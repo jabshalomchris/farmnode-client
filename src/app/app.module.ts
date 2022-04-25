@@ -10,13 +10,15 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { MappingComponent } from './mapping/mapping.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    SignupComponent
+    SignupComponent,
+    MappingComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     NgxWebstorageModule.forRoot(),
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
