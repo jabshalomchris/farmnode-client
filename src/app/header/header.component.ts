@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { animationFrameScheduler } from 'rxjs';
+import { AuthService } from '../auth/shared/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  
+  isLoggedIn:boolean;
+  username:string;
 
-  constructor() { }
+  constructor(private authService: AuthService, private router:Router) { }
 
   ngOnInit(): void {
+    this.isLoggedIn=this.authService.isLoggedIn();
+    this.username=this.authService.getUserName();
+  }
+  logout() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.router.navigateByUrl('');
   }
 
 }

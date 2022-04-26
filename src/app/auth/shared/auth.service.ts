@@ -61,14 +61,12 @@ export class AuthService {
     );
   }
 
-
-
   getJwtToken() {
     return this.localStorage.retrieve('access_token');
   }
 
   refreshToken() {
-    return this.httpClient.post<LoginResponse>('http://localhost:8080/api/auth/refresh/token',
+    return this.httpClient.post<LoginResponse>('http://localhost:8080/api/refresh',
       this.refreshTokenPayload)
       .pipe(tap(response => {
         this.localStorage.clear('access_token');
@@ -81,17 +79,17 @@ export class AuthService {
   }
 
   logout() {
-    this.httpClient.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
+    this.httpClient.post('http://localhost:8080/api/logout', this.refreshTokenPayload,
       { responseType: 'text' })
       .subscribe(data => {
         console.log(data);
       }, error => {
         throwError(error);
       })
-    this.localStorage.clear('authenticationToken');
+    this.localStorage.clear('access_token');
     this.localStorage.clear('username');
-    this.localStorage.clear('refreshToken');
-    this.localStorage.clear('expiresAt');
+    this.localStorage.clear('refresh_token');
+    //this.localStorage.clear('expiresAt');
   }
 
   getUserName() {
