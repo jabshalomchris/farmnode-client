@@ -12,6 +12,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MappingComponent } from './mapping/mapping.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FooterComponent } from './footer/footer.component';
+import { NavbarComponent } from './header/navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
+import { ProduceComponent } from './produce/produce.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({
   declarations: [
@@ -19,7 +24,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     HeaderComponent,
     SignupComponent,
-    MappingComponent
+    MappingComponent,
+    FooterComponent,
+    NavbarComponent,
+    HomeComponent,
+    ProduceComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +40,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgbModule,
+    FontAwesomeModule
     
   ],
   providers: [],

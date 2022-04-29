@@ -1,39 +1,46 @@
-<header>
-  <div class="m-4">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a routerLink="/" class="navbar-brand">
-                <img src="/assets/images/Logo2.png" height="80" alt="Logo">
-            </a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <!-- <div class="navbar-nav">
-                    <a href="#" class="nav-item nav-link active">Home</a>
-                    <a href="#" class="nav-item nav-link">Profile</a>
-                </div> -->
-                <div *ngIf="!isLoggedIn" class="navbar-nav ms-auto" >
-                  <a routerLink="/sign-up" class="nav-item nav-link active">Sign up</a>
-                  <a routerLink="/login"  class="nav-item nav-link ">Login</a>
-                  <a routerLink="/map" class="nav-item nav-link">Map</a>
-                </div>
-                
-                  <div *ngIf="isLoggedIn" ngbDropdown class="navbar-nav ms-auto">
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <!-- <button (click)="goToUserProfile()" ngbDropdownItem>Profile</button> -->
-                        <button (click)="logout()" ngbDropdownItem>Logout</button>
+<header class="shadow">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+            <div class="container-fluid ">
+                <a routerLink="/" class="navbar-brand" style="margin-left: 15px;">
+                    <img src="/assets/images/Logo3.png" height="100" alt="Logo">
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <!-- <div class="navbar-nav">
+                        <a href="#" class="nav-item nav-link active">Home</a>
+                        <a href="#" class="nav-item nav-link">Profile</a>
+                    </div> -->
+                    <div *ngIf="!isLoggedIn" class="navbar-nav ms-auto" >
+                        <a routerLink="" class="nav-item nav-link">Home</a>
+                        <a routerLink="/sign-up" class="nav-item nav-link ">Sign up</a>
+                        <a routerLink="/login"  class="nav-item nav-link ">Login</a>
+                        <a routerLink="/map" class="nav-item nav-link">Map</a>
                     </div>
-                    <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
-                        <!-- <img class="account-icon" src="https://www.redditstatic.com/avatars/avatar_default_08_D4E815.png"> -->
-                        {{username}}
-                    </button>
-                </div>
-                
-                
+                    
+                </div>   
             </div>
-        </div>
-    </nav>
-</div>
-  
-  </header>
+            <div *ngIf="isLoggedIn" style="margin-right: 1%;">
+                <div >
+                    <div ngbDropdown >
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="position:absolute;
+                        left:-50px;">
+                            <!-- <button (click)="goToUserProfile()" ngbDropdownItem>Profile</button> -->
+                            <button  ngbDropdownItem class="btnNav"><fa-icon [icon]="faIdBadge" class="icon"></fa-icon>Public Profile</button>
+                            <button  ngbDropdownItem class="btnNav"><fa-icon [icon]="faUser" class="icon"></fa-icon>My Account</button>
+                            <button (click)="logout()" ngbDropdownItem class="btnNav"><fa-icon [icon]="faRightFromBracket" class="icon"></fa-icon>Logout</button>
+                        </div>
+                        
+                        <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
+                            <!-- <img class="account-icon" src="https://www.redditstatic.com/avatars/avatar_default_08_D4E815.png"> -->
+                            {{username}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+  <app-navbar *ngIf="isLoggedIn"></app-navbar>

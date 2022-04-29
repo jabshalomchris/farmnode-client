@@ -17,7 +17,7 @@ export class MappingComponent implements AfterViewInit {
     
   }
   private initMap(): void{
-    this.map = L.map('map').setView([7.8731,80.7718],15);
+    this.map = L.map('map').setView([7.8731,80.7718],10);
 
     const mainLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
       minZoom: 1,

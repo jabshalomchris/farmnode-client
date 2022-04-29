@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animationFrameScheduler } from 'rxjs';
 import { AuthService } from '../auth/shared/auth.service';
 import { Router } from '@angular/router';
+import { faUser, faRightFromBracket,faIdBadge } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  
+  //variables
   isLoggedIn:boolean;
   username:string;
+
+  //icons
+  faUser = faUser ;
+  faRightFromBracket=faRightFromBracket;
+  faIdBadge=faIdBadge;
 
   constructor(private authService: AuthService, private router:Router) { }
 

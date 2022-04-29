@@ -1,46 +1,49 @@
 header{
     border-radius: 1px solid;
-}
-.reddit-icon-svg{
-    height: 50px;
-    padding: 8px 8px 8px 0;
-    width: 50px;
-}
-
-.reddit-text{        
-    font-weight: 700;
-    height: 50px;
-    width: 50px;    
-}
-.logo{
-    text-decoration: none;
+    -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    position:relative; 
+    z-index: 2;
 }
 
-.login, .signup{    
+
+.shadow {
+    -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+}
+
+a{
+    font-size: large;
+}
+.userdetails{    
     background-color: transparent;
-    border-color: #0079D3;
-    color: #0079D3;
-    fill: #0079D3;
+    border-color: #193d20;
+    color: #193d20;
+    fill: #193d20;
     border: 1px solid;
     border-radius: 4px;
     box-sizing: border-box;
     text-align: center;
     letter-spacing: 1px;
     text-decoration: none;
-    font-size: 12px;
+    font-size: large;
     font-weight: 700;
     letter-spacing: .5px;
     line-height: 24px;
     text-transform: uppercase;
     padding: 3px 16px;
-    opacity: 1;  
-}
-.signup{
-    background-color: #0079D3;
-    border-color: #0079D3;
-    color: aliceblue;
+    opacity: 1;
+    border: 0px;
 }
 
-.signup:hover{
-    opacity: 0.6;
+.userdetails:hover{
+    border: 1px solid;
+}
+.icon{
+    margin-right: 15px
+}
+.btnNav{
+    margin-top: 4%;
 }
