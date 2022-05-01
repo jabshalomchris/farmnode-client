@@ -17,6 +17,7 @@ import { NavbarComponent } from './header/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProduceComponent } from './produce/produce.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgbModule,
-    FontAwesomeModule
-    
+    FontAwesomeModule,
+    LeafletMarkerClusterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
