@@ -55,6 +55,8 @@
                 class="form-control" 
                 [formControlName]="'username'" 
                 name="username" >
+                
+                
             <div class="alert alert-danger" 
                 *ngIf="!loginForm.get('username')?.valid && loginForm.get('username')?.touched">
                 Please provide a valid username

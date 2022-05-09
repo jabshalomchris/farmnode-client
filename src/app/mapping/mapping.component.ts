@@ -1,6 +1,23 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import * as geojson from 'geojson';
+import { map } from 'rxjs/operators';
+import { icon, Marker } from 'leaflet';
+    
+    const iconRetinaUrl = 'assets/marker-icon-2x.png';
+      const iconUrl = 'assets/marker-icon.png';
+      const shadowUrl = 'assets/marker-shadow.png';
+      const iconDefault = icon({
+        iconRetinaUrl,
+        iconUrl,
+        shadowUrl,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        tooltipAnchor: [16, -28],
+        shadowSize: [41, 41]
+      });
+      Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-mapping',
@@ -12,14 +29,18 @@ export class MappingComponent implements AfterViewInit {
   private map;
   markerClusterGroup: L.MarkerClusterGroup;
   markerClusterData = [];
+  
 
   constructor() { }
 
   ngAfterViewInit(): void {
+      
+    
     this.initMap();
     
   }
   private initMap(): void{
+    
     this.markerClusterGroup = L.markerClusterGroup({removeOutsideVisibleBounds: true});
 
     this.map = L.map('map').setView([6.971146721051619, 79.85890895726826],16);
@@ -66,6 +87,14 @@ export class MappingComponent implements AfterViewInit {
       
       this.markerClusterGroup.addLayer(geoJsonLayer);
       this.map.addLayer(this.markerClusterGroup);
+
+      
+     
+     this.map.on('moveend', function(e) {
+      //var bounds = this.map.getBounds();
+      console.log('Login Successful')
+
+});
       
   }
 

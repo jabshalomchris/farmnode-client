@@ -18,6 +18,8 @@ import { HomeComponent } from './home/home.component';
 import { ProduceComponent } from './produce/produce.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import {MatFormFieldModule} from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluste
     ToastrModule.forRoot(),
     NgbModule,
     FontAwesomeModule,
-    LeafletMarkerClusterModule
+    LeafletMarkerClusterModule,
+    MatFormFieldModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
