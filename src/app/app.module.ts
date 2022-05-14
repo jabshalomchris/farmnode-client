@@ -16,10 +16,15 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './header/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProduceComponent } from './produce/produce.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
-import {MatFormFieldModule} from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MyProduceComponent } from './produce/my-produce/my-produce.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { ViewProduceComponent } from './produce/view-produce/view-produce.component';
+import { PostsComponent } from './posts/posts.component';
+import { PostTileComponent } from './posts/post-tile/post-tile.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,11 @@ import { MatIconModule } from '@angular/material/icon';
     FooterComponent,
     NavbarComponent,
     HomeComponent,
-    ProduceComponent
+    ProduceComponent,
+    MyProduceComponent,
+    ViewProduceComponent,
+    PostsComponent,
+    PostTileComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,9 +55,9 @@ import { MatIconModule } from '@angular/material/icon';
     FontAwesomeModule,
     LeafletMarkerClusterModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AuthGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

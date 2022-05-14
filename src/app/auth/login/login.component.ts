@@ -6,13 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 
-
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   hide = true;
@@ -21,40 +18,50 @@ export class LoginComponent implements OnInit {
   registerSuccessMessage: string;
   isError: boolean;
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute,
-    private router: Router, private toastr: ToastrService) {
-    this.loginRequestPayload={
-      username:'',
-      password:''
+  constructor(
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
+    this.loginRequestPayload = {
+      username: '',
+      password: '',
     };
-   }
+  }
 
   ngOnInit(): void {
-    this.loginForm=new FormGroup({
-      username: new FormControl('',Validators.required),
-      password: new FormControl('',Validators.required)
-    })
+    if (this.authService.isLoggedIn()) {
+      this.toastr.success('You have already logged in');
+      this.router.navigate(['/home']);
+    }
+
+    this.loginForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+    });
   }
 
-  login(){
-    this.loginRequestPayload.username=this.loginForm.get('username')?.value;
-    this.loginRequestPayload.password=this.loginForm.get('password')?.value;
-    
-     this.authService.login(this.loginRequestPayload).subscribe(data=>{
-      this.isError = false;
-      //this.router.navigateByUrl('');
-      this.toastr.success('Login Successful');
-      //console.log('Login Successful')
-     },error=>{
-      this.isError = true;
-      throwError(error);
-      this.toastr.error('Login unsuccessful');
-     }
-     
-     );
+  login() {
+    this.loginRequestPayload.username = this.loginForm.get('username')?.value;
+    this.loginRequestPayload.password = this.loginForm.get('password')?.value;
+
+    this.authService.login(this.loginRequestPayload).subscribe(
+      (data) => {
+        this.isError = false;
+        this.toastr.success('Login Successful');
+        this.router.navigateByUrl('/home');
+
+        //console.log('Login Successful')
+      },
+      (error) => {
+        this.isError = true;
+        throwError(error);
+        this.toastr.error('Login unsuccessful');
+      }
+    );
     //this.authService.login2(this.loginRequestPayload).subscribe(data=>{
-      //   console.log('Login Successful')
-      // })
+    //   console.log('Login Successful')
+    // })
   }
-
 }

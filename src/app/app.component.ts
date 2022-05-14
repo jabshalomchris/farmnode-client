@@ -1,11 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/shared/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'farmnodeapp';
+  //variables
+  isLoggedIn: boolean;
+  username: string;
 
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.loggedIn.subscribe(
+      (data: boolean) => (this.isLoggedIn = data)
+    );
+    this.isLoggedIn = this.authService.isLoggedIn();
+    this.username = this.authService.getUserName();
+  }
 }

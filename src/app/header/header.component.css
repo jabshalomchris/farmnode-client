@@ -1,10 +1,11 @@
-header{
+header {
     border-radius: 1px solid;
     -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
     -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
     box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
-    position:relative; 
-    z-index: 2;
+    position: relative;
+    z-index: 0;
+    background-color: #eeee;
 }
 
 
@@ -14,14 +15,15 @@ header{
     box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
 }
 
-a{
+a {
     font-size: large;
 }
-.userdetails{    
+
+.userdetails {
     background-color: transparent;
-    border-color: #193d20;
-    color: #193d20;
-    fill: #193d20;
+    border-color: #274e2d;
+    color: #274e2d;
+    fill: #274e2d;
     border: 1px solid;
     border-radius: 4px;
     box-sizing: border-box;
@@ -38,12 +40,14 @@ a{
     border: 0px;
 }
 
-.userdetails:hover{
+.userdetails:hover {
     border: 1px solid;
 }
-.icon{
+
+.icon {
     margin-right: 15px
 }
-.btnNav{
+
+.btnNav {
     margin-top: 4%;
 }

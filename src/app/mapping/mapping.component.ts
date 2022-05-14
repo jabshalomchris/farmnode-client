@@ -1,101 +1,231 @@
+import { MappingService } from './../services/mapping.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import * as geojson from 'geojson';
 import { map } from 'rxjs/operators';
 import { icon, Marker } from 'leaflet';
-    
-    const iconRetinaUrl = 'assets/marker-icon-2x.png';
-      const iconUrl = 'assets/marker-icon.png';
-      const shadowUrl = 'assets/marker-shadow.png';
-      const iconDefault = icon({
-        iconRetinaUrl,
-        iconUrl,
-        shadowUrl,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        tooltipAnchor: [16, -28],
-        shadowSize: [41, 41]
-      });
-      Marker.prototype.options.icon = iconDefault;
+
+import { ToastrService } from 'ngx-toastr';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { MappingPayload } from './mapping.payload';
+
+const iconRetinaUrl = 'assets/images/Icon.png';
+const iconUrl = 'assets/images/Icon.png';
+const shadowUrl = 'assets/marker-shadow.png';
+const iconDefault = icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [90, 95], // size of the icon
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  popupAnchor: [1, -34], // point from which the popup should open relative to the iconAnchor
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41], // size of the shadow
+});
+Marker.prototype.options.icon = iconDefault;
+
+var greenIcon = L.icon({
+  iconUrl: '/assets/images/Icon.png',
+  shadowUrl: 'assets/marker-shadow.png',
+  iconSize: [88, 104], // size of the icon
+  shadowSize: [80, 104], // size of the shadow
+  iconAnchor: [44, 104], // point of the icon which will correspond to marker's location
+  shadowAnchor: [24, 107], // the same for the shadow
+  popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+});
+
+var redIcon = L.icon({
+  iconUrl: '/assets/images/lock.png',
+
+  iconSize: [38, 95], // size of the icon
+  shadowSize: [50, 64], // size of the shadow
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  shadowAnchor: [4, 62], // the same for the shadow
+  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+});
 
 @Component({
   selector: 'app-mapping',
   templateUrl: './mapping.component.html',
-  styleUrls: ['./mapping.component.css']
+  styleUrls: ['./mapping.component.css'],
 })
-export class MappingComponent implements AfterViewInit {
-  
+export class MappingComponent implements OnInit {
   private map;
   markerClusterGroup: L.MarkerClusterGroup;
   markerClusterData = [];
-  
-
-  constructor() { }
-
-  ngAfterViewInit(): void {
-      
-    
-    this.initMap();
-    
+  private data;
+  mapPayload: MappingPayload;
+  constructor(
+    private httpClient: HttpClient,
+    private mappingService: MappingService,
+    private toastr: ToastrService
+  ) {
+    this.mapPayload = {
+      sw_lat: '',
+      ne_lat: '',
+      sw_lng: '',
+      ne_lng: '',
+    };
   }
-  private initMap(): void{
-    
-    this.markerClusterGroup = L.markerClusterGroup({removeOutsideVisibleBounds: true});
 
-    this.map = L.map('map').setView([6.971146721051619, 79.85890895726826],16);
-
-    //Google Maps
-    // const mainLayer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    //   minZoom: 1,
-    //   maxZoom: 17,subdomains:['mt0','mt1','mt2','mt3']
-    // });
-    // mainLayer.addTo(this.map);
-
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  ngOnInit() {
+    this.initMap();
+  }
+  private initMap(): void {
+    this.markerClusterGroup = L.markerClusterGroup({
+      removeOutsideVisibleBounds: true,
     });
 
-    tiles.addTo(this.map);
-    
+    this.map = L.map('map').setView([6.971146721051619, 79.85890895726826], 16);
+
+    //Google Maps
+    const mainLayer = L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+      {
+        minZoom: 1,
+        maxZoom: 17,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    );
+    mainLayer.addTo(this.map);
+
+    // const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   maxZoom: 18,
+    //   minZoom: 3,
+    //   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    // });
+
+    // tiles.addTo(this.map);
+
     //triAL 1
     // var marker = L.marker(new L.LatLng(7.8731,80.7718), {
     //   draggable: true
     //   }).addTo(this.map).bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
-    
-      //triAL 2
-      // var GeoJson : geojson.FeatureCollection = { "type": "FeatureCollection", "features": [ { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782   ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [79.86843824386597, 6.963606397102782  ] } } ] };
 
-      // L.geoJSON(GeoJson).addTo(this.map).bindPopup('A pretty CSS3 popup.<br> Tested');
+    //triAL 2
+    // var GeoJson : geojson.FeatureCollection = { "type": "FeatureCollection", "features": [ { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782   ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [79.86843824386597, 6.963606397102782  ] } } ] };
 
-      //trial 3 with clustetr group
-      // // this.markerClusterGroup.addLayer(L.marker(new L.LatLng(7.8731,80.7718)));
-      // // this.markerClusterGroup.addLayer(L.marker(new L.LatLng(7.8731,80.7718)));
-      // // this.markerClusterGroup.addLayer(L.marker(new L.LatLng( 6.963606397102782,79.86843824386597 )));
-      // // this.map.addLayer(this.markerClusterGroup);
+    // L.geoJSON(GeoJson).addTo(this.map).bindPopup('A pretty CSS3 popup.<br> Tested');
 
-      //TRIAL 4 gEOjSON WITHCLSUTER
-      var GeoJson : geojson.FeatureCollection = { "type": "FeatureCollection", "features": [ { "type": "Feature", "properties": {"Name":"David"}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86645340919493, 6.961678798653075 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.87159252166748, 6.965267746317486 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.85886812210083, 6.949655091544542 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86431837081908, 6.95954884640577 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.87163543701172, 6.958164372261742 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.87524032592773, 6.959293251486512 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86745119094849, 6.949261041019517 ] } } ] }
-      var geoJsonLayer = L.geoJSON(GeoJson, {
-        onEachFeature: function(feature, layer){
-          layer.bindPopup(feature.properties.Name);
-          
-        }
-      });
-      
-      this.markerClusterGroup.addLayer(geoJsonLayer);
-      this.map.addLayer(this.markerClusterGroup);
+    //trial 3 with clustetr group
+    // // this.markerClusterGroup.addLayer(L.marker(new L.LatLng(7.8731,80.7718)));
+    // // this.markerClusterGroup.addLayer(L.marker(new L.LatLng(7.8731,80.7718)));
+    // // this.markerClusterGroup.addLayer(L.marker(new L.LatLng( 6.963606397102782,79.86843824386597 )));
+    // // this.map.addLayer(this.markerClusterGroup);
 
-      
-     
-     this.map.on('moveend', function(e) {
+    //TRIAL 4 gEOjSON WITHCLSUTER
+    // var GeoJson : geojson.FeatureCollection = { "type": "FeatureCollection", "features": [ { "type": "Feature", "properties": {"Name":"David"}, "geometry": { "type": "Point", "coordinates": [ 79.86843824386597, 6.963606397102782 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86645340919493, 6.961678798653075 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.87159252166748, 6.965267746317486 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.85886812210083, 6.949655091544542 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86431837081908, 6.95954884640577 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.87163543701172, 6.958164372261742 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.87524032592773, 6.959293251486512 ] } }, { "type": "Feature", "properties": {}, "geometry": { "type": "Point", "coordinates": [ 79.86745119094849, 6.949261041019517 ] } } ] }
+    // var geoJsonLayer = L.geoJSON(GeoJson, {
+    //   onEachFeature: function(feature, layer){
+    //     layer.bindPopup(feature.properties.Name);
+
+    //   }
+    // });
+
+    // this.markerClusterGroup.addLayer(geoJsonLayer);
+    // this.map.addLayer(this.markerClusterGroup);
+
+    // //   //TRIAL 5 gEOjSON API Working solution
+    // this.mapPayload.sw_lat = '6.862391';
+    // this.mapPayload.ne_lat = '79.822326';
+    // this.mapPayload.sw_lng = '6.981287';
+    // this.mapPayload.ne_lng = '79.890085';
+
+    // this.mappingService.getMap(this.mapPayload).subscribe(
+    //   (data) => {
+    //     console.log(data);
+    //     var geoJsonLayer = L.geoJSON(data, {
+    //       onEachFeature: function (feature, layer) {
+    //         var popup = layer.bindPopup(
+    //           '<strong>Hello world!</strong><br />' + feature.properties.Name
+    //         );
+    //         popup.on('popupclose', function (e) {
+    //           alert('Hi!');
+    //         });
+    //       },
+    //     });
+    //     this.markerClusterGroup.addLayer(geoJsonLayer);
+    //     this.map.addLayer(this.markerClusterGroup);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     this.toastr.error(error);
+    //   }
+    // );
+
+    //   //TRIAL 6 gEOjSON API
+
+    //     const params = new HttpParams()
+    //       .set('sw_lat', '6.862391')
+    //       .set('ne_lat', '79.822326')
+    //       .set('sw_lng', '6.981287')
+    //       .set('ne_lng', "79.890085");
+
+    //     this.httpClient.get<any>('http://localhost:8080/api/produce/geoJsonNew',{params}).subscribe(Response=>{
+    //       console.log(Response);
+    //       var geoJsonLayer = L.geoJSON(Response, {
+    //         onEachFeature: function(feature, layer){
+    //          layer.bindPopup("<strong>Hello world!</strong><br />"+feature.properties.Name);
+
+    //        }
+    //      });
+    //      this.markerClusterGroup.addLayer(geoJsonLayer);
+    //      this.map.addLayer(this.markerClusterGroup);
+    //  }) // {params} short form of {params:params}
+
+    //   //TRIAL 7 gEOjSON API not entirely
+    this.mapPayload.sw_lat = '6.862391';
+    this.mapPayload.ne_lat = '79.822326';
+    this.mapPayload.sw_lng = '6.981287';
+    this.mapPayload.ne_lng = '79.890085';
+
+    this.mappingService.getMap(this.mapPayload).subscribe(
+      (data) => {
+        console.log(data);
+
+        // var geoJsonLayer = L.geoJSON(data, {
+        //   onEachFeature: function (feature, layer) {
+        //     layer.bindPopup(
+        //       '<strong>Hello world!</strong><br />' + feature.properties.Name
+        //     );
+        //   },
+        // });
+
+        var geoJsonLayer = L.geoJSON(data, {
+          pointToLayer: function (feature, latlng) {
+            if (feature.properties.category == 'Vegetable') {
+              var marker = L.marker(latlng, { icon: greenIcon });
+            } else {
+              var marker = L.marker(latlng, { icon: redIcon });
+            }
+            return marker.bindPopup(
+              '<strong>Hello world!</strong><br />' + feature.properties.Name
+            );
+          },
+        });
+        //  var markers = L.markerClusterGroup({
+        //    iconCreateFunction: function (cluster) {
+        //      return L.divIcon({
+        //        cluster.getAllChildMarkers()
+        //      });
+        //    },
+        //  });
+        //  markers.addLayer(geoJsonLayer);
+        //  this.map.addLayer(markers);
+
+        this.markerClusterGroup.addLayer(geoJsonLayer);
+        this.map.addLayer(this.markerClusterGroup);
+      },
+      (error) => {
+        console.log(error);
+        this.toastr.error(error);
+      }
+    );
+
+    this.map.on('moveend', function (e) {
       //var bounds = this.map.getBounds();
-      console.log('Login Successful')
-
-});
-      
+      //console.log(this.data)
+    });
   }
-
 }

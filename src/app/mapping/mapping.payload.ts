@@ -1,0 +1,6 @@
+export class MappingPayload {
+    sw_lat: string;
+    ne_lat: string;
+    sw_lng: string;
+    ne_lng: string;
+}

@@ -1,8 +1,6 @@
-
-
-.nav ul{
+.nav ul {
     list-style: none;
-    background-color: #193d20;
+    background-color: #274e2d;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -10,11 +8,12 @@
 
 }
 
-.nav li{
+.nav li {
     display: inline-block;
 
 }
-.nav a{
+
+.nav a {
     text-decoration: none;
     color: #fff;
     width: auto;
@@ -24,9 +23,8 @@
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
-    
 }
 
-.nav a:hover{
+.nav a:hover {
     background-color: #f89822;
 }
