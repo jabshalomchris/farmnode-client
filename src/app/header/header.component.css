@@ -4,7 +4,7 @@ header {
     -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
     box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
     position: relative;
-    z-index: 0;
+    z-index: 2;
     background-color: #eeee;
 }
 
@@ -21,28 +21,28 @@ a {
 
 .userdetails {
     background-color: transparent;
-    border-color: #274e2d;
-    color: #274e2d;
-    fill: #274e2d;
+    border-color: #728E37;
+    color: #728E37;
+    fill: #728E37;
     border: 1px solid;
     border-radius: 4px;
     box-sizing: border-box;
     text-align: center;
     letter-spacing: 1px;
     text-decoration: none;
-    font-size: large;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: bold;
     letter-spacing: .5px;
     line-height: 24px;
-    text-transform: uppercase;
     padding: 3px 16px;
     opacity: 1;
     border: 0px;
+
 }
 
-.userdetails:hover {
+/* .userdetails:hover {
     border: 1px solid;
-}
+} */
 
 .icon {
     margin-right: 15px

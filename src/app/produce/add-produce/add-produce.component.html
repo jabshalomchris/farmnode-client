@@ -1,0 +1,81 @@
+<form>
+  <div class="card shadow-sm" style="margin: 50px 200px">
+    <div class="card-body">
+      <h3 class="card-title text">Is it on your property?</h3>
+      <p class="card-text">
+        With supporting text below as a natural lead-in to additional content.
+      </p>
+    </div>
+  </div>
+  <div class="card shadow-sm" style="margin: 30px 200px">
+    <div class="card-body">
+      <h4 class="card-title text">Tell us what you are growing *</h4>
+      <div class="form-outline mb-6">
+        <input
+          type="text"
+          id="name"
+          class="form-control form-control-lg"
+          [formControlName]="'name'"
+          name="name"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="card shadow-sm" style="margin: 30px 200px">
+    <div class="card-body">
+      <h6 class="card-title text">Status</h6>
+      <div class="form-outline mb-6">
+        <input
+          type="text"
+          id="name"
+          class="form-control form-control-lg"
+          [formControlName]="'name'"
+          name="name"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="card shadow-sm" style="margin: 30px 200px">
+    <div class="card-body">
+      <h6 class="card-title text">Enter the location of your produce</h6>
+    </div>
+    <div class="container">
+      <h2 class="text-center">Leaflet Map</h2>
+      <!-- start map -->
+      <div id="contain-map" class="m-auto" style="height: 600px; width: 1000px">
+        <div id="map" style="width: 100%; height: 100%"></div>
+      </div>
+      <!-- end map -->
+      <pre class="text-center">Search key: Google Map, Leaflet Map</pre>
+      <pre class="text-center">Author by DaiDH</pre>
+    </div>
+  </div>
+</form>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">
+  Open My Modal
+</button>
+
+<ng-template #mymodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">This is example from ItSolutionStuff.com</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template> -->

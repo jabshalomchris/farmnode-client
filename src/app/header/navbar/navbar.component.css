@@ -1,6 +1,6 @@
 .nav ul {
     list-style: none;
-    background-color: #274e2d;
+    background-color: #728E37;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -16,6 +16,7 @@
 .nav a {
     text-decoration: none;
     color: #fff;
+    text-shadow: 0.5px 0.5px 1px #000000;
     width: auto;
     display: block;
     padding: 25px;
@@ -26,5 +27,5 @@
 }
 
 .nav a:hover {
-    background-color: #f89822;
+    background-color: #EA9032;
 }

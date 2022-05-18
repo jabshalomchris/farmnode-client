@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { ViewProduceComponent } from './produce/view-produce/view-produce.component';
+import { AddProduceComponent } from './produce/add-produce/add-produce.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'viewproduce/:produceId', component: ViewProduceComponent },
+  { path: 'post-produce', component: AddProduceComponent },
 ];
 
 @NgModule({

@@ -51,6 +51,7 @@ var redIcon = L.icon({
   styleUrls: ['./mapping.component.css'],
 })
 export class MappingComponent implements OnInit {
+  private marker;
   private map;
   markerClusterGroup: L.MarkerClusterGroup;
   markerClusterData = [];
@@ -223,9 +224,15 @@ export class MappingComponent implements OnInit {
       }
     );
 
-    this.map.on('moveend', function (e) {
-      //var bounds = this.map.getBounds();
-      //console.log(this.data)
-    });
+    // /////important
+    // this.map.on('click', (e) => {
+    //   if (this.marker) {
+    //     this.map.removeLayer(this.marker);
+    //   }
+    //   console.log(e.latlng); // get the coordinates
+    //   this.marker = L.marker([e.latlng.lat, e.latlng.lng], {
+    //     icon: greenIcon,
+    //   }).addTo(this.map); // add the marker onclick
+    // });
   }
 }
