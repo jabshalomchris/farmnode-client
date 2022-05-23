@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ProduceModel } from '../models/produce-model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { AddProducePayload } from '../produce/add-produce/add-produce.payload';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +20,15 @@ export class ProduceService {
     return this.httpClient
       .get<ProduceModel>(`http://localhost:8080/api/produce/${produceId}`)
       .pipe(map((response) => response));
+  }
+
+  addProduce(addProducePayload: AddProducePayload): Observable<boolean> {
+    return this.httpClient
+      .post<any>('http://localhost:8080/api/produce', addProducePayload)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 }

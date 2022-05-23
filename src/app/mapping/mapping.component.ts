@@ -53,6 +53,7 @@ var redIcon = L.icon({
 export class MappingComponent implements OnInit {
   private marker;
   private map;
+  private container;
   markerClusterGroup: L.MarkerClusterGroup;
   markerClusterData = [];
   private data;
@@ -62,6 +63,11 @@ export class MappingComponent implements OnInit {
     private mappingService: MappingService,
     private toastr: ToastrService
   ) {
+    var container = L.DomUtil.get('map');
+    if (container != null) {
+      container.outerHTML = ''; // Clear map generated HTML
+      // container._leaflet_id = null; << didn't work for me
+    }
     this.mapPayload = {
       sw_lat: '',
       ne_lat: '',
@@ -74,6 +80,9 @@ export class MappingComponent implements OnInit {
     this.initMap();
   }
   private initMap(): void {
+    if (this.map) {
+      this.map.remove();
+    }
     this.markerClusterGroup = L.markerClusterGroup({
       removeOutsideVisibleBounds: true,
     });
@@ -176,10 +185,10 @@ export class MappingComponent implements OnInit {
     //  }) // {params} short form of {params:params}
 
     //   //TRIAL 7 gEOjSON API not entirely
-    this.mapPayload.sw_lat = '6.862391';
-    this.mapPayload.ne_lat = '79.822326';
-    this.mapPayload.sw_lng = '6.981287';
-    this.mapPayload.ne_lng = '79.890085';
+    this.mapPayload.sw_lat = '5.6816';
+    this.mapPayload.ne_lat = '79.2677';
+    this.mapPayload.sw_lng = '10.03377';
+    this.mapPayload.ne_lng = '82.1448';
 
     this.mappingService.getMap(this.mapPayload).subscribe(
       (data) => {
@@ -201,7 +210,24 @@ export class MappingComponent implements OnInit {
               var marker = L.marker(latlng, { icon: redIcon });
             }
             return marker.bindPopup(
-              '<strong>Hello world!</strong><br />' + feature.properties.Name
+              '<div class="card text-center">' +
+                '<div class="card-header">' +
+                '<h3>' +
+                feature.properties.Name +
+                '</h3>' +
+                '</div>' +
+                '<div class="card-body">' +
+                '<div class="row text-center">' +
+                '<div class="col-md-2 mb-2">' +
+                '<img class="rounded-circle" alt="100x100" loading="lazy" style="height:60px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" data-holder-rendered="true">' +
+                '</div>' +
+                '<div class="col">' +
+                '<h5 class="card-title">Special title treatment</h5>' +
+                '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>' +
+                '<a href="#" class="btn btn-success">Button</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
             );
           },
         });

@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/auth/shared/auth.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'farmnodeapp';
+  //title = 'farmnodeapp';
   //variables
   isLoggedIn: boolean;
   username: string;
