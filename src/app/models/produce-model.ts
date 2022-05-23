@@ -4,7 +4,7 @@ export class ProduceModel {
   description: string;
   category: string;
   produceStatus: string;
-  price: number;
+  price: string;
   address: string;
   latitude: string;
   longitude: string;

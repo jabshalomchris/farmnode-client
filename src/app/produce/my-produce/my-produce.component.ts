@@ -11,15 +11,23 @@ import { Router } from '@angular/router';
 export class MyProduceComponent implements OnInit {
   produces$: Array<ProduceModel>;
 
-  constructor(private produceService: ProduceService, private router: Router) {
-    this.getProduces();
+  constructor(private produceService: ProduceService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.getProducesbyUser();
   }
 
-  ngOnInit(): void {}
+  // //function to get all produces
+  // getProduces() {
+  //   this.produceService.getAllProduces().subscribe((produce) => {
+  //     console.log(produce);
+  //     this.produces$ = produce;
+  //   });
+  // }
 
   //function to get all produces
-  getProduces() {
-    this.produceService.getAllProduces().subscribe((produce) => {
+  getProducesbyUser() {
+    this.produceService.getProducebyUser().subscribe((produce) => {
       console.log(produce);
       this.produces$ = produce;
     });

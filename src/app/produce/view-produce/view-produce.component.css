@@ -1,0 +1,26 @@
+.status {
+    z-index: 200;
+    position: absolute;
+    top: -10px;
+    left: -25px;
+}
+
+.cus-icon {
+    margin: 0 6% 0 6% !important;
+}
+
+.options fa-icon {
+    color: #728E37 !important;
+}
+
+.options a {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    color: #728E37 !important;
+
+}
+
+.options a:hover {
+    color: #193D20 !important;
+}

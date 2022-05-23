@@ -11,7 +11,7 @@ import { ViewProduceComponent } from './produce/view-produce/view-produce.compon
 import { AddProduceComponent } from './produce/add-produce/add-produce.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  // { path: '', component: HomeComponent },
   { path: 'sign-up', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
