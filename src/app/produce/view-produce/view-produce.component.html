@@ -88,16 +88,40 @@
 
             <br />
             <br />
-            <a (click)="editPublishStatus()"
-              ><fa-icon
-                [icon]="faCircleMinus"
-                class="fab fa-lg cus-icon"
-              ></fa-icon
-              >Un-publish to consumers</a
-            >
+            <div
+              *ngIf="
+                produce.publishStatus == 'false';
+                then Publish;
+                else Unpublish
+              "
+            ></div>
+
+            <ng-template #Publish
+              ><a (click)="editPublishStatus(produce.produceId, 'true')"
+                ><fa-icon [icon]="faEye" class="fab fa-lg cus-icon"></fa-icon
+                >Publish to consumers</a
+              >
+            </ng-template>
+            <ng-template #Unpublish
+              ><a (click)="editPublishStatus(produce.produceId, 'false')"
+                ><fa-icon
+                  [icon]="faCircleMinus"
+                  class="fab fa-lg cus-icon"
+                ></fa-icon
+                >Un-publish to consumers</a
+              >
+            </ng-template>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
     </div>
   </div>
 </div>

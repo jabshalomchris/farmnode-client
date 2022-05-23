@@ -7,10 +7,32 @@ import {
   faAppleWhole,
   faSeedling,
   faCircleMinus,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
-import { UpdateProduceModel } from '../../models/update.Produce.module';
+import { UpdateProducePayload } from './update-produce.payload';
+import * as L from 'leaflet';
+
+var greenIcon = L.icon({
+  iconUrl: '/assets/images/Icon.png',
+  shadowUrl: 'assets/marker-shadow.png',
+  iconSize: [88, 104], // size of the icon
+  shadowSize: [80, 104], // size of the shadow
+  iconAnchor: [44, 104], // point of the icon which will correspond to marker's location
+  shadowAnchor: [24, 107], // the same for the shadow
+  popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+});
+
+var redIcon = L.icon({
+  iconUrl: '/assets/images/lock.png',
+
+  iconSize: [38, 95], // size of the icon
+  shadowSize: [50, 64], // size of the shadow
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  shadowAnchor: [4, 62], // the same for the shadow
+  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+});
 
 @Component({
   selector: 'app-view-produce',
@@ -18,10 +40,15 @@ import { UpdateProduceModel } from '../../models/update.Produce.module';
   styleUrls: ['./view-produce.component.css'],
 })
 export class ViewProduceComponent implements OnInit {
+  private map;
+  latitude;
+  longitude;
+  produceRequestPayload: UpdateProducePayload;
   faPenToSquare = faPenToSquare;
   faAppleWhole = faAppleWhole;
   faSeedling = faSeedling;
   faCircleMinus = faCircleMinus;
+  faEye = faEye;
   isError: boolean;
 
   produce: ProduceModel = new ProduceModel();
@@ -31,7 +58,26 @@ export class ViewProduceComponent implements OnInit {
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) {
+    var container = L.DomUtil.get('map');
+    if (container != null) {
+      container.outerHTML = ''; // Clear map generated HTML
+      // container._leaflet_id = null; << didn't work for me
+    }
+
+    this.produceRequestPayload = {
+      produceId: '',
+      produceName: '',
+      description: '',
+      produceStatus: '',
+      price: '',
+      category: '',
+      address: '',
+      longitude: '',
+      latitude: '',
+      publishStatus: '',
+    };
+  }
 
   ngOnInit(): void {
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('produceId');
@@ -39,10 +85,35 @@ export class ViewProduceComponent implements OnInit {
       const produceId = Number(
         this._activatedRoute.snapshot.paramMap.get('produceId')
       );
-      this._produceService
-        .getProducebyId(produceId)
-        .subscribe((data) => (this.produce = data));
+      this._produceService.getProducebyId(produceId).subscribe((data) => {
+        this.produce = data;
+        const latitude = data.latitude;
+        const longitude = data.longitude;
+        this.initMap(latitude, longitude);
+      });
     }
+  }
+
+  private initMap(latitude, longitude): void {
+    this.map = L.map('map').setView([6.971146721051619, 79.85890895726826], 16);
+    //Google Maps
+    const mainLayer = L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+      {
+        minZoom: 1,
+        maxZoom: 17,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    );
+    mainLayer.addTo(this.map);
+
+    var marker = L.marker(new L.LatLng(latitude, longitude), {
+      draggable: false,
+    })
+      .addTo(this.map)
+      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
+
+    this.map.panTo(marker.getLatLng());
   }
 
   editStatus(produceId, status) {
@@ -58,9 +129,25 @@ export class ViewProduceComponent implements OnInit {
       (error) => {
         this.isError = true;
         throwError(error);
-        this.toastr.error('Login unsuccessful');
+        this.toastr.error('Error during produce update');
       }
     );
   }
-  editPublishStatus() {}
+  editPublishStatus(produceId, status) {
+    this._produceService.editPublishStatus(produceId, status).subscribe(
+      (data) => {
+        this.isError = false;
+        this.toastr.info('Visibilty to consumers changed');
+
+        this._produceService
+          .getProducebyId(produceId)
+          .subscribe((data) => (this.produce = data));
+      },
+      (error) => {
+        this.isError = true;
+        throwError(error);
+        this.toastr.error('Error during produce update');
+      }
+    );
+  }
 }

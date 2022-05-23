@@ -35,6 +35,19 @@ export class ProduceService {
       );
   }
 
+  editPublishStatus(produceId: number, status: string): Observable<any> {
+    return this.httpClient
+      .post<any>(
+        `http://localhost:8080/api/produce/update-publish/${status}/${produceId}`,
+        null
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   getProducebyUser(): Observable<Array<ProduceModel>> {
     return this.httpClient.get<Array<ProduceModel>>(
       'http://localhost:8080/api/produce/by-user'
