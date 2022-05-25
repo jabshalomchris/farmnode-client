@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { ViewProduceComponent } from './produce/view-produce/view-produce.component';
 import { AddProduceComponent } from './produce/add-produce/add-produce.component';
+import { FindProducesComponent } from './produce/find-produces/find-produces.component';
+import { OtherProduceComponent } from './produce/other-produce/other-produce.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -16,12 +18,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'map', component: MappingComponent },
+  { path: 'find-produce', component: FindProducesComponent },
   {
     path: 'my-produce',
     component: MyProduceComponent,
     canActivate: [AuthGuard],
   },
   { path: 'viewproduce/:produceId', component: ViewProduceComponent },
+  { path: 'produce/:produceId', component: OtherProduceComponent },
   { path: 'post-produce', component: AddProduceComponent },
 ];
 

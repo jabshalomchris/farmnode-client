@@ -3,6 +3,7 @@ import { map, Observable } from 'rxjs';
 import { ProduceModel } from '../models/produce-model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AddProducePayload } from '../produce/add-produce/add-produce.payload';
+import { MappingPayload } from '../mapping/mapping.payload';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,21 @@ export class ProduceService {
   getAllProduces(): Observable<Array<ProduceModel>> {
     return this.httpClient.get<Array<ProduceModel>>(
       'http://localhost:8080/api/produce'
+    );
+  }
+
+  getProducesbyFilter(mappingPayload: MappingPayload): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('sw_lat', mappingPayload.sw_lat);
+    queryParams = queryParams.append('ne_lat', mappingPayload.ne_lat);
+    queryParams = queryParams.append('sw_lng', mappingPayload.sw_lng);
+    queryParams = queryParams.append('ne_lng', mappingPayload.ne_lng);
+
+    return this.httpClient.get<Array<ProduceModel>>(
+      'http://localhost:8080/api/produce/produceFiltersNew',
+      {
+        params: queryParams,
+      }
     );
   }
 

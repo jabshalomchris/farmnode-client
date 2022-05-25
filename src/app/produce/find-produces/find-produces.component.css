@@ -1,0 +1,95 @@
+.title {
+    text-align: center;
+    padding: 50px;
+    font-size: 50px;
+    font-variant: small-caps;
+    font-family: fantasy;
+    font-weight: bold;
+    letter-spacing: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.parallax {
+    background-image: url("/assets/images/bg3.jpg");
+    width: 100%;
+    height: max-content;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.topCard {
+    margin-top: 3%;
+    margin-left: 50px;
+    margin-right: 50px;
+    max-width: 100%;
+}
+
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+.map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 50px;
+}
+
+.map-frame {
+
+    height: 100%;
+    width: 100%;
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+}
+
+#map {
+    height: 100%;
+}
+
+.wrap {
+    max-width: 80%;
+    height: 70vh;
+    position: relative;
+}
+
+@media (max-width: 830px) {
+    .form-inline {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.popup-content {
+    padding: 0;
+    margin: 0;
+    background-color: aqua;
+
+}
+
+.bg {
+    background-image: url("/assets/images/circular-bg.png");
+    z-index: 0;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: -10px;
+    top: -10px;
+}
+
+.status {
+    z-index: 10;
+    position: absolute;
+    height: 77px !important;
+    left: -6px !important;
+    top: -6px;
+}

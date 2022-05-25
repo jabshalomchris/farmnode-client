@@ -26,7 +26,7 @@
               <img
                 src="http://localhost:8080/api/image/sid"
                 alt="Produce"
-                style="width: 100%; height: 100%; outline: 1px solid #eeeeee"
+                style="width: 100%; height: auto; outline: 1px solid #eeeeee"
                 class="img-thumbnail"
                 loading="lazy"
               />
@@ -38,6 +38,11 @@
               <h5>Rs. {{ produce.category }} / each</h5>
               <br />
               <p>{{ produce.description }}</p>
+              <div class="map-container">
+                <div class="map-frame">
+                  <div id="map"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -45,13 +50,20 @@
     </div>
     <div class="col-lg-3 mb-4">
       <div class="card">
-        <div class="card-body" style="background-color: #dddddd">
-          <div class="card-title" style="color: #4c3113">
+        <div
+          class="card-body"
+          style="
+            background-color: #dddddd;
+            padding-top: 10%;
+            padding-bottom: 20%;
+          "
+        >
+          <div class="card-title text-center" style="color: #4c3113">
             <h5>Options</h5>
           </div>
           <div class="options">
             <br />
-            <a routerLink=""
+            <a (click)="open(mymodal)"
               ><fa-icon
                 [icon]="faPenToSquare"
                 class="fab fa-lg cus-icon"
@@ -114,17 +126,59 @@
           </div>
         </div>
       </div>
+
+      <div class="card" style="margin-top: 5%">
+        <div
+          class="card-body"
+          style="
+            background-color: #dddddd;
+            padding-top: 10%;
+            padding-bottom: 10%;
+          "
+        >
+          <div class="card-title text-center" style="color: #4c3113">
+            <h5>Produce profile</h5>
+          </div>
+          <div style="margin-top: 10%; margin-left: 5%">
+            <p><strong style="margin-right: 5%">0</strong> Subscribers</p>
+            <p><strong style="margin-right: 5%">0</strong> Feedbacks</p>
+            <p><strong style="margin-right: 5%">0</strong> Requests</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="wrap">
-  <div class="map-container">
-    <div class="map-frame">
-      <div id="map"></div>
-    </div>
+<button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">
+  Open My Modal
+</button>
+
+<ng-template #mymodal let-modal class="modal hide">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ produce.produceName }}
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
   </div>
-</div>
+  <div class="modal-body">This is example from ItSolutionStuff.com</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-warning"
+      (click)="modal.close('Save click')"
+    >
+      Ok
+    </button>
+  </div>
+</ng-template>
 
 <!-- 
 <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">

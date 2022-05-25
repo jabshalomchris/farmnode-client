@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProduceService } from 'src/app/services/produce.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProduceModel } from '../../models/produce-model';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   faPenToSquare,
   faAppleWhole,
@@ -49,6 +50,7 @@ export class ViewProduceComponent implements OnInit {
   faSeedling = faSeedling;
   faCircleMinus = faCircleMinus;
   faEye = faEye;
+  closeResult: string;
   isError: boolean;
 
   produce: ProduceModel = new ProduceModel();
@@ -57,7 +59,8 @@ export class ViewProduceComponent implements OnInit {
     private _produceService: ProduceService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: NgbModal
   ) {
     var container = L.DomUtil.get('map');
     if (container != null) {
@@ -109,11 +112,9 @@ export class ViewProduceComponent implements OnInit {
 
     var marker = L.marker(new L.LatLng(latitude, longitude), {
       draggable: false,
-    })
-      .addTo(this.map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
+    }).addTo(this.map);
 
-    this.map.panTo(marker.getLatLng());
+    this.map.setView(marker.getLatLng(), 14);
   }
 
   editStatus(produceId, status) {
@@ -149,5 +150,28 @@ export class ViewProduceComponent implements OnInit {
         this.toastr.error('Error during produce update');
       }
     );
+  }
+
+  open(content) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }

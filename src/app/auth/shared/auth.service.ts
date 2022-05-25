@@ -75,18 +75,18 @@ export class AuthService {
   }
 
   logout() {
-    this.httpClient
-      .post('http://localhost:8080/api/logout', this.refreshTokenPayload, {
-        responseType: 'text',
-      })
-      .subscribe(
-        (data) => {
-          console.log(data);
-        },
-        (error) => {
-          throwError(error);
-        }
-      );
+    // this.httpClient
+    //   .post('http://localhost:8080/api/logout', this.refreshTokenPayload, {
+    //     responseType: 'text',
+    //   })
+    //   .subscribe(
+    //     (data) => {
+    //       console.log(data);
+    //     },
+    //     (error) => {
+    //       throwError(error);
+    //     }
+    //   );
     this.localStorage.clear('access_token');
     this.localStorage.clear('username');
     this.localStorage.clear('refresh_token');

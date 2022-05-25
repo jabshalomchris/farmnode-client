@@ -29,6 +29,8 @@ import { ViewUserComponent } from './users/view-user/view-user.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { AddProduceComponent } from './produce/add-produce/add-produce.component';
+import { FindProducesComponent } from './produce/find-produces/find-produces.component';
+import { OtherProduceComponent } from './produce/other-produce/other-produce.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { AddProduceComponent } from './produce/add-produce/add-produce.component
     ViewUserComponent,
     SubscriptionComponent,
     AddProduceComponent,
+    FindProducesComponent,
+    OtherProduceComponent,
   ],
   imports: [
     BrowserModule,
