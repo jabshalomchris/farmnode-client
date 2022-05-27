@@ -17,12 +17,20 @@ export class ProduceService {
     );
   }
 
-  getProducesbyFilter(mappingPayload: MappingPayload): Observable<any> {
+  getProducesbyFilter(
+    mappingPayload: MappingPayload,
+    include,
+    category,
+    status
+  ): Observable<any> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('sw_lat', mappingPayload.sw_lat);
     queryParams = queryParams.append('ne_lat', mappingPayload.ne_lat);
     queryParams = queryParams.append('sw_lng', mappingPayload.sw_lng);
     queryParams = queryParams.append('ne_lng', mappingPayload.ne_lng);
+    queryParams = queryParams.append('include_users', include);
+    queryParams = queryParams.append('category', category);
+    queryParams = queryParams.append('status', status);
 
     return this.httpClient.get<Array<ProduceModel>>(
       'http://localhost:8080/api/produce/produceFiltersNew',
@@ -34,7 +42,9 @@ export class ProduceService {
 
   getProducebyId(produceId: number): Observable<ProduceModel> {
     return this.httpClient
-      .get<ProduceModel>(`http://localhost:8080/api/produce/${produceId}`)
+      .get<ProduceModel>(
+        `http://localhost:8080/api/produce/detailed/${produceId}`
+      )
       .pipe(map((response) => response));
   }
 

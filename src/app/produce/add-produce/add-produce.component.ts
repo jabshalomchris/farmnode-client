@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddProducePayload } from './add-produce.payload';
 import { ProduceService } from '../../services/produce.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { throwError } from 'rxjs';
+import { finalize, throwError } from 'rxjs';
 
 var greenIcon = L.icon({
   iconUrl: '/assets/images/Icon.png',
@@ -37,6 +37,7 @@ export class AddProduceComponent implements OnInit {
   latitude: string;
   longitude: string;
   isError: boolean;
+  submitted = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -180,7 +181,8 @@ export class AddProduceComponent implements OnInit {
     this.map.addControl(searchControl);
   }
 
-  submit() {
+  submit(submitBtn) {
+    submitBtn.disabled = true;
     this.produceRequestPayload.produceName =
       this.createProduceForm.get('produceName')?.value;
     this.produceRequestPayload.description =
@@ -195,20 +197,28 @@ export class AddProduceComponent implements OnInit {
       this.createProduceForm.get('produceStatus')?.value;
     this.produceRequestPayload.publishStatus = 'true';
 
-    this.produceService.addProduce(this.produceRequestPayload).subscribe(
-      (data) => {
-        this.isError = false;
-        this.toastr.success('Produce added successfully');
-        this.router.navigateByUrl('/');
+    this.produceService
+      .addProduce(this.produceRequestPayload)
+      .pipe(
+        finalize(() => {
+          submitBtn.disabled = false;
+        })
+      )
+      .subscribe(
+        (data) => {
+          this.isError = false;
+          this.toastr.success('Produce added successfully');
+          this.router.navigateByUrl('/');
 
-        //console.log('Login Successful')
-      },
-      (error) => {
-        this.isError = true;
-        throwError(error);
-        this.toastr.error('Login unsuccessful');
-      }
-    );
+          //console.log('Login Successful')
+        },
+        (error) => {
+          this.isError = true;
+          throwError(error);
+          this.toastr.error('Login unsuccessful');
+        }
+      );
+    submitBtn.disabled = false;
 
     console.log(this.produceRequestPayload);
   }
@@ -217,6 +227,7 @@ export class AddProduceComponent implements OnInit {
       this.map.remove();
     }
   }
+
   open(content) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })

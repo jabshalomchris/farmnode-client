@@ -31,6 +31,13 @@ import { SubscriptionComponent } from './subscription/subscription.component';
 import { AddProduceComponent } from './produce/add-produce/add-produce.component';
 import { FindProducesComponent } from './produce/find-produces/find-produces.component';
 import { OtherProduceComponent } from './produce/other-produce/other-produce.component';
+import { MySubscriptionsComponent } from './subscription/my-subscriptions/my-subscriptions.component';
+import { CommunityComponent } from './community/community.component';
+import { SideBarComponent } from './community/side-bar/side-bar.component';
+import { CreatePostComponent } from './community/create-post/create-post.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { ViewFriendsComponent } from './friends/view-friends/view-friends.component';
+import { ViewGrowerComponent } from './users/view-grower/view-grower.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +59,12 @@ import { OtherProduceComponent } from './produce/other-produce/other-produce.com
     AddProduceComponent,
     FindProducesComponent,
     OtherProduceComponent,
+    MySubscriptionsComponent,
+    CommunityComponent,
+    SideBarComponent,
+    CreatePostComponent,
+    ViewFriendsComponent,
+    ViewGrowerComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +79,7 @@ import { OtherProduceComponent } from './produce/other-produce/other-produce.com
     FontAwesomeModule,
     LeafletMarkerClusterModule,
     MatFormFieldModule,
+    EditorModule,
     MatIconModule,
   ],
   providers: [

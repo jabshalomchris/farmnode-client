@@ -21,11 +21,13 @@ export class TokenInterceptorService implements HttpInterceptor {
     const isLogged = authService.isLoggedIn();
     //let token = '';
     if (isLogged) {
-      req = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${authService.getJwtToken()}`,
-        },
-      });
+      if (req.url.slice(0, 27) != 'https://maps.googleapis.com') {
+        req = req.clone({
+          setHeaders: {
+            Authorization: `Bearer ${authService.getJwtToken()}`,
+          },
+        });
+      }
     }
 
     return next.handle(req);

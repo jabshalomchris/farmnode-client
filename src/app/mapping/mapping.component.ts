@@ -190,75 +190,75 @@ export class MappingComponent implements OnInit {
     this.mapPayload.sw_lng = '10.03377';
     this.mapPayload.ne_lng = '82.1448';
 
-    this.mappingService.getMap(this.mapPayload).subscribe(
-      (data) => {
-        console.log(data);
+    //   this.mappingService.getMap(this.mapPayload).subscribe(
+    //     (data) => {
+    //       console.log(data);
 
-        // var geoJsonLayer = L.geoJSON(data, {
-        //   onEachFeature: function (feature, layer) {
-        //     layer.bindPopup(
-        //       '<strong>Hello world!</strong><br />' + feature.properties.Name
-        //     );
-        //   },
-        // });
+    //       // var geoJsonLayer = L.geoJSON(data, {
+    //       //   onEachFeature: function (feature, layer) {
+    //       //     layer.bindPopup(
+    //       //       '<strong>Hello world!</strong><br />' + feature.properties.Name
+    //       //     );
+    //       //   },
+    //       // });
 
-        var geoJsonLayer = L.geoJSON(data, {
-          pointToLayer: function (feature, latlng) {
-            if (feature.properties.category == 'Vegetable') {
-              var marker = L.marker(latlng, { icon: greenIcon });
-            } else {
-              var marker = L.marker(latlng, { icon: redIcon });
-            }
-            return marker.bindPopup(
-              '<div class="card text-center">' +
-                '<div class="card-header">' +
-                '<h3>' +
-                feature.properties.Name +
-                '</h3>' +
-                '</div>' +
-                '<div class="card-body">' +
-                '<div class="row text-center">' +
-                '<div class="col-md-2 mb-2">' +
-                '<img class="rounded-circle" alt="100x100" loading="lazy" style="height:60px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" data-holder-rendered="true">' +
-                '</div>' +
-                '<div class="col">' +
-                '<h5 class="card-title">Special title treatment</h5>' +
-                '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>' +
-                '<a href="#" class="btn btn-success">Button</a>' +
-                '</div>' +
-                '</div>' +
-                '</div>'
-            );
-          },
-        });
-        //  var markers = L.markerClusterGroup({
-        //    iconCreateFunction: function (cluster) {
-        //      return L.divIcon({
-        //        cluster.getAllChildMarkers()
-        //      });
-        //    },
-        //  });
-        //  markers.addLayer(geoJsonLayer);
-        //  this.map.addLayer(markers);
+    //       var geoJsonLayer = L.geoJSON(data, {
+    //         pointToLayer: function (feature, latlng) {
+    //           if (feature.properties.category == 'Vegetable') {
+    //             var marker = L.marker(latlng, { icon: greenIcon });
+    //           } else {
+    //             var marker = L.marker(latlng, { icon: redIcon });
+    //           }
+    //           return marker.bindPopup(
+    //             '<div class="card text-center">' +
+    //               '<div class="card-header">' +
+    //               '<h3>' +
+    //               feature.properties.Name +
+    //               '</h3>' +
+    //               '</div>' +
+    //               '<div class="card-body">' +
+    //               '<div class="row text-center">' +
+    //               '<div class="col-md-2 mb-2">' +
+    //               '<img class="rounded-circle" alt="100x100" loading="lazy" style="height:60px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" data-holder-rendered="true">' +
+    //               '</div>' +
+    //               '<div class="col">' +
+    //               '<h5 class="card-title">Special title treatment</h5>' +
+    //               '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>' +
+    //               '<a href="#" class="btn btn-success">Button</a>' +
+    //               '</div>' +
+    //               '</div>' +
+    //               '</div>'
+    //           );
+    //         },
+    //       });
+    //       //  var markers = L.markerClusterGroup({
+    //       //    iconCreateFunction: function (cluster) {
+    //       //      return L.divIcon({
+    //       //        cluster.getAllChildMarkers()
+    //       //      });
+    //       //    },
+    //       //  });
+    //       //  markers.addLayer(geoJsonLayer);
+    //       //  this.map.addLayer(markers);
 
-        this.markerClusterGroup.addLayer(geoJsonLayer);
-        this.map.addLayer(this.markerClusterGroup);
-      },
-      (error) => {
-        console.log(error);
-        this.toastr.error(error);
-      }
-    );
+    //       this.markerClusterGroup.addLayer(geoJsonLayer);
+    //       this.map.addLayer(this.markerClusterGroup);
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       this.toastr.error(error);
+    //     }
+    //   );
 
-    // /////important
-    // this.map.on('click', (e) => {
-    //   if (this.marker) {
-    //     this.map.removeLayer(this.marker);
-    //   }
-    //   console.log(e.latlng); // get the coordinates
-    //   this.marker = L.marker([e.latlng.lat, e.latlng.lng], {
-    //     icon: greenIcon,
-    //   }).addTo(this.map); // add the marker onclick
-    // });
+    //   // /////important
+    //   // this.map.on('click', (e) => {
+    //   //   if (this.marker) {
+    //   //     this.map.removeLayer(this.marker);
+    //   //   }
+    //   //   console.log(e.latlng); // get the coordinates
+    //   //   this.marker = L.marker([e.latlng.lat, e.latlng.lng], {
+    //   //     icon: greenIcon,
+    //   //   }).addTo(this.map); // add the marker onclick
+    //   // });
   }
 }

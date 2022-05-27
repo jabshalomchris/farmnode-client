@@ -1,0 +1,199 @@
+::-webkit-scrollbar {
+    width: 6px
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555
+}
+
+.nav-tabs .nav-link.active {
+    border-color: transparent;
+    background-color: #fff !important;
+    color: rgb(88, 110, 42) !important;
+    border-bottom: 4px solid rgb(88, 110, 42) !important
+}
+
+.nav-fill .nav-item .nav-link,
+.nav-justified .nav-item .nav-link {
+    width: 100%;
+    color: #000
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0rem !important;
+    border-top-right-radius: 0rem !important
+}
+
+.nav-tabs .nav-link.active {
+    border-color: transparent;
+    background-color: #60D0FF;
+    color: #fff;
+    font-weight: 600
+}
+
+.nav-link {
+    height: 77px;
+    font-size: 15px;
+    background-color: #fff
+}
+
+.nav-link:hover {
+    border: none
+}
+
+.nav-link:focus {
+    outline: none
+}
+
+.tab-pane {
+    height: 300px
+}
+
+.form-control {
+    height: 45px;
+    position: relative
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #9a1550
+}
+
+.flight-where-from:after {
+    position: absolute;
+    content: '23';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%
+}
+
+.custom-button {
+    height: 45px;
+    background-color: #9a1550;
+    border: none;
+    color: #fff
+}
+
+.custom-button:hover,
+.custom-button:focus {
+    background-color: #9a1550;
+    box-shadow: none;
+    outline: none
+}
+
+.scroll-y {
+    overflow-y: scroll;
+    height: 300px
+}
+
+.subbutton {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.15rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+
+.subbutton:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #728E37;
+    border-radius: 10rem;
+    z-index: -2;
+}
+
+.subbutton:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #354219;
+    transition: all 0.3s;
+    border-radius: 10rem;
+    z-index: -1;
+}
+
+.subbutton:hover {
+    color: #fff;
+}
+
+.subbutton:hover:before {
+    width: 100%;
+}
+
+
+.cancelbutton {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.15rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+
+.cancelbutton:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #CC5736;
+    border-radius: 10rem;
+    z-index: -2;
+}
+
+.cancelbutton:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #893922;
+    transition: all 0.3s;
+    border-radius: 10rem;
+    z-index: -1;
+}
+
+.cancelbutton:hover {
+    color: #fff;
+}
+
+.cancelbutton:hover:before {
+    width: 100%;
+}

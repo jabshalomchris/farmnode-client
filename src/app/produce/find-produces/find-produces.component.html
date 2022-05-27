@@ -1,126 +1,353 @@
 <div class="parallax">
-  <div class="title">Find Produces</div>
+  <div class="title">Find Produces Around Me</div>
 </div>
-
-<div class="card shadow rounded topCard">
-  <div class="card-body">
-    <h5>Filter options</h5>
-    <form>
-      <div class="row">
-        <div class="col">
-          <label>Desired location</label>
+<div class="container my-sm-5 border p-0 bg-sec-light shadow-sm">
+  <div id="content">
+    <form [formGroup]="searchForm" (ngSubmit)="submit(submitBtn)">
+      <div class="bg-light p-2 px-md-4 px-1 shadow-sm">
+        <div class="d-sm-flex align-items-sm-center py-sm-3 px-md-3 location">
           <input
             type="text"
-            class="form-control"
-            id="email"
-            placeholder="Enter email"
-            name="email"
+            id="location"
+            [formControlName]="'location'"
+            required
+            placeholder="Search for your location"
+            class="mx-sm-2 mx-3 my-sm-0 my-2 form-control"
           />
-        </div>
-        <div class="col">
-          <label>Produce Name</label>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Enter password"
-            name="pswd"
-          />
-        </div>
-        <div class="col">
-          <label>Produce Category</label>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Enter password"
-            name="pswd"
-          />
-        </div>
-        <div class="col">
-          <label>Status</label>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Enter password"
-            name="pswd"
-          />
-        </div>
-        <div class="col">
-          <label>Free?</label>
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Enter password"
-            name="pswd"
-          />
-        </div>
-        <div class="col">
-          <button type="submit" class="btn btn-primary mb-2">Filter</button>
+          <button
+            #submitBtn
+            type="submit"
+            value="submit"
+            class="unique-button btn mx-3 my-sm-0 mb-2"
+            style="width: 150px"
+          >
+            Search
+          </button>
         </div>
       </div>
     </form>
-  </div>
-</div>
+    <!-- <div class="d-sm-flex align-items-sm-center py-sm-3 px-md-3 location">
+      <input
+        type="text"
+        required
+        placeholder="Jump to your neighbourhood"
+        class="mx-sm-2 mx-3 my-sm-0 my-2 form-control"
+      />
+      <input
+        type="text"
+        required
+        placeholder="From"
+        class="mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control"
+      />
+      <input
+        type="text"
+        required
+        placeholder="To"
+        class="mx-sm-2 mx-3 my-sm-0 my-2 form-control"
+      />
+      <input
+        type="submit"
+        value="search"
+        class="btn btn-primary mx-3 my-sm-0 mb-2"
+      />
+    </div> -->
+    <div class="d-sm-flex py-sm-3 px-md-3">
+      <div class="me-sm-2">
+        <div id="filter" class="p-2 bg-light ms-md-4 ms-sm-2 border">
+          <div class="border-bottom h5 text-uppercase" style="color: #4c3113">
+            Options
+          </div>
 
-<div class="wrap mx-auto">
-  <div class="map-container">
-    <div class="map-frame">
-      <div id="map"></div>
+          <div class="box border-bottom">
+            <div class="box-label text-uppercase d-flex align-items-center">
+              Type of produce
+              <button
+                class="btn ms-auto"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#inner-box"
+                aria-expanded="false"
+                aria-controls="inner-box"
+              >
+                <span class="fas fa-plus"></span>
+              </button>
+            </div>
+            <div id="inner-box" class="collapse show">
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    checked
+                    value=""
+                    name="produceType"
+                    id="all"
+                    (change)="changeProduceType($event)"
+                  />
+                  <label class="form-check-label" for="all"> All </label>
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="Vegetable"
+                    name="produceType"
+                    id="Vegetables"
+                    (change)="changeProduceType($event)"
+                  />
+                  <label class="form-check-label" for="Vegetables">
+                    Vegetables
+                  </label>
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="Fruit"
+                    name="produceType"
+                    id="Fruits"
+                    (change)="changeProduceType($event)"
+                  />
+                  <label class="form-check-label" for="Fruits"> Fruits </label>
+                </div>
+              </div>
+
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="Farm"
+                    name="produceType"
+                    id="Farm"
+                    (change)="changeProduceType($event)"
+                  />
+                  <label class="form-check-label" for="Farm">
+                    Farm produce
+                  </label>
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="floriculture"
+                    name="produceType"
+                    id="floriculture"
+                    (change)="changeGender($event)"
+                  />
+                  <label class="form-check-label" for="floriculture">
+                    Floriculture
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box border-bottom">
+            <div class="box-label text-uppercase d-flex align-items-center">
+              Status
+            </div>
+            <div id="amenities" class="collapse show">
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value=""
+                    name="status"
+                    id="allStatusrb"
+                    checked
+                    (change)="changeGender($event)"
+                  />
+                  <label class="form-check-label" for="allStatusrb">
+                    All
+                  </label>
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="GROWING"
+                    name="status"
+                    id="growingrb"
+                    (change)="changeGender($event)"
+                  />
+                  <label class="form-check-label" for="growingrb">
+                    Growing
+                  </label>
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="RIPE"
+                    name="status"
+                    id="riperb"
+                    (change)="changeGender($event)"
+                  />
+                  <label class="form-check-label" for="riperb"> Ripe </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box border-bottom">
+            <div class="box-label text-uppercase d-flex align-items-center">
+              Price options
+            </div>
+            <div id="amenities" class="collapse show">
+              <div class="my-1">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="asa"
+                    id="flexSwitchAll"
+                    checked
+                  />
+                  <label class="form-check-label" for="flexSwitchCheckChecked"
+                    >All</label
+                  >
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="free"
+                    id="flexSwitchFree"
+                  />
+                  <label class="form-check-label" for="flexSwitchFree"
+                    >Free</label
+                  >
+                </div>
+              </div>
+              <div class="my-1">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="flexSwitchCheckChecked"
+                  />
+                  <label class="form-check-label" for="flexSwitchCheckChecked"
+                    >Excess harvest</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box border-bottom">
+            <div class="box-label text-uppercase d-flex align-items-center">
+              Geo Marker filter
+            </div>
+            <div id="amenities" class="collapse show">
+              <div class="my-1">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="flexSwitchCheckChecked"
+                    checked
+                    (change)="changeSwitch($event)"
+                  />
+                  <label class="form-check-label" for="flexSwitchCheckChecked"
+                    >Include my produces</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white p-2 border" style="width: 100%" id="hotels">
+        <div id="map" style="min-height: 200px"></div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
-  <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
-    <div class="col" *ngFor="let produce of produces$">
-      <div class="card h-100 shadow-sm">
-        <img
-          src="http://localhost:8080/api/image/sid"
-          class="card-img-top"
-          alt="..."
-        />
-        <div
-          *ngIf="
-            produce.produceStatus == 'Ripe';
-            then content;
-            else other_content
-          "
-        ></div>
-        <ng-template #content
-          ><div class="label-topRed shadow-sm">
-            {{ produce.produceStatus }}
-          </div></ng-template
-        >
-        <ng-template #other_content
-          ><div class="label-top shadow-sm">
-            {{ produce.produceStatus }}
-          </div>
-        </ng-template>
+<div class="card topCard mx-auto" style="max-width: 79%">
+  <div
+    class="container-fluid bg-trasparent my-4 p-3"
+    style="position: relative"
+  >
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      <div class="col" *ngFor="let produce of produces$">
+        <div class="card h-100 shadow-sm">
+          <img
+            src="http://localhost:8080/api/image/sid"
+            class="card-img-top"
+            alt="..."
+          />
+          <div
+            *ngIf="
+              produce.produceStatus == 'Ripe';
+              then content;
+              else other_content
+            "
+          ></div>
+          <ng-template #content
+            ><div class="label-topRed shadow-sm">
+              {{ produce.produceStatus }}
+            </div></ng-template
+          >
+          <ng-template #other_content
+            ><div class="label-top shadow-sm">
+              {{ produce.produceStatus }}
+            </div>
+          </ng-template>
 
-        <div class="card-body">
-          <div class="clearfix mb-3">
-            <span class="float-start price-hp">Rs. {{ produce.price }}</span>
-            <span class="float-end"
-              ><a class="text-muted small" href="#">Review</a></span
-            >
-          </div>
-          <h5 class="card-title">
-            {{ produce.produceName }}
-          </h5>
-          <p>
-            {{ produce.description }}
-          </p>
-          <div class="text-center my-4">
-            <a
-              routerLink="/produce/{{ produce.produceId }}"
-              class="btn btn-warning"
-              >View Produce</a
-            >
-          </div>
-          <div class="clearfix mb-1">
-            <span class="float-start"
-              ><i class="far fa-question-circle"></i
-            ></span>
-            <span class="float-end"><i class="fas fa-plus"></i></span>
+          <div class="card-body">
+            <div class="clearfix mb-3">
+              <span class="float-start price-hp">Rs. {{ produce.price }}</span>
+              <span class="float-end"
+                ><a class="text-muted small" href="#">Review</a></span
+              >
+            </div>
+            <h5 class="card-title">
+              {{ produce.produceName }}
+            </h5>
+            <p>
+              {{ produce.description }}
+            </p>
+            <div class="text-center my-4">
+              <div
+                *ngIf="
+                  produce.userName == user;
+                  then ownproduce;
+                  else othersproduce
+                "
+              ></div>
+              <ng-template #ownproduce
+                ><a
+                  routerLink="/viewproduce/{{ produce.produceId }}"
+                  class="btn btn-warning"
+                  >View Produce</a
+                ></ng-template
+              >
+              <ng-template #othersproduce
+                ><a
+                  routerLink="/produce/{{ produce.produceId }}"
+                  class="btn btn-warning"
+                  >View Produce</a
+                ></ng-template
+              >
+            </div>
+            <div class="clearfix mb-1">
+              <span class="float-start"
+                ><i class="far fa-question-circle"></i
+              ></span>
+              <span class="float-end"><i class="fas fa-plus"></i></span>
+            </div>
           </div>
         </div>
       </div>

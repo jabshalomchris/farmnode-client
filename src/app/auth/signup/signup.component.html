@@ -58,7 +58,7 @@
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-              <form [formGroup]="signupForm" (ngSubmit)="register()">
+              <form [formGroup]="signupForm" (ngSubmit)="register(submitBtn)">
                 <div class="form-outline mb-4">
                   <input
                     type="text"
@@ -118,6 +118,7 @@
 
                 <div class="d-flex justify-content-center">
                   <button
+                    #submitBtn
                     type="submit"
                     name="submit"
                     value="submit"

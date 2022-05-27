@@ -1,0 +1,19 @@
+<div>
+  <div class="card">
+    <div class="card-header text-center">
+      <h5>My Subscriptions</h5>
+    </div>
+    <div class="class-body">
+      <p>List of Subscriptions</p>
+    </div>
+  </div>
+</div>
+
+<p>Loop Through Object</p>
+<div *ngFor="let item of data | keyvalue">
+  Key: {{ item.key }}
+  <div *ngFor="let obj of item.value">
+    {{ obj.produceId }}
+    {{ obj.description }}
+  </div>
+</div>

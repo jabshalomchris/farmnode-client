@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { throwError } from 'rxjs';
+import { finalize, throwError } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 import { SignupRequestPayload } from './signup.request.payload';
 
@@ -39,24 +39,33 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  register() {
+  register(submitBtn) {
+    submitBtn.disabled = true;
     this.signupRequestPayload.username = this.signupForm.get('username')?.value;
     this.signupRequestPayload.name = this.signupForm.get('name')?.value;
     this.signupRequestPayload.password = this.signupForm.get('password')?.value;
 
-    this.authService.signup(this.signupRequestPayload).subscribe(
-      (response) => {
-        this.isError = false;
-        this.toastr.success('Registration Successful');
-        this.router.navigateByUrl('/login');
+    this.authService
+      .signup(this.signupRequestPayload)
+      .pipe(
+        finalize(() => {
+          submitBtn.disabled = false;
+        })
+      )
+      .subscribe(
+        (response) => {
+          this.isError = false;
+          this.toastr.success('Registration Successful');
+          this.router.navigateByUrl('/login');
 
-        //console.log('Login Successful')
-      },
-      (error) => {
-        this.isError = true;
-        throwError(error.message);
-        this.toastr.error(error.message);
-      }
-    );
+          //console.log('Login Successful')
+        },
+        (error) => {
+          this.isError = true;
+          throwError(error.message);
+          this.toastr.error(error.message);
+        }
+      );
+    submitBtn.disabled = true;
   }
 }

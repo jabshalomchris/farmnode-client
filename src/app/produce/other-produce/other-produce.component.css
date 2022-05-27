@@ -1,0 +1,126 @@
+.status {
+    z-index: 200;
+    position: absolute;
+    top: -10px;
+    left: -25px;
+}
+
+
+
+.btn-success {
+    background-color: #708C37 !important;
+    border: #708C37;
+
+}
+
+.btn-warning {
+    background-color: #EA9032;
+    border: #EA9032;
+    color: white;
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 30px;
+}
+
+.map-frame {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 100%;
+    width: 100%;
+
+}
+
+#map {
+    height: 100%;
+}
+
+.wrap {
+
+    width: 100%;
+    height: 90vh;
+    background-size: 100%;
+    position: relative;
+}
+
+.head-text {
+    font-weight: normal;
+    font-family: 'Bad Script', cursive;
+    color: #8EB540;
+    text-align: center;
+}
+
+.subbutton {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.15rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    text-decoration: none;
+    right: -30px;
+    cursor: pointer;
+
+}
+
+.subdbutton {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.15rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    text-decoration: none;
+    right: -10px;
+    background-color: #354219;
+    cursor: pointer;
+}
+
+.subbutton:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #728E37;
+    border-radius: 10rem;
+    z-index: -2;
+}
+
+.subbutton:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #354219;
+    transition: all 0.3s;
+    border-radius: 10rem;
+    z-index: -1;
+}
+
+.subbutton:hover {
+    color: #fff;
+}
+
+.subbutton:hover:before {
+    width: 100%;
+}

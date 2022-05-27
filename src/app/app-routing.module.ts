@@ -11,9 +11,14 @@ import { ViewProduceComponent } from './produce/view-produce/view-produce.compon
 import { AddProduceComponent } from './produce/add-produce/add-produce.component';
 import { FindProducesComponent } from './produce/find-produces/find-produces.component';
 import { OtherProduceComponent } from './produce/other-produce/other-produce.component';
+import { MySubscriptionsComponent } from './subscription/my-subscriptions/my-subscriptions.component';
+import { CommunityComponent } from './community/community.component';
+import { CreatePostComponent } from './community/create-post/create-post.component';
+import { ViewFriendsComponent } from './friends/view-friends/view-friends.component';
+import { ViewUserComponent } from './users/view-user/view-user.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'sign-up', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
@@ -27,6 +32,11 @@ const routes: Routes = [
   { path: 'viewproduce/:produceId', component: ViewProduceComponent },
   { path: 'produce/:produceId', component: OtherProduceComponent },
   { path: 'post-produce', component: AddProduceComponent },
+  { path: 'my-subscription', component: MySubscriptionsComponent },
+  { path: 'community', component: CommunityComponent },
+  { path: 'create-post', component: CreatePostComponent },
+  { path: 'view-friends', component: ViewFriendsComponent },
+  { path: 'view-user', component: ViewUserComponent },
 ];
 
 @NgModule({

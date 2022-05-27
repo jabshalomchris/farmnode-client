@@ -2,7 +2,7 @@
   <h2 class="head-text">Post your self-grown <strong>Agro-Produces</strong></h2>
 </div>
 
-<form [formGroup]="createProduceForm" (ngSubmit)="submit()">
+<form [formGroup]="createProduceForm" (ngSubmit)="submit(submitBtn)">
   <!-- <div class="card shadow topCard rounded">
     <div class="card-body">
       <h3 class="card-title text">Is it on your property?</h3>
@@ -66,8 +66,8 @@
               id="btnGrowing"
               value="GROWING"
               autocomplete="off"
-              [checked]="true"
               [formControlName]="'produceStatus'"
+              [checked]="true"
             />
             <label class="btn btn-outline-danger" for="btnGrowing"
               >Mark as growing</label
@@ -116,7 +116,7 @@
           </div>
           <p class="text-below">
             Are you giving it away? Leave this field blank and your item will be
-            listed for FREE!
+            listed for <strong>FREE!</strong>
           </p>
         </div>
         <div class="form-group col-md-6">
@@ -128,8 +128,19 @@
             class="form-control"
             [formControlName]="'inputMeasurement'"
           >
-            <option selected>Each</option>
-            <option>Aa</option>
+            <optgroup label="Units">
+              <option value="volvo">each</option>
+              <option value="saab">dozen</option>
+              <option value="saab">bunch</option>
+              <option value="saab">bag</option>
+            </optgroup>
+            <optgroup label="Metric">
+              <option value="mercedes">10g</option>
+              <option value="audi">100g</option>
+              <option value="audi">kg</option>
+              <option value="audi">500mL</option>
+              <option value="audi">L</option>
+            </optgroup>
           </select>
         </div>
       </div>
@@ -159,6 +170,7 @@
   </div>
   <div class="card bottomcard">
     <button
+      #submitBtn
       type="submit"
       name="submit"
       value="submit"
