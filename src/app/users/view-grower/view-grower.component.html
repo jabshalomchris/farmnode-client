@@ -1,8 +1,5 @@
-<div class="card">
-  <div
-    class="card-body"
-    style="background-color: #dddddd; padding-top: 10%; padding-bottom: 10%"
-  >
+<div class="card" style="background-color: #dddddd">
+  <div class="card-body" style="padding-top: 10%; padding-bottom: 10%">
     <div class="card-title" style="color: #4c3113">
       <h5>Grower/Producer profile</h5>
     </div>
@@ -22,7 +19,9 @@
       class="button mt-4 d-flex flex-row align-items-center"
       style="gap: 10px"
     >
-      <a routerLink="/view-user" class="btn btn-sm btn-success w-100"
+      <a
+        routerLink="/view-user/{{ grower.userId }}"
+        class="btn btn-sm btn-success w-100"
         >View Profile</a
       >
       <div

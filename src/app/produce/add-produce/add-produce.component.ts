@@ -34,10 +34,11 @@ export class AddProduceComponent implements OnInit {
   private marker;
   private map;
   private searchControl;
-  latitude: string;
-  longitude: string;
+  latitude = '';
+  longitude = '';
   isError: boolean;
   submitted = false;
+  selectedFile: File;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,6 +58,7 @@ export class AddProduceComponent implements OnInit {
       produceName: '',
       description: '',
       produceStatus: '',
+      measureType: '',
       price: '',
       category: '',
       address: '',
@@ -69,12 +71,13 @@ export class AddProduceComponent implements OnInit {
   ngOnInit(): void {
     this.createProduceForm = new FormGroup({
       produceName: new FormControl('', Validators.required),
-      inputCategory: new FormControl('', Validators.required),
+      measureType: new FormControl('each', Validators.required),
+      inputCategory: new FormControl('Vegetable', Validators.required),
       produceDescription: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      produceStatus: new FormControl('', Validators.required),
+      produceStatus: new FormControl('GROWING', Validators.required),
       price: new FormControl('', Validators.required),
-      inputMeasurement: new FormControl('', Validators.required),
+      inputMeasurement: new FormControl('each', Validators.required),
     });
     this.initMap();
   }
@@ -181,6 +184,10 @@ export class AddProduceComponent implements OnInit {
     this.map.addControl(searchControl);
   }
 
+  upload(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
   submit(submitBtn) {
     submitBtn.disabled = true;
     this.produceRequestPayload.produceName =
@@ -189,16 +196,20 @@ export class AddProduceComponent implements OnInit {
       this.createProduceForm.get('description')?.value;
     this.produceRequestPayload.category =
       this.createProduceForm.get('inputCategory')?.value;
+    this.produceRequestPayload.price =
+      this.createProduceForm.get('price')?.value;
     this.produceRequestPayload.latitude = this.latitude;
     this.produceRequestPayload.longitude = this.longitude;
     this.produceRequestPayload.price =
       this.createProduceForm.get('price')?.value;
+    this.produceRequestPayload.measureType =
+      this.createProduceForm.get('measureType')?.value;
     this.produceRequestPayload.produceStatus =
       this.createProduceForm.get('produceStatus')?.value;
     this.produceRequestPayload.publishStatus = 'true';
 
     this.produceService
-      .addProduce(this.produceRequestPayload)
+      .addProduce(this.produceRequestPayload, this.selectedFile)
       .pipe(
         finalize(() => {
           submitBtn.disabled = false;
@@ -208,9 +219,7 @@ export class AddProduceComponent implements OnInit {
         (data) => {
           this.isError = false;
           this.toastr.success('Produce added successfully');
-          this.router.navigateByUrl('/');
-
-          //console.log('Login Successful')
+          this.createProduceForm.reset();
         },
         (error) => {
           this.isError = true;

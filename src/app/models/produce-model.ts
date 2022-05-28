@@ -4,6 +4,9 @@ export class ProduceModel {
   description: string;
   category: string;
   produceStatus: string;
+  measureType: string;
+  filename: string;
+  commentCount: number;
   price: string;
   address: string;
   latitude: string;

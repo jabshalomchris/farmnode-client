@@ -6,7 +6,11 @@ import { ProduceService } from 'src/app/services/produce.service';
 import { ProduceModel } from '../../models/produce-model';
 import * as L from 'leaflet';
 import { SubscriptionService } from '../../services/subscription.service';
-import { throwError } from 'rxjs';
+import { finalize, throwError } from 'rxjs';
+import { CommentService } from '../../services/comment.service';
+import { ProduceCommentModel } from '../../models/comment/produce-comment-model';
+import { CommentPayload } from './comment.payload';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-other-produce',
@@ -16,32 +20,47 @@ import { throwError } from 'rxjs';
 export class OtherProduceComponent implements OnInit {
   private map;
   produce: ProduceModel = new ProduceModel();
+  comments$: Array<ProduceCommentModel>;
   user;
   isError: boolean;
+  commentPayload: CommentPayload;
+  commentForm: FormGroup;
+  produceId;
 
   constructor(
     private _produceService: ProduceService,
+    private _commentService: CommentService,
     private _subscriptionService: SubscriptionService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private localStorage: LocalStorageService
-  ) {}
+  ) {
+    this.commentPayload = {
+      text: '',
+      produceId: 0,
+    };
+  }
 
   ngOnInit(): void {
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('produceId');
     if (isIdPresent) {
-      const produceId = Number(
+      this.produceId = Number(
         this._activatedRoute.snapshot.paramMap.get('produceId')
       );
-      this._produceService.getProducebyId(produceId).subscribe((data) => {
+      this._produceService.getProducebyId(this.produceId).subscribe((data) => {
         console.log(data);
         this.produce = data;
         const latitude = data.latitude;
         const longitude = data.longitude;
         this.initMap(latitude, longitude);
       });
+      this.getCommentsForProduce(this.produceId);
     }
+
+    this.commentForm = new FormGroup({
+      text: new FormControl('', Validators.required),
+    });
   }
 
   private initMap(latitude, longitude): void {
@@ -100,5 +119,40 @@ export class OtherProduceComponent implements OnInit {
         this.toastr.error('Error during unsubscription');
       }
     );
+  }
+
+  postComment(submitBtn) {
+    submitBtn.disabled = true;
+    this.commentPayload.text = this.commentForm.get('text')?.value;
+    this.commentPayload.produceId = this.produce.produceId;
+
+    this._commentService
+      .addProduceComment(this.commentPayload)
+      .pipe(
+        finalize(() => {
+          submitBtn.disabled = false;
+        })
+      )
+      .subscribe(
+        (data) => {
+          this.isError = false;
+          this.commentForm.reset();
+          this.toastr.success('Comment added successfully');
+          this.getCommentsForProduce(this.produceId);
+        },
+        (error) => {
+          this.isError = true;
+          throwError(error);
+          this.toastr.error('Commenting failed');
+        }
+      );
+    submitBtn.disabled = false;
+  }
+
+  getCommentsForProduce(produceId) {
+    this._commentService.getCommentsByProduce(produceId).subscribe((data) => {
+      console.log(data);
+      this.comments$ = data;
+    });
   }
 }

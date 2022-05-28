@@ -1,7 +1,7 @@
-<div class="container" style="margin-top: 4%">
+<div class="container" style="margin-top: 4%; padding: 0 80px">
   <div class="row">
-    <div class="col-lg-8 mb-4" style="margin-left: 2%">
-      <div class="card" style="padding: 3%">
+    <div class="col-lg-8 mb-4" style="margin-left: 4%">
+      <div class="card shadow" style="padding: 3%">
         <div class="card-body">
           <div
             *ngIf="produce.produceStatus == 'RIPE'; then Ripe; else Growing"
@@ -37,7 +37,7 @@
                   <h3 style="color: #4c3113">{{ produce.produceName }}</h3>
                   <h5 class="text-muted mb-0">{{ produce.category }}</h5>
                 </div>
-                <div class="col" style="margin-right: 0 !important">
+                <div class="col-lg-2" style="margin-right: 0 !important">
                   <div
                     *ngIf="
                       produce.subscription == false;
@@ -74,18 +74,64 @@
           </div>
         </div>
       </div>
+      <div class="card" style="padding: 3%; margin-top: 2%">
+        <div class="card-body">
+          <p>Leave a produce comment *</p>
+          <form [formGroup]="commentForm" (ngSubmit)="postComment(submitBtn)">
+            <fieldset>
+              <div class="row">
+                <div class="col">
+                  <textarea
+                    class="form-control"
+                    id="text"
+                    placeholder="Your message"
+                    [formControlName]="'text'"
+                    required=""
+                  ></textarea>
+                </div>
+              </div>
+              <div class="mt-4 d-flex justify-content-end">
+                <button #submitBtn class="btn btn-success">Add comment</button>
+              </div>
+            </fieldset>
+          </form>
+          <hr />
+          <div class="container p-3 scroll-y">
+            <div
+              class="border-bottom d-flex justify-content-between align-items-center"
+              *ngFor="let comment of comments$"
+            >
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center ms-4">
+                  <img
+                    src="http://localhost:8080/api/image/sid"
+                    alt=""
+                    style="width: 45px; height: 45px"
+                    class="rounded-circle"
+                  />
+                  <div class="ms-4">
+                    <p class="mb-0" style="font-size: 12px">
+                      {{ comment.userName
+                      }}<span class="text-muted"> says:</span>
+                    </p>
+                    <p class="fw-bold mb-1">{{ comment.text }}</p>
+                    <p>
+                      <span style="font-size: 12px">{{
+                        comment.createdDate
+                      }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-lg-3 mb-4">
       <app-view-grower [growerUsername]="produce.userName"></app-view-grower>
-      <div class="card" style="margin-top: 5%">
-        <div
-          class="card-body"
-          style="
-            background-color: #dddddd;
-            padding-top: 10%;
-            padding-bottom: 10%;
-          "
-        >
+      <div class="card" style="margin-top: 5%; background-color: #dddddd">
+        <div class="card-body" style="padding-top: 10%; padding-bottom: 10%">
           <div class="card-title text-center">
             <h4 class="head-text">More from <strong>John Doe</strong></h4>
           </div>

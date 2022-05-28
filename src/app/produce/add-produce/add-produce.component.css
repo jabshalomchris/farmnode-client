@@ -2,20 +2,29 @@
     color: #4C3113;
 }
 
-.topCard {
-    margin: 50px 280px 20px 280px
-}
+
 
 .othercards {
-    margin: 20px 280px
+    max-width: 60%;
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
 }
 
 .bottomcard {
-    margin: 50px 280px 60px 280px;
-    padding-left: 5%;
-    padding-right: 5%;
+
     background: none;
-    border: 0ch;
+    border: none;
+    max-width: 40%;
+    margin: 4% auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 100px;
+    /* Added */
 }
 
 .form-group {
@@ -50,6 +59,7 @@ select {
 }
 
 .map-container {
+
     position: absolute;
     top: 0;
     left: 0;
@@ -66,6 +76,8 @@ select {
 }
 
 #map {
+    border: #333333;
+    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 100%;
 }
 

@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'community', component: CommunityComponent },
   { path: 'create-post', component: CreatePostComponent },
   { path: 'view-friends', component: ViewFriendsComponent },
-  { path: 'view-user', component: ViewUserComponent },
+  { path: 'view-user/:userId', component: ViewUserComponent },
 ];
 
 @NgModule({

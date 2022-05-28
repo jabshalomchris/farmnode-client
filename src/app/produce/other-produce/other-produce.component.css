@@ -22,7 +22,7 @@
 .map-container {
     position: relative;
     width: 100%;
-    height: 50vh;
+    height: 40vh;
     top: 0;
     left: 0;
     right: 0;
@@ -34,7 +34,6 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: 100%;
     width: 100%;
-
 }
 
 #map {
@@ -80,6 +79,7 @@
     border-radius: 10rem;
     color: #fff;
     text-transform: uppercase;
+    width: 150px;
     font-size: 0.75rem;
     letter-spacing: 0.15rem;
     transition: all 0.3s;
@@ -87,7 +87,6 @@
     overflow: hidden;
     z-index: 10;
     text-decoration: none;
-    right: -10px;
     background-color: #354219;
     cursor: pointer;
 }
@@ -123,4 +122,26 @@
 
 .subbutton:hover:before {
     width: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 6px
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555
+}
+
+
+.scroll-y {
+    overflow-y: scroll;
+    height: 200px
 }

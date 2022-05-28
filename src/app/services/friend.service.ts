@@ -21,6 +21,12 @@ export class FriendService {
       );
   }
 
+  getUsersFriends() {
+    return this.httpClient
+      .get<any>(`http://localhost:8080/api/friends/listFriends`)
+      .pipe(map((response) => response));
+  }
+
   getoutboundrequests() {
     return this.httpClient
       .get<any>(`http://localhost:8080/api/friends/outbound-requests`)

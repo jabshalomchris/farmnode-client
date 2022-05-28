@@ -89,7 +89,9 @@ export class ViewProduceComponent implements OnInit {
         this._activatedRoute.snapshot.paramMap.get('produceId')
       );
       this._produceService.getProducebyId(produceId).subscribe((data) => {
+        console.log(data);
         this.produce = data;
+        console.log(this.produce);
         const latitude = data.latitude;
         const longitude = data.longitude;
         this.initMap(latitude, longitude);

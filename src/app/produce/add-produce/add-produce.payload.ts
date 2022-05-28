@@ -4,6 +4,7 @@ export class AddProducePayload {
   produceStatus: string;
   price: string;
   category: string;
+  measureType: string;
   address: string;
   longitude: string;
   latitude: string;

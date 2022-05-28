@@ -80,9 +80,24 @@ export class ProduceService {
     );
   }
 
-  addProduce(addProducePayload: AddProducePayload): Observable<boolean> {
+  addProduce(
+    addProducePayload: AddProducePayload,
+    selectedFile
+  ): Observable<boolean> {
+    const formdata = new FormData();
+    formdata.append('file', selectedFile);
+    formdata.append('produceName', addProducePayload.produceName);
+    formdata.append('category', addProducePayload.category);
+    formdata.append('description', addProducePayload.description);
+    formdata.append('price', addProducePayload.price);
+    formdata.append('latitude', addProducePayload.latitude);
+    formdata.append('longitude', addProducePayload.longitude);
+    formdata.append('produceStatus', addProducePayload.produceStatus);
+    formdata.append('measureType', addProducePayload.measureType);
+    formdata.append('publishStatus', addProducePayload.publishStatus);
+
     return this.httpClient
-      .post<any>('http://localhost:8080/api/produce', addProducePayload)
+      .post<any>('http://localhost:8080/api/produce', formdata)
       .pipe(
         map((data) => {
           return data;

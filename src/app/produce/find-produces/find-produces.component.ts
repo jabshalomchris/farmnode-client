@@ -378,7 +378,7 @@ export class FindProducesComponent implements OnInit {
       console.log('unclicked');
     }
   }
-  changeGender(e) {
+  changeStatus(e) {
     this.status = e.target.value;
     if (e.target.checked) {
       if (this.geoJsonLayer) {

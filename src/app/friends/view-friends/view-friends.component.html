@@ -34,7 +34,7 @@
             >
               <div class="d-flex flex-column lh-lg">
                 <i class="bx bxs-left-down-arrow-circle"></i>
-                <span>Inbound Requests</span>
+                <span>Inbound Requests (0)</span>
               </div>
             </button>
           </li>
@@ -51,7 +51,7 @@
             >
               <div class="d-flex flex-column lh-lg">
                 <i class="bx bxs-user-minus"></i>
-                <span>Awaiting connection approval</span>
+                <span>Awaiting connection approval (0)</span>
               </div>
             </button>
           </li>
@@ -79,7 +79,34 @@
             role="tabpanel"
             aria-labelledby="faq_tab_1-tab"
           >
-            <div class="container p-3">
+            <div class="container p-3 scroll-y">
+              <div
+                class="border-bottom p-3 d-flex justify-content-between align-items-center"
+                *ngFor="let obj of friendslist"
+              >
+                <div class="d-flex flex-column">
+                  <div class="d-flex align-items-center ms-4">
+                    <img
+                      src="http://localhost:8080/api/image/sid"
+                      alt=""
+                      style="width: 45px; height: 45px"
+                      class="rounded-circle"
+                    />
+                    <div class="ms-4">
+                      <p class="fw-bold mb-1">{{ obj.name }}</p>
+                      <p class="text-muted mb-0">{{ obj.username }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <a class="subbutton"
+                    ><i class="bx bxs-user-check" style="font-size: 20px"></i
+                    >Friends</a
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- <div class="container p-3">
               <div class="input-group mb-3">
                 <input
                   type="text"
@@ -121,7 +148,7 @@
                   Show Flights
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
           <div
             class="tab-pane fade"

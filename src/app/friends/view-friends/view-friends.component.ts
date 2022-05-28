@@ -8,6 +8,7 @@ import { FriendService } from '../../services/friend.service';
   styleUrls: ['./view-friends.component.css'],
 })
 export class ViewFriendsComponent implements AfterViewInit {
+  friendslist;
   outboundRequests;
   inboundRequests;
   active = 0;
@@ -18,8 +19,16 @@ export class ViewFriendsComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
+    this.getAllFriends();
     this.getalloutboundrequests();
     this.getallinboundrequests();
+  }
+
+  getAllFriends() {
+    this._friendservice.getUsersFriends().subscribe((data) => {
+      this.friendslist = data;
+      console.log(this.friendslist);
+    });
   }
 
   getalloutboundrequests() {

@@ -8,6 +8,7 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./view-user.component.css'],
 })
 export class ViewUserComponent implements OnInit {
+  userId;
   constructor(
     private _userservice: UsersService,
     private _router: Router,
@@ -16,10 +17,11 @@ export class ViewUserComponent implements OnInit {
 
   ngOnInit(): void {
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('userId');
-    // if (isIdPresent) {
-    //   const userId = Number(
-    //     this._activatedRoute.snapshot.paramMap.get('produceId')
-    //   );
+    if (isIdPresent) {
+      this.userId = Number(
+        this._activatedRoute.snapshot.paramMap.get('produceId')
+      );
+    }
     //   this._userservice
     //     .checkFriendship(userId)
     //     .subscribe((data) => (this.produce = data));
