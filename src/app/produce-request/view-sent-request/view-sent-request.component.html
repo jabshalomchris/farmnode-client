@@ -1,1 +1,68 @@
-<p>view-sent-request works!</p>
+<div class="container mt-5">
+  <div class="card shadow othercards">
+    <div class="card-header text-center" style="background-color: #f8f9fa">
+      <h4 class="head-text pt-3">
+        These are the requests you've <strong>sent</strong> to the grower
+      </h4>
+    </div>
+    <div class="card-body">
+      <table class="table align-middle mb-0 bg-light">
+        <thead class="bg-light">
+          <tr>
+            <th style="width: 14%">Request date</th>
+            <th style="width: 20%">Grower</th>
+            <th>Produce</th>
+            <th>Status</th>
+            <th style="color: black">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests$">
+            <td>
+              <div class="d-flex align-items-center">
+                <p class="mb-1 text-muted" style="font-size: 14px">
+                  {{ request.createdDate }}
+                </p>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <a
+                    class="fw mb-1 user-anchor"
+                    data-toggle="tooltip"
+                    title="Go to user profile"
+                    >{{ request.growerName }}</a
+                  >
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <a class="fw mb-1 request-link"
+                ><span *ngFor="let item of request.requestItem">
+                  {{ item.produceName }},
+                </span></a
+              >
+            </td>
+            <td>
+              <span class="badge alert-warning">{{
+                request.requestStatus
+              }}</span>
+            </td>
+            <td style="text-align: center">
+              <a
+                routerLink="/viewproduce/dsdsdd"
+                class="fw-bold"
+                data-toggle="tooltip"
+                title="View request"
+                style="color: #728e37"
+                >View</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

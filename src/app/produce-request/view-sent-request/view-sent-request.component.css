@@ -1,0 +1,48 @@
+.head-text {
+    font-weight: normal;
+    font-family: 'Bad Script', cursive;
+    color: #8EB540;
+    text-align: center;
+    font-size: 26px;
+}
+
+.othercards {
+    min-height: 400px;
+    max-width: 80%;
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
+}
+
+th {
+    color: #212529
+}
+
+thead {
+    background-color: #DDDDDD !important;
+}
+
+.user-anchor {
+    color: #728e37;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.user-anchor:hover {
+    font-weight: 600;
+    color: #39471c;
+}
+
+.request-link {
+    color: #728e37;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.request-link:hover {
+    color: #39471c;
+}

@@ -18,6 +18,7 @@ import { CreatePostComponent } from './community/create-post/create-post.compone
 import { ViewFriendsComponent } from './friends/view-friends/view-friends.component';
 import { ViewUserComponent } from './users/view-user/view-user.component';
 import { ViewSentRequestComponent } from './produce-request/view-sent-request/view-sent-request.component';
+import { ViewRecievedRequestComponent } from './produce-request/view-recieved-request/view-recieved-request.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'view-user/:userId', component: ViewUserComponent },
   { path: 'produce-request', component: ProduceRequestComponent },
   { path: 'view-sent-request', component: ViewSentRequestComponent },
+  { path: 'view-received-request', component: ViewRecievedRequestComponent },
 ];
 
 @NgModule({

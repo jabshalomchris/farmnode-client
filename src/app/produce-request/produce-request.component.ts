@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UsersService } from '../services/users.service';
 import { RequestService } from '../services/request.service';
 import { finalize } from 'rxjs';
-import { ProduceRequestPayload } from './produce-request.payload';
+import { ProduceRequestPayload } from './request.payload';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ViewportScroller } from '@angular/common';
 
