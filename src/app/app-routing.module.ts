@@ -1,3 +1,4 @@
+import { ProduceRequestComponent } from './produce-request/produce-request.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './auth/signup/signup.component';
@@ -16,6 +17,7 @@ import { CommunityComponent } from './community/community.component';
 import { CreatePostComponent } from './community/create-post/create-post.component';
 import { ViewFriendsComponent } from './friends/view-friends/view-friends.component';
 import { ViewUserComponent } from './users/view-user/view-user.component';
+import { ViewSentRequestComponent } from './produce-request/view-sent-request/view-sent-request.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: 'create-post', component: CreatePostComponent },
   { path: 'view-friends', component: ViewFriendsComponent },
   { path: 'view-user/:userId', component: ViewUserComponent },
+  { path: 'produce-request', component: ProduceRequestComponent },
+  { path: 'view-sent-request', component: ViewSentRequestComponent },
 ];
 
 @NgModule({

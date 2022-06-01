@@ -4,6 +4,7 @@ import { ProduceModel } from '../models/produce-model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AddProducePayload } from '../produce/add-produce/add-produce.payload';
 import { MappingPayload } from '../mapping/mapping.payload';
+import { FindProducesPayload } from '../produce/find-produces/find-produces.payload';
 
 @Injectable({
   providedIn: 'root',
@@ -18,32 +19,50 @@ export class ProduceService {
   }
 
   getProducesbyFilter(
-    mappingPayload: MappingPayload,
-    include,
-    category,
-    status
+    findProducePayload: FindProducesPayload
   ): Observable<any> {
     let queryParams = new HttpParams();
-    queryParams = queryParams.append('sw_lat', mappingPayload.sw_lat);
-    queryParams = queryParams.append('ne_lat', mappingPayload.ne_lat);
-    queryParams = queryParams.append('sw_lng', mappingPayload.sw_lng);
-    queryParams = queryParams.append('ne_lng', mappingPayload.ne_lng);
-    queryParams = queryParams.append('include_users', include);
-    queryParams = queryParams.append('category', category);
-    queryParams = queryParams.append('status', status);
+    queryParams = queryParams.append('sw_lat', findProducePayload.sw_lat);
+    queryParams = queryParams.append('ne_lat', findProducePayload.ne_lat);
+    queryParams = queryParams.append('sw_lng', findProducePayload.sw_lng);
+    queryParams = queryParams.append('ne_lng', findProducePayload.ne_lng);
+    queryParams = queryParams.append(
+      'include_users',
+      findProducePayload.includeUsers
+    );
+    queryParams = queryParams.append('category', findProducePayload.category);
+    queryParams = queryParams.append('status', findProducePayload.status);
 
     return this.httpClient.get<Array<ProduceModel>>(
-      'http://localhost:8080/api/produce/produceFiltersNew',
+      'http://localhost:8080/api/produce/by-filters',
       {
         params: queryParams,
       }
     );
   }
 
-  getProducebyId(produceId: number): Observable<ProduceModel> {
+  getProducebyId(produceId: number): Observable<any> {
     return this.httpClient
-      .get<ProduceModel>(
+      .get<Array<ProduceModel>>(
         `http://localhost:8080/api/produce/detailed/${produceId}`
+      )
+      .pipe(map((response) => response));
+  }
+
+  getProducesbyUserId(userId: number): Observable<Array<ProduceModel>> {
+    return this.httpClient
+      .get<Array<ProduceModel>>(
+        `http://localhost:8080/api/produce/by-user/${userId}`
+      )
+      .pipe(map((response) => response));
+  }
+
+  getProducesbyUserIdForRequest(
+    userId: number
+  ): Observable<Array<ProduceModel>> {
+    return this.httpClient
+      .get<Array<ProduceModel>>(
+        `http://localhost:8080/api/produce/by-user/request/${userId}`
       )
       .pipe(map((response) => response));
   }

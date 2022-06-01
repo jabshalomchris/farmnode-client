@@ -53,6 +53,8 @@ export class ViewProduceComponent implements OnInit {
   closeResult: string;
   isError: boolean;
 
+  showModal: boolean;
+
   produce: ProduceModel = new ProduceModel();
 
   constructor(
@@ -174,6 +176,21 @@ export class ViewProduceComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  show() {
+    this.showModal = true; // Show-Hide Modal Check
+  }
+  //Bootstrap Modal Close event
+  hide() {
+    this.showModal = false;
+  }
+
+  update() {
+    console.log('Update');
+    if (confirm('Are you sure to delete ')) {
+      console.log('Implement delete functionality here');
     }
   }
 }

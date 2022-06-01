@@ -7,7 +7,7 @@ export class ProduceModel {
   measureType: string;
   filename: string;
   commentCount: number;
-  price: string;
+  price: number;
   address: string;
   latitude: string;
   longitude: string;

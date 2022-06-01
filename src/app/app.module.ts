@@ -5,15 +5,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MappingComponent } from './mapping/mapping.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FooterComponent } from './shared/layout/footer/footer.component';
-import { NavbarComponent } from './header/navbar/navbar.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProduceComponent } from './produce/produce.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -38,6 +38,11 @@ import { CreatePostComponent } from './community/create-post/create-post.compone
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ViewFriendsComponent } from './friends/view-friends/view-friends.component';
 import { ViewGrowerComponent } from './users/view-grower/view-grower.component';
+import { ProduceRequestComponent } from './produce-request/produce-request.component';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { ProduceTileComponent } from './produce-request/produce-tile/produce-tile.component';
+import { ViewSentRequestComponent } from './produce-request/view-sent-request/view-sent-request.component';
+import { ViewRecievedRequestComponent } from './produce-request/view-recieved-request/view-recieved-request.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +70,11 @@ import { ViewGrowerComponent } from './users/view-grower/view-grower.component';
     CreatePostComponent,
     ViewFriendsComponent,
     ViewGrowerComponent,
+    ProduceRequestComponent,
+    PageNotFoundComponent,
+    ProduceTileComponent,
+    ViewSentRequestComponent,
+    ViewRecievedRequestComponent,
   ],
   imports: [
     BrowserModule,

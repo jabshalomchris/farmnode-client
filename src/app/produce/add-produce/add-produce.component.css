@@ -81,12 +81,7 @@ select {
     height: 100%;
 }
 
-.head-text {
-    font-weight: normal;
-    font-family: 'Bad Script', cursive;
-    color: #8EB540;
-    text-align: center;
-}
+
 
 .btn-submit {
     color: white;
@@ -123,3 +118,10 @@ select {
     background-size: 100%;
     position: relative;
 } */
+
+.head-text {
+    font-weight: normal;
+    font-family: 'Bad Script', cursive;
+    color: #8EB540;
+    text-align: center;
+}

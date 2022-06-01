@@ -1,0 +1,138 @@
+<div class="card shadow-sm rounded top-card">
+  <div class="card-body">
+    <!-- <div class="d-flex align-items-center"> -->
+    <div>
+      <!-- <img
+        class="pull-left"
+        src="/assets/images/user.png"
+        alt=""
+        style="width: 50px; height: 50px"
+        class="rounded-circle"
+        loading="lazy"
+      /> -->
+      <div style="text-align: center">
+        <h5 class="top-font">
+          Welcome to <strong>Judah's</strong> e-micro farm !
+        </h5>
+      </div>
+    </div>
+    <h5 class="mt-4" style="color: #4c3113">What would you like to request?</h5>
+    <hr />
+    <div class="row">
+      <div class="col-lg-5">
+        <p class="text-muted">
+          Click to add <strong>Judah's</strong> ripe produces:
+        </p>
+      </div>
+      <div class="col" style="margin-left: -40px">
+        <a
+          *ngFor="let produce of produces$"
+          (click)="handleAddRequest(produce)"
+          class="request-produce-image"
+          ><img
+            src="http://localhost:8080/api/image/produce-image/{{
+              produce.filename
+            }}"
+            title="{{ produce.produceName }}"
+            alt="produce-image"
+            style="width: 55px; height: 55px"
+            class="rounded"
+        /></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm rounded other-card" style="padding: 0 50px">
+  <div class="card-body">
+    <div
+      class="row d-flex justify-content-between align-items-center"
+      *ngFor="let item of requestItems"
+    >
+      <div class="col-md-1">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img6.webp"
+          class="img-fluid rounded-3"
+          alt="Cotton T-shirt"
+          width="40px"
+        />
+      </div>
+      <div class="col-sm-4">
+        <h6>{{ item.produceName }}</h6>
+        <a class="mb-0 item-a" routerLink="/produce/{{ item.produceId }}"
+          >View</a
+        >
+      </div>
+      <div class="col-sm-2">
+        <button
+          class="btn btn-link px-2"
+          onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+        >
+          <i class="fas fa-minus"></i>
+        </button>
+
+        <input
+          id="form1"
+          min="0"
+          name="quantity"
+          value="{{ item.quantity }}"
+          type="number"
+          class="form-control form-control-sm"
+          (change)="quantityChange($event, item.produceId)"
+        />
+
+        <button
+          class="btn btn-link px-2"
+          onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+        >
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <h6 class="mb-0" style="font-weight: normal">
+          x Rs. {{ item.price }} / bunch = Rs. {{ item.linetotal }}
+        </h6>
+      </div>
+      <!-- <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+      </div> -->
+
+      <hr style="font-weight: lighter" />
+    </div>
+    <div style="text-align: right; color: #4c3113">
+      <h4>
+        Total = Rs. <span>{{ total }}</span>
+      </h4>
+      <p class="text-muted">Payable on collection</p>
+    </div>
+    <hr class="my-4" />
+    <p>Include a message *</p>
+    <form [formGroup]="createRequestForm" (ngSubmit)="submit(submitBtn)">
+      <fieldset>
+        <div class="row">
+          <div class="col">
+            <textarea
+              class="form-control"
+              id="text"
+              placeholder="Your message"
+              required=""
+              [formControlName]="'message'"
+            ></textarea>
+          </div>
+        </div>
+        <div class="mt-4 mb-1 d-flex justify-content-end">
+          <button #submitBtn class="btn btn-success">Submit Request</button>
+        </div>
+        <div
+          style="text-align: right; font-size: 12px; margin-top: 10px"
+          class="text-muted"
+        >
+          <p>
+            Your request will be submitted to the grower
+            <strong> Jason Williams 1</strong>
+          </p>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

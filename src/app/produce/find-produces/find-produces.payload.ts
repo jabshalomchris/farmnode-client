@@ -3,4 +3,7 @@ export class FindProducesPayload {
   ne_lat: string;
   sw_lng: string;
   ne_lng: string;
+  category: string;
+  status: string;
+  includeUsers: boolean;
 }

@@ -1,0 +1,107 @@
+import { Injectable, Output, EventEmitter } from '@angular/core';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { LocalStorageService } from 'ngx-webstorage';
+import { LoginRequestPayload } from 'src/app/auth/login/login.request.payload';
+import { LoginResponse } from 'src/app/auth/login/login.response.payload';
+import { map, tap } from 'rxjs/operators';
+import { SignupRequestPayload } from 'src/app/auth/signup/signup.request.payload';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
+  @Output() username: EventEmitter<string> = new EventEmitter();
+
+  refreshTokenPayload = {
+    refreshToken: this.getRefreshToken(),
+    username: this.getUserName(),
+  };
+
+  constructor(
+    private httpClient: HttpClient,
+    private localStorage: LocalStorageService
+  ) {}
+
+  signup(signupRequestPayload: SignupRequestPayload): Observable<any> {
+    return this.httpClient.post(
+      'http://localhost:8080/api/user/signup',
+      signupRequestPayload,
+      { responseType: 'text' }
+    );
+  }
+
+  login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
+    const body = new HttpParams()
+      .set('username', loginRequestPayload.username)
+      .set('password', loginRequestPayload.password);
+
+    return this.httpClient
+      .post<LoginResponse>('http://localhost:8080/api/login', body)
+      .pipe(
+        map((data) => {
+          this.localStorage.store('access_token', data.access_token);
+          this.localStorage.store('username', data.username);
+          this.localStorage.store('refresh_token', data.refresh_token);
+
+          this.loggedIn.emit(true);
+          this.username.emit(data.username);
+          // console.log(data);
+          return true;
+        })
+      );
+  }
+
+  getJwtToken() {
+    return this.localStorage.retrieve('access_token');
+  }
+
+  refreshToken() {
+    return this.httpClient
+      .post<LoginResponse>(
+        'http://localhost:8080/api/refresh',
+        this.refreshTokenPayload
+      )
+      .pipe(
+        tap((response) => {
+          this.localStorage.clear('access_token');
+          this.localStorage.clear('expiresAt');
+
+          this.localStorage.store('access_token', response.access_token);
+          // this.localStorage.store('expiresAt', response.expiresAt);
+        })
+      );
+  }
+
+  logout() {
+    // this.httpClient
+    //   .post('http://localhost:8080/api/logout', this.refreshTokenPayload, {
+    //     responseType: 'text',
+    //   })
+    //   .subscribe(
+    //     (data) => {
+    //       console.log(data);
+    //     },
+    //     (error) => {
+    //       throwError(error);
+    //     }
+    //   );
+    this.localStorage.clear('access_token');
+    this.localStorage.clear('username');
+    this.localStorage.clear('refresh_token');
+    this.loggedIn.emit(false);
+    //this.localStorage.clear('expiresAt');
+  }
+
+  getUserName() {
+    return this.localStorage.retrieve('username');
+  }
+  getRefreshToken() {
+    return this.localStorage.retrieve('refresh_token');
+  }
+
+  isLoggedIn(): boolean {
+    return this.getJwtToken() != null;
+  }
+}

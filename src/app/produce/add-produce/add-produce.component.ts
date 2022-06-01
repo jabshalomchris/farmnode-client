@@ -10,6 +10,7 @@ import { AddProducePayload } from './add-produce.payload';
 import { ProduceService } from '../../services/produce.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, throwError } from 'rxjs';
+import { ViewportScroller } from '@angular/common';
 
 var greenIcon = L.icon({
   iconUrl: '/assets/images/Icon.png',
@@ -46,7 +47,8 @@ export class AddProduceComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private titleService: Title,
-    private produceService: ProduceService
+    private produceService: ProduceService,
+    private viewportScroller: ViewportScroller
   ) {
     var container = L.DomUtil.get('map');
     if (container != null) {
@@ -69,7 +71,14 @@ export class AddProduceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initForm();
+
+    this.initMap();
+  }
+
+  private initForm() {
     this.createProduceForm = new FormGroup({
+      image: new FormControl('', Validators.required),
       produceName: new FormControl('', Validators.required),
       measureType: new FormControl('each', Validators.required),
       inputCategory: new FormControl('Vegetable', Validators.required),
@@ -79,7 +88,6 @@ export class AddProduceComponent implements OnInit {
       price: new FormControl('', Validators.required),
       inputMeasurement: new FormControl('each', Validators.required),
     });
-    this.initMap();
   }
 
   private initMap(): void {
@@ -219,7 +227,8 @@ export class AddProduceComponent implements OnInit {
         (data) => {
           this.isError = false;
           this.toastr.success('Produce added successfully');
-          this.createProduceForm.reset();
+          this.initForm();
+          this.viewportScroller.scrollToPosition([0, 0]);
         },
         (error) => {
           this.isError = true;

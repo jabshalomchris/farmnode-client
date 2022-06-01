@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -18,6 +18,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./other-produce.component.css'],
 })
 export class OtherProduceComponent implements OnInit {
+  showModalBox: boolean = false;
+
   private map;
   produce: ProduceModel = new ProduceModel();
   comments$: Array<ProduceCommentModel>;
@@ -26,6 +28,7 @@ export class OtherProduceComponent implements OnInit {
   commentPayload: CommentPayload;
   commentForm: FormGroup;
   produceId;
+  showModal: boolean;
 
   constructor(
     private _produceService: ProduceService,
@@ -107,7 +110,7 @@ export class OtherProduceComponent implements OnInit {
     this._subscriptionService.unsubscribe(produceId).subscribe(
       (data) => {
         this.isError = false;
-        this.toastr.info('You have unsubscribed ' + this.produce.produceName);
+        this.toastr.error('You have unsubscribed produce');
 
         this._produceService
           .getProducebyId(produceId)
@@ -154,5 +157,13 @@ export class OtherProduceComponent implements OnInit {
       console.log(data);
       this.comments$ = data;
     });
+  }
+
+  show() {
+    this.showModal = true; // Show-Hide Modal Check
+  }
+  //Bootstrap Modal Close event
+  hide() {
+    this.showModal = false;
   }
 }

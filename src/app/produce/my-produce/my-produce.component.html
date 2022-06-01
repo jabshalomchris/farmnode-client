@@ -29,7 +29,9 @@
                   <td>
                     <div class="d-flex align-items-center">
                       <img
-                        src="http://localhost:8080/api/image/sid"
+                        src="http://localhost:8080/api/image/produce-image/{{
+                          produce.filename
+                        }}"
                         alt=""
                         style="width: 45px; height: 45px"
                         class="rounded-circle"
@@ -44,7 +46,7 @@
                   </td>
                   <td>
                     <div
-                      *ngIf="produce.price != '0'; then priced; else free"
+                      *ngIf="produce.price != 0; then priced; else free"
                     ></div>
                     <ng-template #priced
                       ><div class="d-flex align-items-center">
@@ -114,7 +116,9 @@
                   <td>
                     <div class="d-flex align-items-center">
                       <img
-                        src="http://localhost:8080/api/image/imageget"
+                        src="http://localhost:8080/api/image/produce-image/{{
+                          produce.filename
+                        }}"
                         alt=""
                         style="width: 45px; height: 45px"
                         class="rounded-circle"
@@ -129,7 +133,7 @@
                   </td>
                   <td>
                     <div
-                      *ngIf="produce.price != '0'; then priced; else free"
+                      *ngIf="produce.price != 0; then priced; else free"
                     ></div>
                     <ng-template #priced
                       ><div class="d-flex align-items-center">

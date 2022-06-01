@@ -23,13 +23,17 @@
 
           <div class="row">
             <div class="col-lg-4">
-              <img
-                src="http://localhost:8080/api/image/imageget"
-                alt="Produce"
-                style="width: 100%; height: auto; outline: 1px solid #eeeeee"
-                class="img-thumbnail"
-                loading="lazy"
-              />
+              <a (click)="show()">
+                <img
+                  src="http://localhost:8080/api/image/produce-image/{{
+                    produce.filename
+                  }}"
+                  alt="Produce"
+                  style="width: 100%; height: 200px; outline: 1px solid #eeeeee"
+                  class="img-thumbnail"
+                  loading="lazy"
+                />
+              </a>
             </div>
             <div class="col">
               <h3 style="color: #4c3113">{{ produce.produceName }}</h3>
@@ -112,6 +116,7 @@
                 ><fa-icon
                   [icon]="faCircleMinus"
                   class="fab fa-lg cus-icon"
+                  style="color: #b9002d !important"
                 ></fa-icon
                 >Un-publish to consumers</a
               >
@@ -141,89 +146,153 @@
   </div>
 </div>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(mymodal)">
-  Open My Modal
-</button>
-
 <ng-template #mymodal let-modal class="modal hide">
-  <div class="modal-header">
+  <div
+    class="modal-header text-center"
+    style="background-color: whitesmoke; color: #4c3113"
+  >
     <h4 class="modal-title" id="modal-basic-title">
-      {{ produce.produceName }}
+      <i class="bx bxs-leaf" style="margin-right: 10px; color: #728e37"></i>Edit
+      my produce
     </h4>
-    <button
+    <a
       type="button"
-      class="close"
+      class="btn"
       aria-label="Close"
       (click)="modal.dismiss('Cross click')"
     >
       <span aria-hidden="true">×</span>
-    </button>
+    </a>
   </div>
-  <div class="modal-body">
-    <div class="container mt-5">
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-10">
-          <div class="bg-white shadow">
-            <div style="padding: 20px 0">
-              <div style="padding: 0 30px">
-                <div class="row">
-                  <div class="col">
-                    <img
-                      src="http://localhost:8080/api/image/sid"
-                      alt=""
-                      style="
-                        width: 100px;
-                        height: auto;
-                        border: 1px;
-                        border-color: black;
-                      "
-                      class="rounded"
-                    />
-                  </div>
-                  <div class="col-sm-3">
-                    <h5>Judah Christopher</h5>
-                  </div>
-                  <div class="col">
-                    <p>
-                      <strong style="margin-right: 5%">0</strong> Produces grown
-                    </p>
-                    <p><strong style="margin-right: 5%">0</strong> Reviews</p>
-                    <p>
-                      <strong style="margin-right: 5%">{{
-                        produce.commentCount
-                      }}</strong>
-                      Comments
-                    </p>
-                  </div>
-                  <div class="col">
-                    <p>
-                      <strong style="margin-right: 5%">0</strong> Connections
-                    </p>
-                    <p>
-                      <strong style="margin-right: 5%">0</strong> Subscriptions
-                    </p>
-                  </div>
-                  <div class="col">
-                    <h5>Judah Christopher</h5>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="modal-body" style="background-color: whitesmoke">
+    <form>
+      <div class="form-group mb-3">
+        <label for="producenameinput"><h6 class="text">Produce Name</h6></label>
+        <input
+          type="text"
+          class="form-control"
+          id="producenameinput"
+          value="{{ produce.produceName }}"
+        />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="descriptioninput"><h6 class="text">Description</h6></label>
+        <textarea
+          class="form-control"
+          id="descriptioninput"
+          rows="3"
+          value="{{ produce.description }}"
+        ></textarea>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div class="form-group">
+            <label for="categoryinput"
+              ><h6 class="text">Produce Category</h6></label
+            >
+            <select class="form-control" id="categoryinput">
+              <option value="Vegetable">Vegetable</option>
+              <option value="Fruit">Fruit</option>
+              <option value="Dairy">Dairy Products</option>
+              <option value="Floriculture">Floriculture</option>
+              <option value="Seeds">Seedlings</option>
+            </select>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="measuretypeinput"
+              ><h6 class="text">Measurement Type</h6></label
+            >
+            <select
+              class="form-control"
+              id="measuretypeinput"
+              value="{{ produce.measureType }}"
+            >
+              <optgroup label="Units">
+                <option value="each">each</option>
+                <option value="dozen">dozen</option>
+                <option value="bunch">bunch</option>
+                <option value="bunch">bag</option>
+              </optgroup>
+              <optgroup label="Metric">
+                <option value="10g">10g</option>
+                <option value="100g">100g</option>
+                <option value="kg">kg</option>
+                <option value="500mL">500mL</option>
+                <option value="L">L</option>
+              </optgroup>
+            </select>
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="form-group">
+        <label for="price"
+          ><h6 class="text">Enter your selling price</h6></label
+        >
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" style="color: #728e37"
+              ><strong>LKR</strong>
+            </span>
+          </div>
+          <input
+            type="number"
+            class="form-control"
+            value="{{ produce.price }}"
+          />
+          <p class="text-below text-muted mt-3">
+            Planning to give away the excess produce? Leave this field blank and
+            your item will be listed as <strong>FREE!</strong> and notfications
+            will be sent to potential consumers.
+          </p>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-warning"
-      (click)="modal.close('Save click')"
-    >
-      Ok
-    </button>
+  <div class="modal-footer" style="background-color: whitesmoke">
+    <a class="subbutton" (click)="update()">Update Produce</a>
   </div>
 </ng-template>
+
+<!-- Creates the bootstrap modal where the image will appear -->
+<div
+  [style.display]="showModal ? 'block' : 'none'"
+  class="modal"
+  id="imagemodal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  style="z-index: 1000"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img
+          src="http://localhost:8080/api/image/produce-image/{{
+            produce.filename
+          }}"
+          id="imagepreview"
+          style="width: 100%; height: auto"
+          loading="lazy"
+        />
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+          (click)="hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- 
 <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">

@@ -17,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ViewGrowerComponent implements OnChanges {
   @Input() growerUsername: string;
+  @Input() produceId: number;
   grower: ProducerModel = new ProducerModel();
 
   constructor(

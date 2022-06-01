@@ -81,6 +81,9 @@ export class FindProducesComponent implements OnInit {
       ne_lat: '',
       sw_lng: '',
       ne_lng: '',
+      category: '',
+      status: '',
+      includeUsers: this.includeUsers,
     };
   }
 
@@ -141,30 +144,9 @@ export class FindProducesComponent implements OnInit {
 
     // console.log(this.map.getBounds());
 
-    this.northeast_lat = this.map.getBounds().getNorthEast().lat;
-    this.northeast_long = this.map.getBounds().getNorthEast().lng;
-    this.southwest_lat = this.map.getBounds().getSouthWest().lat;
-    this.southwest_long = this.map.getBounds().getSouthWest().lng;
+    this.fillMap();
 
-    this.fillMap(
-      this.southwest_lat,
-      this.northeast_lat,
-      this.southwest_long,
-      this.northeast_long,
-      true,
-      this.category,
-      this.status
-    );
-
-    this.getProducesbyFilter(
-      this.southwest_lat,
-      this.northeast_lat,
-      this.southwest_long,
-      this.northeast_long,
-      true,
-      this.category,
-      this.status
-    );
+    this.getProducesbyFilter();
 
     // /////important
     this.map.on('dragend', (e) => {
@@ -172,29 +154,8 @@ export class FindProducesComponent implements OnInit {
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
         console.log('dragend'); // get the coordinates
 
-        this.northeast_lat = this.map.getBounds().getNorthEast().lat;
-        this.northeast_long = this.map.getBounds().getNorthEast().lng;
-        this.southwest_lat = this.map.getBounds().getSouthWest().lat;
-        this.southwest_long = this.map.getBounds().getSouthWest().lng;
-
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
+        this.getProducesbyFilter();
       }
     });
 
@@ -208,156 +169,132 @@ export class FindProducesComponent implements OnInit {
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
         this.southwest_long = this.map.getBounds().getSouthWest().lng;
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
 
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.getProducesbyFilter();
       }
     });
   }
 
-  private fillMap(
-    southwest_lat,
-    northeast_lat,
-    southwest_long,
-    northeast_long,
-    include,
-    category,
-    status
-  ): void {
+  private fillMap(): void {
     let router: any = this.router;
     let user: any = this.user;
-    this.findProducePayload.sw_lat = southwest_lat;
-    this.findProducePayload.ne_lat = northeast_lat;
-    this.findProducePayload.sw_lng = southwest_long;
-    this.findProducePayload.ne_lng = northeast_long;
 
-    this.mappingService
-      .getMap(this.findProducePayload, include, category, status)
-      .subscribe(
-        (data) => {
-          console.log(data);
+    this.findProducePayload.sw_lat = this.map.getBounds().getSouthWest().lat;
+    this.findProducePayload.ne_lat = this.map.getBounds().getNorthEast().lat;
+    this.findProducePayload.sw_lng = this.map.getBounds().getSouthWest().lng;
+    this.findProducePayload.ne_lng = this.map.getBounds().getNorthEast().lng;
+    this.findProducePayload.category = this.category;
+    this.findProducePayload.status = this.status;
+    this.findProducePayload.includeUsers = this.includeUsers;
 
-          this.geoJsonLayer = L.geoJSON(data, {
-            pointToLayer: function (feature, latlng) {
-              var statusString;
+    this.mappingService.getMap(this.findProducePayload).subscribe(
+      (data) => {
+        console.log(data);
 
-              if (feature.properties.produceStatus == 'RIPE') {
-                statusString =
-                  '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-ripe.png" loading="lazy"></div>';
-              } else if (feature.properties.produceStatus == 'GROWING') {
-                statusString =
-                  '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-growing.png" loading="lazy"></div>';
-              }
-              if (feature.properties.category == 'Vegetable') {
-                var marker = L.marker(latlng, { icon: greenIcon });
-              } else {
-                var marker = L.marker(latlng, { icon: redIcon });
-              }
+        this.geoJsonLayer = L.geoJSON(data, {
+          pointToLayer: function (feature, latlng) {
+            var statusString;
 
-              var popup = L.popup({
-                maxWidth: 301,
-              }).setContent(
-                '<div class="card" style="width: 240px">' +
-                  '<div class="card-header text-center">' +
-                  statusString +
-                  '<h4 >' +
-                  feature.properties.Name +
-                  '</h4>' +
-                  '</div>' +
-                  '<div class="card-body">' +
-                  '<div class="container">' +
-                  '<div class="row text-center">' +
-                  '<div class="col-md-2 mb-2">' +
-                  '<img class="rounded-circle" alt="100x100" loading="lazy" style="height:60px" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" data-holder-rendered="true">' +
-                  '</div>' +
-                  '<div class="col">' +
-                  '<h6 class="text-muted mb-0">' +
-                  feature.properties.category +
-                  '</h6>' +
-                  '<p >' +
-                  feature.properties.description +
-                  '</p>' +
-                  "<a id='routingButton'" +
-                  ' class="btn btn-warning">View</a>' +
-                  '</div>' +
-                  '</div>' +
-                  '</div>' +
-                  '</div>'
-              );
-              if (feature.properties.grower == user) {
-                return marker.bindPopup(popup).on('popupopen', () => {
-                  const button = document.getElementById('routingButton');
-                  button?.addEventListener('click', () => {
-                    console.log('button clicked' + feature.id);
-                    router.navigateByUrl('/viewproduce/' + feature.id);
-                  });
+            if (feature.properties.produceStatus == 'RIPE') {
+              statusString =
+                '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-ripe.png" loading="lazy"></div>';
+            } else if (feature.properties.produceStatus == 'GROWING') {
+              statusString =
+                '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-growing.png" loading="lazy"></div>';
+            }
+            if (feature.properties.category == 'Vegetable') {
+              var marker = L.marker(latlng, { icon: greenIcon });
+            } else {
+              var marker = L.marker(latlng, { icon: redIcon });
+            }
+
+            var popup = L.popup({
+              maxWidth: 301,
+            }).setContent(
+              '<div class="card" style="width: 240px">' +
+                '<div class="card-header text-center">' +
+                statusString +
+                '<h4 >' +
+                feature.properties.Name +
+                '</h4>' +
+                '</div>' +
+                '<div class="card-body">' +
+                '<div class="container">' +
+                '<div class="row text-center">' +
+                '<div class="col-md-2 mb-2">' +
+                '<img class="rounded" alt="100x100" loading="lazy" style="height:60px; width: 60px" src="http://localhost:8080/api/image/produce-image/' +
+                feature.properties.filename +
+                '" data-holder-rendered="true">' +
+                '</div>' +
+                '<div class="col">' +
+                '<h6 class="text-muted mb-0">' +
+                feature.properties.category +
+                '</h6>' +
+                '<p >' +
+                feature.properties.description.slice(0, 30) +
+                ' .....' +
+                '</p>' +
+                "<a id='routingButton'" +
+                ' class="btn btn-warning">View</a>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+            );
+            if (feature.properties.grower == user) {
+              return marker.bindPopup(popup).on('popupopen', () => {
+                const button = document.getElementById('routingButton');
+                button?.addEventListener('click', () => {
+                  console.log('button clicked' + feature.id);
+                  router.navigateByUrl('/viewproduce/' + feature.id);
                 });
-              } else {
-                return marker.bindPopup(popup).on('popupopen', () => {
-                  const button = document.getElementById('routingButton');
-                  button?.addEventListener('click', () => {
-                    console.log('button clicked' + feature.id);
-                    router.navigateByUrl('/produce/' + feature.id);
-                  });
+              });
+            } else {
+              return marker.bindPopup(popup).on('popupopen', () => {
+                const button = document.getElementById('routingButton');
+                button?.addEventListener('click', () => {
+                  console.log('button clicked' + feature.id);
+                  router.navigateByUrl('/produce/' + feature.id);
                 });
-              }
-            },
-          });
+              });
+            }
+          },
+        });
 
-          this.markerClusterGroup.addLayer(this.geoJsonLayer);
-          this.map.addLayer(this.markerClusterGroup);
+        this.markerClusterGroup.addLayer(this.geoJsonLayer);
+        this.map.addLayer(this.markerClusterGroup);
 
-          // this.map.on('popupopen', function (e) {
-          //   const button = document.getElementById('popupButtonlll');
+        // this.map.on('popupopen', function (e) {
+        //   const button = document.getElementById('popupButtonlll');
 
-          //   button?.addEventListener(
-          //     'click',
-          //     () => {
-          //       console.log('button clicked' + e.popup._source.feature.id);
-          //     },
-          //     { once: true }
-          //   );
-          // });
-        },
-        (error) => {
-          console.log(error);
-          this.toastr.error(error);
-        }
-      );
+        //   button?.addEventListener(
+        //     'click',
+        //     () => {
+        //      console.log('button clicked' + e.popup._source.feature.id);
+        //     },
+        //     { once: true }
+        //   );
+        // });
+      },
+      (error) => {
+        console.log(error);
+        this.toastr.error(error);
+      }
+    );
   }
 
-  private getProducesbyFilter(
-    southwest_lat,
-    northeast_lat,
-    southwest_long,
-    northeast_long,
-    include,
-    category,
-    status
-  ) {
-    this.findProducePayload.sw_lat = southwest_lat;
-    this.findProducePayload.ne_lat = northeast_lat;
-    this.findProducePayload.sw_lng = southwest_long;
-    this.findProducePayload.ne_lng = northeast_long;
+  private getProducesbyFilter() {
+    this.findProducePayload.sw_lat = this.map.getBounds().getSouthWest().lat;
+    this.findProducePayload.ne_lat = this.map.getBounds().getNorthEast().lat;
+    this.findProducePayload.sw_lng = this.map.getBounds().getSouthWest().lng;
+    this.findProducePayload.ne_lng = this.map.getBounds().getNorthEast().lng;
+    this.findProducePayload.category = this.category;
+    this.findProducePayload.status = this.status;
+    this.findProducePayload.includeUsers = this.includeUsers;
 
     this.produceService
-      .getProducesbyFilter(this.findProducePayload, include, category, status)
+      .getProducesbyFilter(this.findProducePayload)
       .subscribe((produce) => {
         this.produces$ = produce;
         console.log(produce);
@@ -385,30 +322,9 @@ export class FindProducesComponent implements OnInit {
         // this.includeUsers = true;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
 
-        this.northeast_lat = this.map.getBounds().getNorthEast().lat;
-        this.northeast_long = this.map.getBounds().getNorthEast().lng;
-        this.southwest_lat = this.map.getBounds().getSouthWest().lat;
-        this.southwest_long = this.map.getBounds().getSouthWest().lng;
+        this.fillMap();
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
-
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.getProducesbyFilter();
       }
     } else {
       if (this.geoJsonLayer) {
@@ -420,24 +336,8 @@ export class FindProducesComponent implements OnInit {
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
         this.southwest_long = this.map.getBounds().getSouthWest().lng;
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
+        this.getProducesbyFilter();
       }
     }
   }
@@ -454,25 +354,9 @@ export class FindProducesComponent implements OnInit {
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
         this.southwest_long = this.map.getBounds().getSouthWest().lng;
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
 
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.getProducesbyFilter();
       }
     } else {
       if (this.geoJsonLayer) {
@@ -484,24 +368,8 @@ export class FindProducesComponent implements OnInit {
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
         this.southwest_long = this.map.getBounds().getSouthWest().lng;
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
+        this.getProducesbyFilter();
       }
     }
   }
@@ -517,25 +385,9 @@ export class FindProducesComponent implements OnInit {
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
         this.southwest_long = this.map.getBounds().getSouthWest().lng;
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
 
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.getProducesbyFilter();
       }
     } else {
       if (this.geoJsonLayer) {
@@ -547,24 +399,8 @@ export class FindProducesComponent implements OnInit {
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
         this.southwest_long = this.map.getBounds().getSouthWest().lng;
 
-        this.fillMap(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
-        this.getProducesbyFilter(
-          this.southwest_lat,
-          this.northeast_lat,
-          this.southwest_long,
-          this.northeast_long,
-          this.includeUsers,
-          this.category,
-          this.status
-        );
+        this.fillMap();
+        this.getProducesbyFilter();
       }
     }
   }
@@ -598,30 +434,6 @@ export class FindProducesComponent implements OnInit {
                 data.results[0].geometry.viewport.northeast.lng,
               ],
             ]);
-
-            // if (this.geoJsonLayer) {
-            //   this.markerClusterGroup.removeLayer(this.geoJsonLayer);
-            //   this.fillMap(
-            //     data.results[0].geometry.viewport.southwest.lat,
-            //     data.results[0].geometry.viewport.northeast.lat,
-            //     data.results[0].geometry.viewport.southwest.lng,
-            //     data.results[0].geometry.viewport.northeast.lng,
-            //     this.includeUsers,
-            //     this.category,
-            //     this.status
-            //   );
-
-            //   this.getProducesbyFilter(
-            //     data.results[0].geometry.viewport.southwest.lat,
-            //     data.results[0].geometry.viewport.northeast.lat,
-            //     data.results[0].geometry.viewport.southwest.lng,
-            //     data.results[0].geometry.viewport.northeast.lng,
-            //     this.includeUsers,
-            //     this.category,
-            //     this.status
-            //   );
-            //   console.log('Done');
-            // }
           } else {
             this.toastr.warning('Search location not found');
           }

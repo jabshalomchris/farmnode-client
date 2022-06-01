@@ -4,4 +4,5 @@ export class ProducerModel {
   username: string;
   produceCount: number;
   friendship: string;
+  filename: string;
 }

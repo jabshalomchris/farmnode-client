@@ -43,32 +43,38 @@ export class LoginComponent implements OnInit {
   }
 
   login(submitBtn) {
-    submitBtn.disabled = true;
-    this.loginRequestPayload.username = this.loginForm.get('username')?.value;
-    this.loginRequestPayload.password = this.loginForm.get('password')?.value;
+    if (this.loginForm.valid) {
+      submitBtn.disabled = true;
+      this.loginRequestPayload.username = this.loginForm.get('username')?.value;
+      this.loginRequestPayload.password = this.loginForm.get('password')?.value;
 
-    this.authService
-      .login(this.loginRequestPayload)
-      .pipe(
-        finalize(() => {
-          submitBtn.disabled = false;
-        })
-      )
-      .subscribe(
-        (data) => {
-          this.isError = false;
-          this.toastr.success('Login Successful');
-          this.router.navigateByUrl('/home');
+      this.authService
+        .login(this.loginRequestPayload)
+        .pipe(
+          finalize(() => {
+            submitBtn.disabled = false;
+          })
+        )
+        .subscribe(
+          (data) => {
+            this.isError = false;
+            this.toastr.success('Login Successful');
+            this.router.navigateByUrl('/home');
 
-          //console.log('Login Successful')
-        },
-        (error) => {
-          this.isError = true;
-          throwError(error);
-          this.toastr.error('Login unsuccessful');
-        }
-      );
-    submitBtn.disabled = true;
+            //console.log('Login Successful')
+          },
+          (error) => {
+            this.isError = true;
+            throwError(error);
+            this.toastr.error('Login unsuccessful');
+          }
+        );
+      submitBtn.disabled = true;
+    } else {
+      // validate all form fields
+      console.log('Please input');
+    }
+
     //this.authService.login2(this.loginRequestPayload).subscribe(data=>{
     //   console.log('Login Successful')
     // })

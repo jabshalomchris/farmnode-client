@@ -6,7 +6,7 @@
 }
 
 .cus-icon {
-    margin: 0 6% 0 6% !important;
+    margin: 0 6% 0 5% !important;
 }
 
 .options fa-icon {
@@ -18,8 +18,6 @@
     text-decoration: none;
     font-weight: 500;
     color: #39471c !important;
-
-
 }
 
 .options a:hover {
@@ -84,4 +82,65 @@
     .modal-content {
         width: 100%;
     }
+}
+
+.form-control {
+    background-color: #dddddd !important;
+}
+
+select {
+    -webkit-appearance: listbox !important;
+    color: #728E37;
+    font-weight: bold;
+}
+
+.subbutton {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.15rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+
+.subbutton:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #728E37;
+    border-radius: 10rem;
+    z-index: -2;
+}
+
+.subbutton:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #354219;
+    transition: all 0.3s;
+    border-radius: 10rem;
+    z-index: -1;
+}
+
+.subbutton:hover {
+    color: #fff;
+}
+
+.subbutton:hover:before {
+    width: 100%;
 }
