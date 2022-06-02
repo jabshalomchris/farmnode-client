@@ -24,6 +24,8 @@
 
 .topCard {
     margin-top: 3%;
+    max-width: 87%;
+    background-color: #EEEEEE;
 }
 
 
@@ -418,4 +420,34 @@ label {
 
 .unique-button:hover:before {
     width: 100%;
+}
+
+.bg {
+    background-repeat: no-repeat;
+    z-index: 0;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    left: -9px;
+    top: -6px;
+}
+
+.icon-status {
+    z-index: 10;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: -9px;
+    top: -6px;
+}
+
+.card-footer span {
+    color: #728e37;
+    font-weight: 600;
+
+}
+
+.card-footer span:hover {
+    color: #354219;
+    cursor: pointer;
 }

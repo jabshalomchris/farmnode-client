@@ -24,7 +24,7 @@ import { MyProduceComponent } from './produce/my-produce/my-produce.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { ViewProduceComponent } from './produce/view-produce/view-produce.component';
 import { PostsComponent } from './posts/posts.component';
-import { PostTileComponent } from './posts/post-tile/post-tile.component';
+import { PostTileComponent } from './community/post-tile/post-tile.component';
 import { ViewUserComponent } from './users/view-user/view-user.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { SubscriptionComponent } from './subscription/subscription.component';
@@ -43,6 +43,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { ProduceTileComponent } from './produce-request/produce-tile/produce-tile.component';
 import { ViewSentRequestComponent } from './produce-request/view-sent-request/view-sent-request.component';
 import { ViewRecievedRequestComponent } from './produce-request/view-recieved-request/view-recieved-request.component';
+import { ViewPostsComponent } from './community/view-posts/view-posts.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { ViewRecievedRequestComponent } from './produce-request/view-recieved-re
     ProduceTileComponent,
     ViewSentRequestComponent,
     ViewRecievedRequestComponent,
+    ViewPostsComponent,
   ],
   imports: [
     BrowserModule,

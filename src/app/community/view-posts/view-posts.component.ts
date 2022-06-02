@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-community',
-  templateUrl: './community.component.html',
-  styleUrls: ['./community.component.css'],
+  selector: 'app-view-posts',
+  templateUrl: './view-posts.component.html',
+  styleUrls: ['./view-posts.component.css'],
 })
-export class CommunityComponent implements OnInit {
+export class ViewPostsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

@@ -198,10 +198,10 @@ export class FindProducesComponent implements OnInit {
 
             if (feature.properties.produceStatus == 'RIPE') {
               statusString =
-                '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-ripe.png" loading="lazy"></div>';
+                '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-ripe.png" loading="lazy" ngbTooltip="Ripe"></div>';
             } else if (feature.properties.produceStatus == 'GROWING') {
               statusString =
-                '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-growing.png" loading="lazy"></div>';
+                '<div style="z-index: 10;position: absolute;  left: -16px !important;top: 2 !important;"><img src="/assets/images/s-growing.png" loading="lazy" ngbTooltip="Growing"></div>';
             }
             if (feature.properties.category == 'Vegetable') {
               var marker = L.marker(latlng, { icon: greenIcon });
@@ -210,35 +210,44 @@ export class FindProducesComponent implements OnInit {
             }
 
             var popup = L.popup({
-              maxWidth: 301,
+              maxWidth: 290,
             }).setContent(
-              '<div class="card" style="width: 240px">' +
-                '<div class="card-header text-center">' +
+              '<div class="card" style="width: 240px;">' +
+                '<div class="card-header text-center" style="color: #728e37; font-size: 22px; font-weight: bold">' +
                 statusString +
                 '<h4 >' +
                 feature.properties.Name +
                 '</h4>' +
                 '</div>' +
                 '<div class="card-body">' +
-                '<div class="container">' +
-                '<div class="row text-center">' +
-                '<div class="col-md-2 mb-2">' +
-                '<img class="rounded" alt="100x100" loading="lazy" style="height:60px; width: 60px" src="http://localhost:8080/api/image/produce-image/' +
+                '<div class="row">' +
+                '<div class="col-6 col-sm-3">' +
+                '<img class="rounded-circle" alt="100x100" loading="lazy" style="height:50px; width: 50px" src="http://localhost:8080/api/image/produce-image/' +
                 feature.properties.filename +
                 '" data-holder-rendered="true">' +
                 '</div>' +
-                '<div class="col">' +
-                '<h6 class="text-muted mb-0">' +
-                feature.properties.category +
+                '<div class="col-6 col-sm-9">' +
+                '<h6 class="card-title">' +
+                'Rs. ' +
+                feature.properties.price +
+                ' / ' +
+                feature.properties.measureType +
                 '</h6>' +
-                '<p >' +
+                '<p class="card-text" >' +
                 feature.properties.description.slice(0, 30) +
                 ' .....' +
                 '</p>' +
+                '<div style="text-align: right">' +
                 "<a id='routingButton'" +
                 ' class="btn btn-warning">View</a>' +
                 '</div>' +
                 '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="card-footer text-muted"> Grower : ' +
+                "<span style='color: #728e37; font-weight: 600'>" +
+                feature.properties.grower +
+                '</span>' +
                 '</div>' +
                 '</div>'
             );
