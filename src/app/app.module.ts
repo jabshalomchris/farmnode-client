@@ -46,7 +46,6 @@ import { ViewRecievedRequestComponent } from './produce-request/view-recieved-re
 import { ViewPostsComponent } from './community/view-posts/view-posts.component';
 import { ViewRequestComponent } from './produce-request/view-request/view-request.component';
 import { UpdateRequestComponent } from './produce-request/update-request/update-request.component';
-import { MyPostsComponent } from './community/my-posts/my-posts.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +81,6 @@ import { MyPostsComponent } from './community/my-posts/my-posts.component';
     ViewPostsComponent,
     ViewRequestComponent,
     UpdateRequestComponent,
-    MyPostsComponent,
   ],
   imports: [
     BrowserModule,
