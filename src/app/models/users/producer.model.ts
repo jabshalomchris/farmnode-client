@@ -3,6 +3,8 @@ export class ProducerModel {
   name: string;
   username: string;
   produceCount: number;
+  friendsCount: number;
+  subscriptionCount: number;
   friendship: string;
   filename: string;
 }

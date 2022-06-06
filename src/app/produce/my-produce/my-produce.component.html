@@ -23,9 +23,12 @@
             <tbody>
               <tr *ngFor="let produce of produces$">
                 <div
-                  *ngIf="produce.publishStatus == 'false'; then RipeContent"
+                  *ngIf="
+                    produce.publishStatus == 'false';
+                    then unpublishContent
+                  "
                 ></div>
-                <ng-template #RipeContent>
+                <ng-template #unpublishContent>
                   <td>
                     <div class="d-flex align-items-center">
                       <img
@@ -33,7 +36,7 @@
                           produce.filename
                         }}"
                         alt=""
-                        style="width: 45px; height: 45px"
+                        style="object-fit: cover; width: 45px; height: 45px"
                         class="rounded-circle"
                       />
                       <div class="ms-3">
@@ -110,9 +113,9 @@
             <tbody>
               <tr *ngFor="let produce of produces$">
                 <div
-                  *ngIf="produce.publishStatus == 'true'; then RipeContent"
+                  *ngIf="produce.publishStatus == 'true'; then publishContent"
                 ></div>
-                <ng-template #RipeContent>
+                <ng-template #publishContent>
                   <td>
                     <div class="d-flex align-items-center">
                       <img
@@ -120,7 +123,7 @@
                           produce.filename
                         }}"
                         alt=""
-                        style="width: 45px; height: 45px"
+                        style="object-fit: cover; width: 45px; height: 45px"
                         class="rounded-circle"
                       />
                       <div class="ms-3">

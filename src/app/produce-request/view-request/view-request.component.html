@@ -1,0 +1,126 @@
+<div class="card shadow-sm rounded top-card">
+  <div class="card-body">
+    <!-- <div class="d-flex align-items-center"> -->
+    <div>
+      <!-- <img
+        class="pull-left"
+        src="/assets/images/user.png"
+        alt=""
+        style="width: 50px; height: 50px"
+        class="rounded-circle"
+        loading="lazy"
+      /> -->
+      <div style="text-align: center">
+        <h5 class="top-font">
+          You request to <strong>{{ request.growerName }}</strong
+          >'s e-micro farm !
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm rounded other-card" style="padding: 0 50px">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <h4 class="mt-4" style="color: #4c3113; font-weight: bold">
+          The Order
+        </h4>
+      </div>
+      <div class="col">
+        <span
+          class="badge alert-danger mt-4"
+          style="font-size: 20px; float: right"
+          >PENDING</span
+        >
+      </div>
+    </div>
+    <p class="text-muted">recieved {{ request.createdDate }}</p>
+
+    <hr />
+    <div
+      class="row d-flex justify-content-between align-items-center"
+      *ngFor="let item of requestItems"
+    >
+      <div class="col-md-1">
+        <img
+          loading="lazy"
+          style="object-fit: cover; height: 55px; width: 55px"
+          src="http://localhost:8080/api/image/produce-image/{{
+            item.fileName
+          }}"
+          alt="{{ item.produceName }}"
+          data-holder-rendered="
+                  true"
+        />
+      </div>
+      <div class="col-sm-4">
+        <h6>{{ item.produceName }}</h6>
+        <a class="mb-0 item-a" routerLink="/produce/{{ item.produceId }}"
+          >View</a
+        >
+      </div>
+      <div class="col-sm-2">
+        <input
+          id="form1"
+          min="0"
+          name="quantity"
+          value="{{ item.quantity }}"
+          type="number"
+          class="form-control form-control-sm"
+        />
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <h6 class="mb-0" style="font-weight: normal">
+          x Rs. {{ item.price }} / bunch = Rs. {{ item.linetotal }}
+        </h6>
+      </div>
+      <!-- <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+      </div> -->
+
+      <hr class="mt-4" style="font-weight: lighter" />
+    </div>
+    <div style="text-align: right; color: #4c3113">
+      <h4 class="mb-0" style="font-weight: bold">
+        Total = Rs. <span>22</span>
+      </h4>
+      <p class="text-muted">Payable on collection</p>
+    </div>
+    <hr class="my-4" />
+    <form>
+      <div class="form-group row">
+        <label
+          for="message"
+          class="col-sm-2 col-form-label"
+          style="color: #4c3113"
+          >Your message *</label
+        >
+        <div class="col-sm-10">
+          <textarea
+            class="form-control"
+            style="background-color: #fafafa"
+            id="text"
+            value="{{ request.message }}"
+            disabled
+          ></textarea>
+        </div>
+      </div>
+      <fieldset>
+        <div class="row">
+          <div class="col"></div>
+        </div>
+        <div
+          style="text-align: right; font-size: 12px; margin-top: 10px"
+          class="text-muted"
+        >
+          <p>
+            Your request is submitted to the grower
+            <strong> {{ request.growerName }}</strong>
+          </p>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

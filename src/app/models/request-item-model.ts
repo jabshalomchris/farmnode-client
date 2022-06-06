@@ -2,6 +2,7 @@ import { ProduceModel } from './produce-model';
 export class RequestItem {
   produceId: number;
   produceName: string;
+  fileName: string;
   quantity: number;
   price: number;
   linetotal: number;

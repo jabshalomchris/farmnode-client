@@ -51,13 +51,7 @@ export class OtherProduceComponent implements OnInit {
       this.produceId = Number(
         this._activatedRoute.snapshot.paramMap.get('produceId')
       );
-      this._produceService.getProducebyId(this.produceId).subscribe((data) => {
-        console.log(data);
-        this.produce = data;
-        const latitude = data.latitude;
-        const longitude = data.longitude;
-        this.initMap(latitude, longitude);
-      });
+      this.getProducebyId();
       this.getCommentsForProduce(this.produceId);
     }
 
@@ -84,6 +78,15 @@ export class OtherProduceComponent implements OnInit {
     }).addTo(this.map);
 
     this.map.setView(marker.getLatLng(), 14);
+  }
+
+  getProducebyId() {
+    this._produceService.getProducebyId(this.produceId).subscribe((data) => {
+      this.produce = data;
+      const latitude = data.latitude;
+      const longitude = data.longitude;
+      this.initMap(latitude, longitude);
+    });
   }
 
   addSubsciption(produceId) {

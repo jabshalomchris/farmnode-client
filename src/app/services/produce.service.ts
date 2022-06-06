@@ -67,6 +67,19 @@ export class ProduceService {
       .pipe(map((response) => response));
   }
 
+  updateProduce(updateProducePayload): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `http://localhost:8080/api/produce/update/`,
+        updateProducePayload
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   editStatus(produceId: number, status: string): Observable<any> {
     return this.httpClient
       .post<any>(

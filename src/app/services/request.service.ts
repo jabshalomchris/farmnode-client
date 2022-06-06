@@ -37,4 +37,25 @@ export class RequestService {
       )
       .pipe(map((response) => response));
   }
+
+  getRequestById(requestId): Observable<any> {
+    return this.httpClient
+      .get<RequestResponsePayload>(
+        `http://localhost:8080/api/request/${requestId}`
+      )
+      .pipe(map((response) => response));
+  }
+
+  editStatus(requestId: number, status: string): Observable<any> {
+    return this.httpClient
+      .put<any>(
+        `http://localhost:8080/api/request/${requestId}/${status}`,
+        null
+      )
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
 }

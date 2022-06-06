@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/shared/auth.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean;
   username: string;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.loggedIn.subscribe(
@@ -20,5 +21,11 @@ export class AppComponent implements OnInit {
     );
     this.isLoggedIn = this.authService.isLoggedIn();
     this.username = this.authService.getUserName();
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
   }
 }

@@ -44,6 +44,9 @@ import { ProduceTileComponent } from './produce-request/produce-tile/produce-til
 import { ViewSentRequestComponent } from './produce-request/view-sent-request/view-sent-request.component';
 import { ViewRecievedRequestComponent } from './produce-request/view-recieved-request/view-recieved-request.component';
 import { ViewPostsComponent } from './community/view-posts/view-posts.component';
+import { ViewRequestComponent } from './produce-request/view-request/view-request.component';
+import { UpdateRequestComponent } from './produce-request/update-request/update-request.component';
+import { MyPostsComponent } from './community/my-posts/my-posts.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +80,9 @@ import { ViewPostsComponent } from './community/view-posts/view-posts.component'
     ViewSentRequestComponent,
     ViewRecievedRequestComponent,
     ViewPostsComponent,
+    ViewRequestComponent,
+    UpdateRequestComponent,
+    MyPostsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,168 @@
+<div class="card shadow-sm rounded top-card">
+  <div class="card-body">
+    <div class="d-flex align-items-center">
+      <a href=""
+        ><img
+          class="pull-left"
+          src="/assets/images/user.png"
+          alt=""
+          style="width: 50px; height: 50px; margin-right: 20px"
+          class="rounded-circle"
+          loading="lazy"
+          ngbTooltip="Go to buyer's profile"
+      /></a>
+
+      <div>
+        <h5 class="top-font">
+          A request from <strong> {{ request.growerName }}</strong>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm rounded other-card" style="padding: 0 50px">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <h4 class="mt-4" style="color: #4c3113; font-weight: bold">
+          The Order
+        </h4>
+      </div>
+      <div class="col">
+        <div
+          *ngIf="request.requestStatus == 'APPROVED'; then Approved; else Other"
+        ></div>
+        <ng-template #Approved
+          ><span
+            class="badge alert-success mt-4"
+            style="font-size: 20px; float: right"
+            >{{ request.requestStatus }}</span
+          ></ng-template
+        >
+        <ng-template #Other>
+          <span
+            class="badge alert-danger mt-4"
+            style="font-size: 20px; float: right"
+            >{{ request.requestStatus }}</span
+          ></ng-template
+        >
+      </div>
+    </div>
+    <p class="text-muted">recieved {{ request.createdDate }}</p>
+
+    <hr />
+    <div
+      class="row d-flex justify-content-between align-items-center"
+      *ngFor="let item of requestItems"
+    >
+      <div class="col-md-1">
+        <img
+          loading="lazy"
+          style="object-fit: cover; height: 55px; width: 55px"
+          src="http://localhost:8080/api/image/produce-image/{{
+            item.fileName
+          }}"
+          alt="{{ item.produceName }}"
+          data-holder-rendered="
+                  true"
+        />
+      </div>
+      <div class="col-sm-4">
+        <h6>{{ item.produceName }}</h6>
+        <a class="mb-0 item-a" routerLink="/viewproduce/{{ item.produceId }}"
+          >View</a
+        >
+      </div>
+      <div class="col-sm-2">
+        <input
+          id="form1"
+          min="0"
+          name="quantity"
+          value="{{ item.quantity }}"
+          type="number"
+          class="form-control form-control-sm"
+          disabled
+        />
+      </div>
+      <div class="col-sm-4" style="text-align: right">
+        <h6 class="mb-0" style="font-weight: normal">
+          x Rs. {{ item.price }} / bunch = Rs. {{ item.linetotal }}
+        </h6>
+      </div>
+      <!-- <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+        <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+      </div> -->
+
+      <hr class="mt-4" style="font-weight: lighter" />
+    </div>
+    <div style="text-align: right; color: #4c3113">
+      <h4 class="mb-0" style="font-weight: bold">
+        Total = Rs. <span>22</span>
+      </h4>
+      <p class="text-muted">Payable on collection</p>
+    </div>
+    <hr class="my-4" />
+    <form>
+      <div class="form-group row">
+        <label
+          for="message"
+          class="col-sm-2 col-form-label"
+          style="color: #4c3113"
+          >Buyers message</label
+        >
+        <div class="col-sm-10">
+          <textarea
+            class="form-control"
+            style="background-color: #fafafa"
+            id="text"
+            value="{{ request.message }}"
+            disabled
+          ></textarea>
+        </div>
+      </div>
+      <fieldset>
+        <div class="row">
+          <div class="col"></div>
+        </div>
+        <div
+          *ngIf="
+            request.requestStatus == 'PENDING';
+            then ShowUpdateControls;
+            else Updated
+          "
+        ></div>
+        <ng-template #ShowUpdateControls
+          ><div
+            style="text-align: right; font-size: 12px; margin-top: 10px"
+            class="text-muted"
+          >
+            <a
+              (click)="updateRequestStatus(request.requestId, 'APPROVED')"
+              class="btn btn-success"
+              style="margin-right: 15px"
+            >
+              Accept
+            </a>
+            <a
+              (click)="updateRequestStatus(request.requestId, 'DECLINED')"
+              class="btn btn-danger"
+              >Decline</a
+            >
+          </div></ng-template
+        >
+        <ng-template #Updated
+          ><div
+            style="text-align: right; font-size: 12px; margin-top: 10px"
+            class="text-muted"
+          >
+            <p>
+              You have
+              <strong> {{ request.requestStatus }}</strong> the request
+            </p>
+          </div></ng-template
+        >
+      </fieldset>
+    </form>
+  </div>
+</div>

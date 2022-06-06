@@ -13,5 +13,6 @@ export class ProduceModel {
   longitude: string;
   publishStatus: string;
   userName: string;
+  grower: string;
   subscription: boolean;
 }

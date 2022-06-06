@@ -14,6 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { UpdateProducePayload } from './update-produce.payload';
 import * as L from 'leaflet';
+import { CommentService } from 'src/app/services/comment.service';
+import { ProduceCommentModel } from 'src/app/models/comment/produce-comment-model';
+import Swal from 'sweetalert2';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 var greenIcon = L.icon({
   iconUrl: '/assets/images/Icon.png',
@@ -42,6 +46,7 @@ var redIcon = L.icon({
 })
 export class ViewProduceComponent implements OnInit {
   private map;
+  comments$: Array<ProduceCommentModel>;
   latitude;
   longitude;
   produceRequestPayload: UpdateProducePayload;
@@ -52,13 +57,13 @@ export class ViewProduceComponent implements OnInit {
   faEye = faEye;
   closeResult: string;
   isError: boolean;
-
   showModal: boolean;
-
   produce: ProduceModel = new ProduceModel();
+  updateForm: FormGroup;
 
   constructor(
     private _produceService: ProduceService,
+    private _commentService: CommentService,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
@@ -71,7 +76,7 @@ export class ViewProduceComponent implements OnInit {
     }
 
     this.produceRequestPayload = {
-      produceId: '',
+      produceId: 0,
       produceName: '',
       description: '',
       produceStatus: '',
@@ -81,6 +86,7 @@ export class ViewProduceComponent implements OnInit {
       longitude: '',
       latitude: '',
       publishStatus: '',
+      measureType: '',
     };
   }
 
@@ -97,8 +103,29 @@ export class ViewProduceComponent implements OnInit {
         const latitude = data.latitude;
         const longitude = data.longitude;
         this.initMap(latitude, longitude);
+        this.initForm();
       });
+      this.getCommentsForProduce(produceId);
     }
+  }
+
+  private initForm() {
+    this.updateForm = new FormGroup({
+      produceName: new FormControl(
+        this.produce.produceName,
+        Validators.required
+      ),
+      measureType: new FormControl(
+        this.produce.measureType,
+        Validators.required
+      ),
+      category: new FormControl(this.produce.category, Validators.required),
+      description: new FormControl(
+        this.produce.description,
+        Validators.required
+      ),
+      price: new FormControl(this.produce.price, Validators.required),
+    });
   }
 
   private initMap(latitude, longitude): void {
@@ -119,6 +146,13 @@ export class ViewProduceComponent implements OnInit {
     }).addTo(this.map);
 
     this.map.setView(marker.getLatLng(), 14);
+  }
+
+  getCommentsForProduce(produceId) {
+    this._commentService.getCommentsByProduce(produceId).subscribe((data) => {
+      console.log(data);
+      this.comments$ = data;
+    });
   }
 
   editStatus(produceId, status) {
@@ -187,10 +221,51 @@ export class ViewProduceComponent implements OnInit {
     this.showModal = false;
   }
 
-  update() {
-    console.log('Update');
-    if (confirm('Are you sure to delete ')) {
-      console.log('Implement delete functionality here');
-    }
+  update(submitBtn) {
+    Swal.fire({
+      title: 'Are you sure want to update ?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#8EB540',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.value) {
+        this.produceRequestPayload.produceId = this.produce.produceId;
+        this.produceRequestPayload.produceName =
+          this.updateForm.get('produceName')?.value;
+        this.produceRequestPayload.description =
+          this.updateForm.get('description')?.value;
+        this.produceRequestPayload.category =
+          this.updateForm.get('category')?.value;
+        this.produceRequestPayload.measureType =
+          this.updateForm.get('measureType')?.value;
+        this.produceRequestPayload.price = this.updateForm.get('price')?.value;
+
+        this._produceService
+          .updateProduce(this.produceRequestPayload)
+          .subscribe(
+            (data) => {
+              this._produceService
+                .getProducebyId(this.produce.produceId)
+                .subscribe((data) => (this.produce = data));
+              this.isError = false;
+              Swal.fire({
+                title: 'Updated',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              this.modalService.dismissAll();
+            },
+            (error) => {
+              this.isError = true;
+              throwError(error);
+              this.toastr.error('Error during produce update');
+            }
+          );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelled', '', 'error');
+      }
+    });
   }
 }

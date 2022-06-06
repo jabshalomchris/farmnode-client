@@ -16,3 +16,27 @@ input.ng-invalid.ng-touched {
 body {
     background-color: #EEEEEE;
 }
+
+.title {
+    text-align: center;
+    padding: 50px;
+    font-size: 50px;
+    font-variant: small-caps;
+    font-family: fantasy;
+    font-weight: bold;
+    letter-spacing: 10px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.parallax {
+    background-image: url("/assets/images/bg3.jpg");
+    width: 100%;
+    height: max-content;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

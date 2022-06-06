@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { SubscriptionService } from '../../services/subscription.service';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { UsersService } from 'src/app/services/users.service';
+import { ProducerModel } from 'src/app/models/users/producer.model';
 
 @Component({
   selector: 'app-my-subscriptions',
@@ -7,16 +11,45 @@ import { SubscriptionService } from '../../services/subscription.service';
   styleUrls: ['./my-subscriptions.component.css'],
 })
 export class MySubscriptionsComponent implements OnInit {
+  faLocationDot = faLocationDot;
   data: object;
   jsonObj: object;
+  isEmptyboolean: boolean;
+  user: ProducerModel = new ProducerModel();
 
-  constructor(private _subscriptionService: SubscriptionService) {}
+  constructor(
+    private _subscriptionService: SubscriptionService,
+    private toastr: ToastrService,
+    private _userService: UsersService
+  ) {}
 
   ngOnInit(): void {
+    this.getSubscriptions();
+    this.checkifEmpty();
+    this.getUsersDetail();
+
+    // const valueToGiveToNgFor = this.groupBy(this.data, 'grower'); // 'workT' is by you want to groupBy values
+  }
+
+  checkifEmpty() {}
+
+  private getUsersDetail() {
+    this._userService.getUsersDetail().subscribe((data) => {
+      this.user = data;
+      console.log(this.user);
+    });
+  }
+
+  getSubscriptions() {
     this._subscriptionService.getMySubscriptions().subscribe((data) => {
-      //this.data = data;
-      console.log(data);
       const valueToGiveToNgFor = this.groupBy(data, 'userName');
+      if (Object.keys(valueToGiveToNgFor).length === 0) {
+        this.isEmptyboolean = true;
+      } else {
+        this.isEmptyboolean = false;
+      }
+      console.log(this.isEmptyboolean);
+
       console.log(valueToGiveToNgFor);
       this.data = valueToGiveToNgFor;
       // this.jsonObj = {
@@ -29,9 +62,8 @@ export class MySubscriptionsComponent implements OnInit {
       //   '4': [{ title: 'title4', desc: 'desc4' }],
       //   '5': [{ title: 'title5', desc: 'desc5' }],
       // };
-      console.log(this.jsonObj);
+      // console.log(this.jsonObj);
     });
-    // const valueToGiveToNgFor = this.groupBy(this.data, 'grower'); // 'workT' is by you want to groupBy values
   }
 
   // define function that will manage it
@@ -41,4 +73,17 @@ export class MySubscriptionsComponent implements OnInit {
       return rv;
     }, {});
   };
+
+  unsubscribe(produceId) {
+    this._subscriptionService.unsubscribe(produceId).subscribe(
+      (data) => {
+        this.toastr.error('You have unsubscribed produce');
+
+        this.getSubscriptions();
+      },
+      (error) => {
+        this.toastr.info('Error during unsubscription');
+      }
+    );
+  }
 }

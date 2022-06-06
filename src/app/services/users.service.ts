@@ -24,4 +24,21 @@ export class UsersService {
       })
       .pipe(map((response) => response));
   }
+
+  getGrowerdetailsById(userId: number): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('userId', userId);
+
+    return this.httpClient
+      .get<any>(`http://localhost:8080/api/friends/fellow-user-by-id`, {
+        params: queryParams,
+      })
+      .pipe(map((response) => response));
+  }
+
+  getUsersDetail(): Observable<any> {
+    return this.httpClient
+      .get<any>(`http://localhost:8080/api/get-user-details`)
+      .pipe(map((response) => response));
+  }
 }

@@ -29,7 +29,12 @@
                     produce.filename
                   }}"
                   alt="Produce"
-                  style="width: 100%; height: 200px; outline: 1px solid #eeeeee"
+                  style="
+                    object-fit: cover;
+                    width: 100%;
+                    height: 200px;
+                    outline: 1px solid #eeeeee;
+                  "
                   class="img-thumbnail"
                   loading="lazy"
                 />
@@ -45,6 +50,62 @@
               <div class="map-container">
                 <div class="map-frame">
                   <div id="map"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="padding: 3%; margin-top: 2%">
+        <div class="container p-3 scroll-y">
+          <div *ngIf="comments$.length == 0; then emptycomments"></div>
+          <ng-template #emptycomments
+            ><h5>No comments yet for this produce</h5></ng-template
+          >
+
+          <div
+            class="border-bottom d-flex justify-content-between align-items-center"
+            *ngFor="let comment of comments$"
+          >
+            <div class="d-flex flex-column">
+              <div class="d-flex align-items-center ms-4">
+                <div
+                  *ngIf="
+                    comment.filename == null;
+                    then userimagenotpresent;
+                    else userimagepresent
+                  "
+                ></div>
+                <ng-template #userimagepresent
+                  ><img
+                    src="http://localhost:8080/api/image/produce-image/{{
+                      comment.filename
+                    }}"
+                    alt=""
+                    style="width: 45px; height: 45px"
+                    class="rounded-circle"
+                  />
+                </ng-template>
+                <ng-template #userimagenotpresent
+                  ><img
+                    src="/assets/images/user.png"
+                    alt=""
+                    style="width: 45px; height: 45px"
+                    class="rounded-circle"
+                    loading="lazy"
+                  />
+                </ng-template>
+
+                <div class="ms-4">
+                  <p class="mb-0" style="font-size: 12px">
+                    {{ comment.userName }}<span class="text-muted"> says:</span>
+                  </p>
+                  <p class="fw-bold mb-1">{{ comment.text }}</p>
+                  <p>
+                    <span style="font-size: 12px">{{
+                      comment.createdDate
+                    }}</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -164,15 +225,16 @@
       <span aria-hidden="true">×</span>
     </a>
   </div>
-  <div class="modal-body" style="background-color: whitesmoke">
-    <form>
+  <form [formGroup]="updateForm" (ngSubmit)="update(submitBtn)">
+    <div class="modal-body" style="background-color: whitesmoke">
       <div class="form-group mb-3">
         <label for="producenameinput"><h6 class="text">Produce Name</h6></label>
         <input
           type="text"
           class="form-control"
           id="producenameinput"
-          value="{{ produce.produceName }}"
+          required
+          [formControlName]="'produceName'"
         />
       </div>
 
@@ -183,6 +245,8 @@
           id="descriptioninput"
           rows="3"
           value="{{ produce.description }}"
+          required
+          [formControlName]="'description'"
         ></textarea>
       </div>
       <div class="row mb-3">
@@ -191,7 +255,11 @@
             <label for="categoryinput"
               ><h6 class="text">Produce Category</h6></label
             >
-            <select class="form-control" id="categoryinput">
+            <select
+              class="form-control"
+              id="categoryinput"
+              [formControlName]="'category'"
+            >
               <option value="Vegetable">Vegetable</option>
               <option value="Fruit">Fruit</option>
               <option value="Dairy">Dairy Products</option>
@@ -208,7 +276,7 @@
             <select
               class="form-control"
               id="measuretypeinput"
-              value="{{ produce.measureType }}"
+              [formControlName]="'measureType'"
             >
               <optgroup label="Units">
                 <option value="each">each</option>
@@ -241,7 +309,7 @@
           <input
             type="number"
             class="form-control"
-            value="{{ produce.price }}"
+            [formControlName]="'price'"
           />
           <p class="text-below text-muted mt-3">
             Planning to give away the excess produce? Leave this field blank and
@@ -250,11 +318,19 @@
           </p>
         </div>
       </div>
-    </form>
-  </div>
-  <div class="modal-footer" style="background-color: whitesmoke">
-    <a class="subbutton" (click)="update()">Update Produce</a>
-  </div>
+    </div>
+    <div class="modal-footer" style="background-color: whitesmoke">
+      <button
+        type="submit"
+        #submitBtn
+        class="subbutton"
+        name="submit"
+        value="submit"
+      >
+        Update Produce
+      </button>
+    </div>
+  </form>
 </ng-template>
 
 <!-- Creates the bootstrap modal where the image will appear -->

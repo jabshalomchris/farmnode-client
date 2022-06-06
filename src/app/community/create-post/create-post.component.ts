@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/services/post.service';
 import { CreatePostPayload } from './create-post.payload';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { finalize, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-create-post',
@@ -12,8 +14,10 @@ import { CreatePostPayload } from './create-post.payload';
 export class CreatePostComponent implements OnInit {
   createPostForm: FormGroup;
   postPayload: CreatePostPayload;
+  selectedFile: File;
+  isError: boolean;
 
-  constructor(private router: Router, private postService: PostService) {
+  constructor(private router: Router, private _postService: PostService) {
     this.postPayload = {
       postName: '',
       url: '',
@@ -24,14 +28,71 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {
     this.createPostForm = new FormGroup({
       postName: new FormControl('', Validators.required),
-      url: new FormControl('', Validators.required),
+      image: new FormControl(''),
       description: new FormControl('', Validators.required),
     });
   }
-  createPost() {
-    console.log('HOoo');
+  createPost(submitBtn) {
+    submitBtn.disabled = true;
+    if (this.createPostForm.valid) {
+      this.postPayload.postName = this.createPostForm.get('postName')?.value;
+      this.postPayload.description =
+        this.createPostForm.get('description')?.value;
+
+      this._postService
+        .createPost(this.postPayload)
+        .pipe(
+          finalize(() => {
+            submitBtn.disabled = false;
+          })
+        )
+        .subscribe(
+          (data) => {
+            this.isError = false;
+            Swal.fire({
+              icon: 'success',
+              text: 'Post added successfully!',
+              showConfirmButton: false,
+              // confirmButtonColor: '#8EB540',
+              timer: 1300,
+            });
+            this.router.navigateByUrl('/community');
+          },
+          (error) => {
+            this.isError = true;
+            throwError(error);
+            Swal.fire({
+              icon: 'error',
+              text: 'Post add unsuccessful!',
+              showConfirmButton: false,
+              // confirmButtonColor: '#8EB540',
+              timer: 1300,
+            });
+          }
+        );
+    }
+    submitBtn.disabled = false;
   }
   discardPost() {
     this.router.navigateByUrl('/community');
+  }
+  po;
+  upload(event) {
+    const file: File = event.target.files[0];
+    var pattern = /image-*/;
+
+    if (!file.type.match(pattern)) {
+      Swal.fire({
+        icon: 'error',
+        text: 'Unacceptable File type!',
+        confirmButtonColor: '#8EB540',
+      });
+      this.createPostForm.patchValue({
+        image: '',
+      });
+      return;
+    } else {
+      this.selectedFile = event.target.files[0];
+    }
   }
 }

@@ -1,8 +1,9 @@
 export class UpdateProducePayload {
-  produceId: string;
+  produceId: number;
   produceName: string;
   description: string;
   produceStatus: string;
+  measureType: string;
   price: string;
   category: string;
   address: string;

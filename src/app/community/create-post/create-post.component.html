@@ -1,24 +1,47 @@
 <div class="container">
-  <div class="row">
-    <hr />
-    <div class="create-post-container col-md-9">
-      <form
-        class="post-form"
-        [formGroup]="createPostForm"
-        (ngSubmit)="createPost()"
-      >
-        <div class="form-group">
-          <div class="create-post-heading">Create Post</div>
-          <hr />
-          <input
-            type="text"
-            [formControlName]="'postName'"
-            class="form-control"
-            style="margin-top: 5px"
-            placeholder="Title"
-          />
+  <div class="create-post-container shadow">
+    <form
+      class="post-form"
+      [formGroup]="createPostForm"
+      (ngSubmit)="createPost(submitBtn)"
+    >
+      <div class="form-group">
+        <div class="create-post-heading">Create Post</div>
+        <hr />
+        <p>Title</p>
+        <input
+          type="text"
+          [formControlName]="'postName'"
+          class="form-control"
+          style="margin-top: 5px"
+          placeholder="Title"
+          [formControlName]="'postName'"
+        />
+        <p class="mt-3">Body</p>
+        <textarea
+          type="text"
+          rows="5"
+          [formControlName]="'description'"
+          class="form-control"
+          style="margin-top: 5px"
+          placeholder="Post Description"
+          [formControlName]="'description'"
+        ></textarea>
+        <label for="produceImage"
+          ><h6 class="text mt-3">Upload an Image *</h6></label
+        >
+        <span>A picture can add value to what you are posting!</span>
+        <input
+          type="file"
+          class="form-control"
+          id="produceImage"
+          style="margin-top: 6px"
+          accept="image/*"
+          [formControlName]="'image'"
+          (change)="upload($event)"
+        />
 
-          <editor
+        <!-- <editor
             [formControlName]="'description'"
             [init]="{
               height: 350,
@@ -33,17 +56,22 @@
                           alignleft aligncenter alignright alignjustify | \
                           bullist numlist outdent indent | removeformat | help'
             }"
-          ></editor>
-          <span>
-            <div style="margin-top: 5px" class="float-right">
-              <button (click)="discardPost()" class="btnDiscard">
-                Discard
-              </button>
-              <button class="btnCreatePost">Post</button>
-            </div>
-          </span>
-        </div>
-      </form>
-    </div>
+          ></editor> -->
+        <span>
+          <div style="margin-top: 5px">
+            <button (click)="discardPost()" class="btnDiscard">Discard</button>
+            <button
+              class="btnCreatePost"
+              #submitBtn
+              type="submit"
+              name="submit"
+              value="submit"
+            >
+              Post
+            </button>
+          </div>
+        </span>
+      </div>
+    </form>
   </div>
 </div>

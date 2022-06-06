@@ -11,6 +11,7 @@ import { ProduceService } from '../../services/produce.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize, throwError } from 'rxjs';
 import { ViewportScroller } from '@angular/common';
+import Swal from 'sweetalert2';
 
 var greenIcon = L.icon({
   iconUrl: '/assets/images/Icon.png',
@@ -193,7 +194,22 @@ export class AddProduceComponent implements OnInit {
   }
 
   upload(event) {
-    this.selectedFile = event.target.files[0];
+    const file: File = event.target.files[0];
+    var pattern = /image-*/;
+
+    if (!file.type.match(pattern)) {
+      Swal.fire({
+        icon: 'error',
+        text: 'Unacceptable File type!',
+        confirmButtonColor: '#8EB540',
+      });
+      this.createProduceForm.patchValue({
+        image: '',
+      });
+      return;
+    } else {
+      this.selectedFile = event.target.files[0];
+    }
   }
 
   submit(submitBtn) {

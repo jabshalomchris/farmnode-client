@@ -1,0 +1,63 @@
+.top-card {
+    max-width: 60%;
+    margin: 3% auto;
+    padding: 15px;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
+}
+
+.other-card {
+    max-width: 60%;
+    margin: 0 auto;
+    padding: 15px;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
+    background-color: #FFFFFF;
+}
+
+.pull-left {
+    float: left;
+}
+
+.top-font {
+    color: #8EB540;
+    padding-top: 5px;
+    font-family: 'Bad Script', cursive;
+    font-size: 32px;
+}
+
+.request-produce-image {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer
+}
+
+a img:hover {
+    transform: scale(1.3);
+}
+
+.item-a {
+    color: #728e37
+}
+
+.item-a:hover {
+    color: #39471c
+}
+
+input {
+    background-color: #EFEFEF;
+    font-weight: bold;
+    text-align: right;
+    color: #728e37;
+}
+
+.btn-success {
+    background-color: #728e37 !important;
+    border: none !important;
+}

@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { finalize, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +59,15 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (data) => {
             this.isError = false;
-            this.toastr.success('Login Successful');
+            Swal.fire({
+              icon: 'success',
+              title: 'Logged in successfully',
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            });
             this.router.navigateByUrl('/home');
 
             //console.log('Login Successful')

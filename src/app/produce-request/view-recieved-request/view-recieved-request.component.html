@@ -1,68 +1,360 @@
+<div class="parallax">
+  <div class="title">Inbound Requests</div>
+</div>
 <div class="container mt-5">
-  <div class="card shadow othercards">
-    <div class="card-header text-center" style="background-color: #f8f9fa">
-      <h4 class="head-text pt-3">
-        These are the requests you've <strong>sent</strong> to the grower
-      </h4>
-    </div>
-    <div class="card-body">
-      <table class="table align-middle mb-0 bg-white">
-        <thead class="bg-light">
-          <tr>
-            <th style="width: 14%">Request date</th>
-            <th style="width: 20%">Grower</th>
-            <th>Produce</th>
-            <th>Status</th>
-            <th style="color: black">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let request of requests$">
-            <td>
-              <div class="d-flex align-items-center">
-                <p class="mb-1 text-muted" style="font-size: 14px">
-                  {{ request.createdDate }}
-                </p>
-              </div>
-            </td>
-            <td>
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <a
-                    class="fw mb-1 user-anchor"
-                    data-toggle="tooltip"
-                    title="Go to user profile"
-                    >{{ request.growerName }}</a
-                  >
-                </div>
-              </div>
-            </td>
+  <div class="row">
+    <div class="col-lg-2 mb-4">
+      <div class="card" style="background-color: #dddddd">
+        <div class="card-body" style="padding-top: 10%; padding-bottom: 10%">
+          <div
+            class="nav flex-column nav-pills"
+            id="v-pills-tab"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <a
+              class="nav-link active"
+              id="faq_tab_1-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#faq_tab_1"
+              type="button"
+              role="tab"
+              aria-controls="faq_tab_1"
+              aria-selected="true"
+              >All</a
+            >
+            <a
+              class="nav-link"
+              id="faq_tab_2-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#faq_tab_2"
+              type="button"
+              role="tab"
+              aria-controls="faq_tab_2"
+              aria-selected="false"
+              >Pending</a
+            >
+            <a
+              class="nav-link"
+              id="faq_tab_3-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#faq_tab_3"
+              type="button"
+              role="tab"
+              aria-controls="faq_tab_3"
+              aria-selected="false"
+              >Approved</a
+            >
+            <a
+              class="nav-link"
+              id="faq_tab_4-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#faq_tab_4"
+              type="button"
+              role="tab"
+              aria-controls="faq_tab_4"
+              aria-selected="false"
+              >Declined</a
+            >
+          </div>
 
-            <td>
-              <a class="fw mb-1 request-link"
-                ><span *ngFor="let item of request.requestItem">
-                  {{ item.produceName }},
-                </span></a
-              >
-            </td>
-            <td>
-              <span class="badge alert-warning">{{
-                request.requestStatus
-              }}</span>
-            </td>
-            <td style="text-align: center">
-              <a
-                routerLink="/viewproduce/dsdsdd"
-                class="fw-bold"
-                data-toggle="tooltip"
-                title="View request"
-                style="color: #728e37"
-                >View</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-4">
+      <div class="card shadow" style="min-height: 320px">
+        <div class="card-header text-center" style="background-color: #f8f9fa">
+          <h4 class="head-text pt-3">
+            These are the requests you've
+            <strong style="color: #334019">Recieved</strong> for your produces
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div
+              class="tab-pane fade active show"
+              id="faq_tab_1"
+              role="tabpanel"
+              aria-labelledby="faq_tab_1-tab"
+            >
+              <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr>
+                    <th style="width: 14%">Request date</th>
+                    <th style="width: 20%">Buyer</th>
+                    <th>Produce</th>
+                    <th>Status</th>
+                    <th style="color: black">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of requests$">
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <p class="mb-1 text-muted" style="font-size: 14px">
+                          {{ request.createdDate }}
+                        </p>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                          <a
+                            class="fw mb-1 user-anchor"
+                            data-toggle="tooltip"
+                            title="Go to user profile"
+                            >{{ request.buyerName }}</a
+                          >
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <a class="fw mb-1 request-link"
+                        ><span *ngFor="let item of request.requestItem">
+                          {{ item.produceName }},
+                        </span></a
+                      >
+                    </td>
+                    <td>
+                      <span class="badge alert-warning">{{
+                        request.requestStatus
+                      }}</span>
+                    </td>
+                    <td style="text-align: center">
+                      <a
+                        routerLink="/update-request/{{ request.requestId }}"
+                        class="fw-bold"
+                        data-toggle="tooltip"
+                        title="View request"
+                        style="color: #728e37"
+                        >View</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="faq_tab_2"
+              role="tabpanel"
+              aria-labelledby="faq_tab_2-tab"
+            >
+              <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr>
+                    <th style="width: 14%">Request date</th>
+                    <th style="width: 20%">Buyer</th>
+                    <th>Produce</th>
+                    <th>Status</th>
+                    <th style="color: black">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of requests$">
+                    <div
+                      *ngIf="
+                        request.requestStatus == 'PENDING';
+                        then declinedData
+                      "
+                    ></div>
+                    <ng-template #declinedData>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <p class="mb-1 text-muted" style="font-size: 14px">
+                            {{ request.createdDate }}
+                          </p>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="ms-3">
+                            <a
+                              class="fw mb-1 user-anchor"
+                              data-toggle="tooltip"
+                              title="Go to user profile"
+                              >{{ request.buyerName }}</a
+                            >
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <a class="fw mb-1 request-link"
+                          ><span *ngFor="let item of request.requestItem">
+                            {{ item.produceName }},
+                          </span></a
+                        >
+                      </td>
+                      <td>
+                        <span class="badge alert-warning">{{
+                          request.requestStatus
+                        }}</span>
+                      </td>
+                      <td style="text-align: center">
+                        <a
+                          routerLink="/update-request/{{ request.requestId }}"
+                          class="fw-bold"
+                          data-toggle="tooltip"
+                          title="View request"
+                          style="color: #728e37"
+                          >View</a
+                        >
+                      </td>
+                    </ng-template>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="faq_tab_3"
+              role="tabpanel"
+              aria-labelledby="faq_tab_3-tab"
+            >
+              <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr>
+                    <th style="width: 14%">Request date</th>
+                    <th style="width: 20%">Buyer</th>
+                    <th>Produce</th>
+                    <th>Status</th>
+                    <th style="color: black">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of requests$">
+                    <div
+                      *ngIf="
+                        request.requestStatus == 'APPROVED';
+                        then declinedData
+                      "
+                    ></div>
+                    <ng-template #declinedData>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <p class="mb-1 text-muted" style="font-size: 14px">
+                            {{ request.createdDate }}
+                          </p>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="ms-3">
+                            <a
+                              class="fw mb-1 user-anchor"
+                              data-toggle="tooltip"
+                              title="Go to user profile"
+                              >{{ request.buyerName }}</a
+                            >
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <a class="fw mb-1 request-link"
+                          ><span *ngFor="let item of request.requestItem">
+                            {{ item.produceName }},
+                          </span></a
+                        >
+                      </td>
+                      <td>
+                        <span class="badge alert-success">{{
+                          request.requestStatus
+                        }}</span>
+                      </td>
+                      <td style="text-align: center">
+                        <a
+                          routerLink="/update-request/{{ request.requestId }}"
+                          class="fw-bold"
+                          data-toggle="tooltip"
+                          title="View request"
+                          style="color: #728e37"
+                          >View</a
+                        >
+                      </td>
+                    </ng-template>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="faq_tab_4"
+              role="tabpanel"
+              aria-labelledby="faq_tab_4-tab"
+            >
+              <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                  <tr>
+                    <th style="width: 14%">Request date</th>
+                    <th style="width: 20%">Buyer</th>
+                    <th>Produce</th>
+                    <th>Status</th>
+                    <th style="color: black">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of requests$">
+                    <div
+                      *ngIf="
+                        request.requestStatus == 'DECLINED';
+                        then declinedData
+                      "
+                    ></div>
+                    <ng-template #declinedData>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <p class="mb-1 text-muted" style="font-size: 14px">
+                            {{ request.createdDate }}
+                          </p>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="ms-3">
+                            <a
+                              class="fw mb-1 user-anchor"
+                              data-toggle="tooltip"
+                              title="Go to user profile"
+                              >{{ request.buyerName }}</a
+                            >
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <a class="fw mb-1 request-link"
+                          ><span *ngFor="let item of request.requestItem">
+                            {{ item.produceName }},
+                          </span></a
+                        >
+                      </td>
+                      <td>
+                        <span class="badge alert-danger">{{
+                          request.requestStatus
+                        }}</span>
+                      </td>
+                      <td style="text-align: center">
+                        <a
+                          routerLink="/update-request/{{ request.requestId }}"
+                          class="fw-bold"
+                          data-toggle="tooltip"
+                          title="View request"
+                          style="color: #728e37"
+                          >View</a
+                        >
+                      </td>
+                    </ng-template>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

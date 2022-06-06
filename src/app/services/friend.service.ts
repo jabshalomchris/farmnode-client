@@ -47,9 +47,8 @@ export class FriendService {
   }
 
   cancelRequest(recieverId) {
-    return this.httpClient.post<any>(
-      `http://localhost:8080/api/friends/cancel-request/${recieverId}`,
-      null
+    return this.httpClient.delete<any>(
+      `http://localhost:8080/api/friends/cancel-request/${recieverId}`
     );
   }
 }

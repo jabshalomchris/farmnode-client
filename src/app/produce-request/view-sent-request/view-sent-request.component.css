@@ -46,3 +46,17 @@ thead {
 .request-link:hover {
     color: #39471c;
 }
+
+.nav-link {
+    color: #39471c !important;
+}
+
+.nav-link:hover {
+    background-color: #9ca38e !important;
+}
+
+.active {
+    font-weight: 500;
+    color: #eee !important;
+    background-color: #334019 !important;
+}

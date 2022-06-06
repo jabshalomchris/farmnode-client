@@ -15,21 +15,31 @@ import { finalize, throwError } from 'rxjs';
 
 // Icons
 var greenIcon = L.icon({
-  iconUrl: '/assets/images/marker3.png',
+  iconUrl: '/assets/images/vegicon3.png',
   shadowUrl: 'assets/marker-shadow.png',
-  iconSize: [100, 80], // size of the icon
-  shadowSize: [100, 80], // size of the shadow
-  iconAnchor: [50, 80], // point of the icon which will correspond to marker's location
+  iconSize: [80, 80], // size of the icon
+  shadowSize: [100, 100], // size of the shadow
+  iconAnchor: [40, 60], // point of the icon which will correspond to marker's location
   shadowAnchor: [24, 80], // the same for the shadow
   popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
 });
 
 var redIcon = L.icon({
-  iconUrl: '/assets/images/marker.png',
+  iconUrl: '/assets/images/fruiticon3.png',
   shadowUrl: 'assets/marker-shadow.png',
-  iconSize: [88, 104], // size of the icon
-  shadowSize: [88, 104], // size of the shadow
-  iconAnchor: [44, 104], // point of the icon which will correspond to marker's location
+  iconSize: [80, 80], // size of the icon
+  shadowSize: [80, 80], // size of the shadow
+  iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
+  shadowAnchor: [24, 107], // the same for the shadow
+  popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+});
+
+var DairyIcon = L.icon({
+  iconUrl: '/assets/images/farmicon.png',
+  shadowUrl: 'assets/marker-shadow.png',
+  iconSize: [80, 80], // size of the icon
+  shadowSize: [80, 80], // size of the shadow
+  iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
   shadowAnchor: [24, 107], // the same for the shadow
   popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
 });
@@ -205,6 +215,8 @@ export class FindProducesComponent implements OnInit {
             }
             if (feature.properties.category == 'Vegetable') {
               var marker = L.marker(latlng, { icon: greenIcon });
+            } else if (feature.properties.category == 'Dairy') {
+              var marker = L.marker(latlng, { icon: DairyIcon });
             } else {
               var marker = L.marker(latlng, { icon: redIcon });
             }
@@ -222,7 +234,8 @@ export class FindProducesComponent implements OnInit {
                 '<div class="card-body">' +
                 '<div class="row">' +
                 '<div class="col-6 col-sm-3">' +
-                '<img class="rounded-circle" alt="100x100" loading="lazy" style="height:50px; width: 50px" src="http://localhost:8080/api/image/produce-image/' +
+                '<img class="rounded-circle" alt="100x100" loading="lazy" style="object-fit: cover;' +
+                'height:50px; width: 50px" src="http://localhost:8080/api/image/produce-image/' +
                 feature.properties.filename +
                 '" data-holder-rendered="true">' +
                 '</div>' +
