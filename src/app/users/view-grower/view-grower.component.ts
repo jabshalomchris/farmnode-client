@@ -9,6 +9,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { ProduceRequestModel } from 'src/app/models/produce-request-model';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +24,7 @@ export class ViewGrowerComponent implements OnChanges {
   faCheck = faCheck;
   @Input() growerUsername: string;
   @Input() produceId: number;
+  @Input() produceStatus: string;
   grower: ProducerModel = new ProducerModel();
   produces$: Array<ProduceRequestModel>;
   slicedproduces$: Array<ProduceRequestModel>;
@@ -70,7 +72,28 @@ export class ViewGrowerComponent implements OnChanges {
   addFriends(friendId) {
     this._friendService.addFriend(friendId).subscribe((data) => {
       this.getGrowerdetail(this.growerUsername);
-      this.toastr.info('Friend request sent to' + this.grower.name);
+      this.toastr.info('Friend request sent to ' + this.grower.name);
     });
+  }
+
+  cancelRequest(friendId) {
+    this._friendService.cancelRequest(friendId).subscribe((data) => {
+      this.getGrowerdetail(this.growerUsername);
+      this.toastr.error('Cancelled connection request to ' + this.grower.name);
+    });
+  }
+  goToRequest(userId, produceId) {
+    if (this.produceStatus != 'RIPE') {
+      Swal.fire({
+        imageUrl: '/assets/images/transition.png',
+        text: 'The produce is still growing! You can still subscribe to it so that you will be notified when it is ready for collection..',
+        confirmButtonColor: '#8EB540',
+      });
+      return;
+    } else {
+      this.router.navigate(['/produce-request'], {
+        queryParams: { userId: userId, produceId: produceId },
+      });
+    }
   }
 }

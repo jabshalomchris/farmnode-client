@@ -43,23 +43,32 @@
         class="button-10 w-100"
         >View Profile</a
       >
-
-      <div
-        *ngIf="grower.friendship == 'false'; then addFriend; else friends"
-      ></div>
-      <ng-template #addFriend
-        ><a
-          (click)="addFriends(grower.userId)"
-          class="btn btn-sm btn-warning w-100 ml-2"
-          >+ Add Friend</a
+      <ng-container *ngIf="grower?.friendship != 'false'; else norequestsmade">
+        <ng-container
+          *ngIf="grower?.friendship === 'PENDING'; else alreadyfriends"
         >
-      </ng-template>
-      <ng-template #friends
+          <!-- Requests sent -->
+          <a (click)="cancelRequest(grower.userId)" class="button-30 w-100"
+            >Cancel Request</a
+          >
+        </ng-container>
+      </ng-container>
+      <!-- Already friends-->
+      <ng-template #alreadyfriends
         ><button class="button-20 w-100" ngbTooltip="You are already friends">
           <fa-icon [icon]="faCheck" class="icon"></fa-icon>
           Connected
-        </button>
-      </ng-template>
+        </button></ng-template
+      >
+      <!-- No friend requests sent -->
+      <ng-template #norequestsmade
+        ><a
+          ngbTooltip="Send connection request"
+          (click)="addFriends(grower.userId)"
+          class="button-60 w-100"
+          >+ Add Friend</a
+        ></ng-template
+      >
     </div>
 
     <div style="margin-top: 10%; margin-left: 5%">
@@ -87,11 +96,7 @@
       </p>
     </div>
     <div class="mt-4" style="text-align: center">
-      <a
-        class="button-40"
-        routerLink="/produce-request"
-        [queryParams]="{ userId: grower.userId, produceId: produceId }"
-      >
+      <a class="button-40" (click)="goToRequest(grower.userId, produceId)">
         Request produce
       </a>
     </div>
