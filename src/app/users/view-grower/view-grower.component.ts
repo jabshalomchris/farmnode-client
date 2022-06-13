@@ -12,6 +12,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { ProduceRequestModel } from 'src/app/models/produce-request-model';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-grower',
@@ -30,8 +31,12 @@ export class ViewGrowerComponent implements OnChanges {
     private _userService: UsersService,
     private _produceService: ProduceService,
     private _friendService: FriendService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private router: Router
+  ) {
+    // force route reload whenever params change;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     for (const propName in changes) {

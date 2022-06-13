@@ -1,8 +1,34 @@
-<div class="community-body">
+<div class="parallax2">
+  <div class="title">Agro-Community Circle</div>
+</div>
+<div class="community-body" style="min-height: 70%">
   <div class="container">
     <div class="row">
       <div class="col-md-9">
+        <div class="row post">
+          <div class="col-md-1">
+            <div class="d-flex align-items-center">
+              <img
+                src="/assets/images/user.png"
+                alt=""
+                style="height: 50px"
+                class="rounded-circle"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="col-md-10 ms-4 mt-1">
+            <input
+              class="form-control"
+              type="text"
+              style="background-color: #f6f7f8"
+              placeholder="Create Post or Ask a question"
+              (click)="open(mymodal)"
+            />
+          </div>
+        </div>
         <!-- <app-post-tile [posts]="posts"></app-post-tile> -->
+
         <app-post-tile></app-post-tile>
       </div>
       <div class="col-md-3">
@@ -12,3 +38,24 @@
     </div>
   </div>
 </div>
+
+<ng-template #mymodal let-modal class="modal hide">
+  <div
+    class="modal-header text-center"
+    style="background-color: whitesmoke; color: #4c3113"
+  >
+    <h4 class="modal-title" id="modal-basic-title">
+      <i class="bx bxs-leaf" style="margin-right: 10px; color: #728e37"></i
+      >Create Post / Ask a question
+    </h4>
+    <a
+      type="button"
+      class="btn"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </a>
+  </div>
+  <app-create-post></app-create-post>
+</ng-template>

@@ -41,4 +41,15 @@ export class UsersService {
       .get<any>(`http://localhost:8080/api/get-user-details`)
       .pipe(map((response) => response));
   }
+
+  getUserActivity(userId: number): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('userId', userId);
+
+    return this.httpClient
+      .get<any>(`http://localhost:8080/api/get-user-activity`, {
+        params: queryParams,
+      })
+      .pipe(map((response) => response));
+  }
 }

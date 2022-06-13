@@ -71,7 +71,16 @@
                 </div>
               </div>
               <hr />
-              <h5>Rs. {{ produce.price }} / each</h5>
+              <div *ngIf="produce.price == 0; then Free; else priced"></div>
+              <ng-template #Free
+                ><h4 style="color: brown; font-weight: 700">FREE</h4>
+              </ng-template>
+              <ng-template #priced
+                ><h5 style="color: brown; font-weight: 700">
+                  Rs. {{ produce.price }} / each
+                </h5>
+              </ng-template>
+
               <br />
               <p>{{ produce.description }}</p>
               <div class="map-container">
@@ -100,7 +109,7 @@
                 </div>
               </div>
               <div class="mt-4 d-flex justify-content-end">
-                <button #submitBtn class="btn btn-success">Add comment</button>
+                <button #submitBtn class="button-10">Add comment</button>
               </div>
             </fieldset>
           </form>

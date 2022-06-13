@@ -4,6 +4,8 @@ import { UsersService } from '../../services/users.service';
 import { ProduceService } from '../../services/produce.service';
 import { ProducerModel } from 'src/app/models/users/producer.model';
 import { ProduceRequestModel } from 'src/app/models/produce-request-model';
+import { UserActivityModel } from 'src/app/models/user-activity.model';
+import { faCheck, faAt, faPhone } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-view-user',
@@ -11,8 +13,12 @@ import { ProduceRequestModel } from 'src/app/models/produce-request-model';
   styleUrls: ['./view-user.component.css'],
 })
 export class ViewUserComponent implements OnInit {
+  faCheck = faCheck;
+  faAt = faAt;
+  faPhone = faPhone;
   userId;
   grower: ProducerModel = new ProducerModel();
+  activity$: Array<UserActivityModel>;
   produces$: Array<ProduceRequestModel>;
 
   constructor(
@@ -37,6 +43,14 @@ export class ViewUserComponent implements OnInit {
       this.grower = data;
       console.log(this.grower);
       this.getProducesofUser(this.grower.userId);
+      this.getUserActivity(this.grower.userId);
+    });
+  }
+
+  private getUserActivity(input: number) {
+    this._userservice.getUserActivity(input).subscribe((data) => {
+      this.activity$ = data;
+      console.log(this.activity$);
     });
   }
 

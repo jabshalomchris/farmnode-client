@@ -42,7 +42,7 @@ export class MySubscriptionsComponent implements OnInit {
 
   getSubscriptions() {
     this._subscriptionService.getMySubscriptions().subscribe((data) => {
-      const valueToGiveToNgFor = this.groupBy(data, 'userName');
+      const valueToGiveToNgFor = this.groupBy(data, 'grower');
       if (Object.keys(valueToGiveToNgFor).length === 0) {
         this.isEmptyboolean = true;
       } else {

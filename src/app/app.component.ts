@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/shared/auth.service';
 
@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/auth/shared/auth.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  //title = 'farmnodeapp';
+  title = 'farmnodeapp';
   //variables
   isLoggedIn: boolean;
   username: string;
@@ -27,5 +27,26 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+  }
+
+  @HostListener('window:scroll', []) onWindowScroll() {
+    this.scrollFunction();
+  }
+  // When the user scrolls down 20px from the top of the document, show the button
+  scrollFunction() {
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      document.getElementById('myBtn')!.style.display = 'block';
+    } else {
+      document.getElementById('myBtn')!.style.display = 'none';
+    }
+  }
+
+  // When the user clicks on the button, scroll to the top of the document
+  topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 }

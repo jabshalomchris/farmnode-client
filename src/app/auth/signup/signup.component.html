@@ -1,149 +1,3 @@
-<!-- <div class="wrap">
-  <form class="formWrap" [formGroup]="signupForm" (ngSubmit)="register()">
-    <img src="/assets/images/lock.png" alt="loginBackground" class="locImg" />
-    <h4>Login</h4>
-    <div>
-      <input
-        type="text"
-        id="username"
-        placeholder="Username"
-        class="form-control"
-        [formControlName]="'username'"
-        name="username"
-      />
-
-      <div
-        class="alert alert-danger"
-        *ngIf="
-          !loginForm.get('username')?.valid &&
-          loginForm.get('username')?.touched
-        "
-      >
-        Please provide a valid username
-      </div>
-    </div>
-
-    <div>
-
-      <input
-        type="password"
-        placeholder="Password"
-        id="password"
-        class="form-control"
-        [formControlName]="'password'"
-        name="password"
-      />
-      <div
-        class="alert alert-danger"
-        *ngIf="
-          !loginForm.get('password')?.valid &&
-          loginForm.get('password')?.touched
-        "
-      >
-        Please provide a password
-      </div>
-    </div>
-    <button type="submit" name="submit" value="submit">Login</button>
-    <a href="#">No account yet? Create an account</a>
-    <a href="#">Forgot password?</a>
-  </form>
-</div> -->
-
-<!-- 
-<div class="vh-100" style="background-image: url('/assets/images/bg2.jpg')">
-  <div class="mask d-flex align-items-center h-100">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-
-              <form [formGroup]="signupForm" (ngSubmit)="register(submitBtn)">
-                <div class="form-outline mb-4">
-                  <input
-                    type="text"
-                    id="name"
-                    class="form-control form-control-lg"
-                    [formControlName]="'name'"
-                    name="name"
-                  />
-                  <label class="form-label" for="name">Your Name</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input
-                    type="email"
-                    id="username"
-                    class="form-control form-control-lg"
-                    [formControlName]="'username'"
-                    name="username"
-                  />
-                  <label class="form-label" for="username">Your Email</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input
-                    type="password"
-                    id="password"
-                    class="form-control form-control-lg"
-                    [formControlName]="'password'"
-                    name="password"
-                  />
-                  <label class="form-label" for="password">Password</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input
-                    type="password"
-                    id="form3Example4cdg"
-                    class="form-control form-control-lg"
-                  />
-                  <label class="form-label" for="form3Example4cdg"
-                    >Repeat your password</label
-                  >
-                </div>
-
-                <div class="form-check d-flex justify-content-center mb-5">
-                  <input
-                    class="form-check-input me-2"
-                    type="checkbox"
-                    value=""
-                    id="form2Example3cg"
-                  />
-                  <label class="form-check-label" for="form2Example3g">
-                    I agree all statements in
-                    <a href="#!" class="text-body"><u>Terms of service</u></a>
-                  </label>
-                </div>
-
-                <div class="d-flex justify-content-center">
-                  <button
-                    #submitBtn
-                    type="submit"
-                    name="submit"
-                    value="submit"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                  >
-                    Register
-                  </button>
-                </div>
-
-                <p class="text-center text-muted mt-5 mb-0">
-                  Have already an account?
-                  <a routerLink="/login" class="fw-bold text-body"
-                    ><u>Login here</u></a
-                  >
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div
   style="
     background-image: url('/assets/images/bg2.jpg');
@@ -152,86 +6,194 @@
     position: relative; ;
   "
 >
-  <div class="card shadow rounded othercards">
-    <div class="card-body">
-      <form [formGroup]="signupForm" (ngSubmit)="register(submitBtn)">
-        <div class="form-outline mb-4">
-          <input
-            type="text"
-            id="name"
-            class="form-control form-control-lg"
-            [formControlName]="'name'"
-            name="name"
-          />
-          <label class="form-label" for="name">Your Name</label>
+  <div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div
+          class="card shadow-2-strong card-registration"
+          style="border-radius: 15px"
+        >
+          <div class="card-body p-4 p-md-5">
+            <h1 class="mb-4 pb-2 pb-md-0 mb-md-5 head-text">
+              Registration <strong>Form</strong>
+            </h1>
+            <form [formGroup]="signupForm" (ngSubmit)="register(submitBtn)">
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <label class="form-label" for="fname"
+                      ><h6 class="text">First Name</h6></label
+                    >
+                    <input
+                      type="text"
+                      id="fname"
+                      class="form-control form-control-lg"
+                      [formControlName]="'fname'"
+                      name="fname"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <label class="form-label" for="lname"
+                      ><h6 class="text">Last Name</h6></label
+                    >
+                    <input
+                      type="text"
+                      id="lname"
+                      class="form-control form-control-lg"
+                      [formControlName]="'lname'"
+                      name="lname"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="form-group text">
+                  <label for="description"><h6 class="text">Bio *</h6></label>
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    id="description"
+                    placeholder="Tell us a little bit about yourself (your interests on fresh foods or gardening/agriculture experience)."
+                    [formControlName]="'description'"
+                    name="description"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <h6 class="mb-2 pb-1">
+                    <h6 class="text">Gender *</h6>
+                  </h6>
+
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="femaleGender"
+                      value="female"
+                      [formControlName]="'gender'"
+                    />
+                    <label class="form-check-label" for="femaleGender"
+                      >Female</label
+                    >
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="gender"
+                      id="maleGender"
+                      value="male"
+                      [formControlName]="'gender'"
+                      [checked]="true"
+                    />
+                    <label class="form-check-label" for="maleGender"
+                      >Male</label
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 d-flex align-items-center">
+                  <div class="form-outline w-100">
+                    <label for="produceImage"
+                      ><h6 class="text">Upload an Image *</h6></label
+                    >
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="produceImage"
+                      style="margin-top: 6px"
+                      accept="image/*"
+                      [formControlName]="'image'"
+                      (change)="upload($event)"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" for="username"
+                      ><h6 class="text">Email *</h6></label
+                    >
+                    <input
+                      type="email"
+                      id="emailAddress"
+                      class="form-control form-control-lg"
+                      ngModel
+                      [email]="true"
+                      [formControlName]="'username'"
+                      name="username"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" for="contactNo"
+                      ><h6 class="text">Phone Number</h6></label
+                    >
+                    <input
+                      type="tel"
+                      id="contactNo"
+                      class="form-control form-control-lg"
+                      [formControlName]="'contactNo'"
+                      name="contactNo"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" for="passord"
+                      ><h6 class="text">Password</h6></label
+                    >
+                    <input
+                      type="password"
+                      id="password"
+                      class="form-control form-control-lg"
+                      [formControlName]="'password'"
+                      name="password"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 pb-2">
+                  <div class="form-outline">
+                    <label class="form-label" for="cpassword"
+                      ><h6 class="text">Confirm password</h6></label
+                    >
+                    <input
+                      type="password"
+                      id="cpassword"
+                      class="form-control form-control-lg"
+                      [formControlName]="'cpassword'"
+                      name="cpassword"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center mt-2">
+                <button
+                  type="submit"
+                  #submitBtn
+                  class="subbutton"
+                  name="submit"
+                  value="submit"
+                  style="border: none"
+                >
+                  Register
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div class="form-outline mb-4">
-          <input
-            type="email"
-            id="username"
-            class="form-control form-control-lg"
-            [formControlName]="'username'"
-            name="username"
-          />
-          <label class="form-label" for="username">Your Email</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input
-            type="password"
-            id="password"
-            class="form-control form-control-lg"
-            [formControlName]="'password'"
-            name="password"
-          />
-          <label class="form-label" for="password">Password</label>
-        </div>
-
-        <div class="form-outline mb-4">
-          <input
-            type="password"
-            id="form3Example4cdg"
-            class="form-control form-control-lg"
-          />
-          <label class="form-label" for="form3Example4cdg"
-            >Repeat your password</label
-          >
-        </div>
-
-        <div class="form-check d-flex justify-content-center mb-5">
-          <input
-            class="form-check-input me-2"
-            type="checkbox"
-            value=""
-            id="form2Example3cg"
-          />
-          <label class="form-check-label" for="form2Example3g">
-            I agree all statements in
-            <a href="#!" class="text-body"><u>Terms of service</u></a>
-          </label>
-        </div>
-
-        <div class="d-flex justify-content-center">
-          <button
-            #submitBtn
-            type="submit"
-            name="submit"
-            value="submit"
-            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-          >
-            Register
-          </button>
-        </div>
-
-        <p class="text-center text-muted mt-5 mb-0">
-          Have already an account?
-          <a routerLink="/login" class="fw-bold text-body"><u>Login here</u></a>
-        </p>
-      </form>
-
-      <div>
-        <div class="text-muted text-center" style="margin: 20px 20px"></div>
       </div>
     </div>
   </div>

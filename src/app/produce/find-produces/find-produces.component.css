@@ -264,42 +264,6 @@ label {
 
 
 
-
-#filter {
-    width: 200px
-}
-
-.hotel .fas,
-.hotel .far {
-    font-size: .8rem
-}
-
-.hotel .fas.fa-star {
-    color: #ffa500
-}
-
-.hotel .tags {
-    font-size: 0.8rem
-}
-
-.hotel .btn {
-    width: 150px;
-    border-radius: 0
-}
-
-.hotel .btn.enquiry {
-    background-color: #ff761b;
-    color: #fff
-}
-
-.hotel .btn.enquiry:hover {
-    background-color: #fc771fef
-}
-
-#hotels {
-    width: 100%
-}
-
 @media(min-width: 1399.6px) {
     #navbar-toggler-icon {
         display: none
@@ -469,4 +433,30 @@ label {
     color: #728E37;
     border: 1px solid #728E37;
     cursor: pointer;
+}
+
+/* CSS */
+.button-10 {
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+
+    color: #fff;
+    background: linear-gradient(180deg, #5b7429 0%, #39491a 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #39481a, inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-10:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+.button-10:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #90ad54;
 }

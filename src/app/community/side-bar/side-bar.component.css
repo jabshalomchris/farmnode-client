@@ -1,11 +1,10 @@
 .sidebar {
-    height: 340px;
+    height: 440px;
     --post-line-color: #ccc;
     border: 1px solid #ccc;
     margin-bottom: 10px;
     overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.8);
-    color: #878A8C;
+    background-color: #DDDDDD;
     position: relative;
     border-radius: 4px;
     padding: 5px;
@@ -23,16 +22,14 @@
     border-radius: 4px;
     text-align: center;
     letter-spacing: 1px;
-    margin-top: 15px;
-    font-size: 10px;
-    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 18px;
     letter-spacing: .5px;
     line-height: 24px;
-    text-transform: uppercase;
-    padding: 3px 16px;
     opacity: 1;
     width: 200px;
-    height: 30px;
+    height: 40px;
 }
 
 .btnCreateSubreddit {
@@ -46,4 +43,82 @@
     font-weight: 500;
     line-height: 20px;
     color: #1c1c1c;
+}
+
+.special-text {
+    font-weight: bold;
+    font-family: 'Bad Script', cursive;
+    color: #8EB540;
+    font-size: 24px;
+}
+
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+
+/* CSS */
+.button-10 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: .5px;
+    line-height: 24px;
+    background: linear-gradient(180deg, #5b7429 0%, #39491a 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #39481a, inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-10:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+.button-10:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #729133;
+}
+
+/* CSS */
+.button-20 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+
+    color: #44571f;
+    font-size: 18px;
+    letter-spacing: .5px;
+    line-height: 24px;
+    text-transform: capitalize;
+    background: linear-gradient(180deg, #ffff 0%, #eaeaea 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #729133, inset 0px 0.8px 0px -0.25px #729133;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-20:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+
+.button-20:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #729133;
 }

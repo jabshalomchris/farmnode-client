@@ -1,34 +1,53 @@
-.post-title {
-    font-size: 28px;
-    font-weight: bold;
+.btnCommments {
+    border-radius: 2px solid;
+    color: #718D37;
+    text-decoration: none;
     opacity: 1;
 }
 
-.post-title:hover {
-    opacity: 0.6;
+.btnCommments:hover {
+    opacity: 0.65;
+    cursor: pointer;
+
 }
 
-.subreddit-text {
+.post-title {
+    font-size: 28px;
     font-weight: bold;
 }
 
-.post-url {
-    color: black;
+.posturl,
+.postname {
+    color: #334019;
+    text-decoration: none;
 }
 
-.username {
-    color: gray;
+.post-header {
+    font-size: 14px;
 }
+
+.post-header a {
+    color: #718D37;
+    text-decoration: none;
+}
+
+.post-header a:hover {
+    color: #334019;
+}
+
+
 
 .post-text {
     margin-top: 10px;
+    font-size: 20px;
 }
 
 .post {
     --post-line-color: #ccc;
     border: 1px solid #ccc;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 30px auto;
+    margin-bottom: 100px !important;
+    width: 70%;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.8);
     color: #878A8C;
@@ -47,4 +66,67 @@
     position: relative;
     border-radius: 4px;
     padding: 5px;
+}
+
+.subbutton {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.15rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+/* CSS */
+.button-102 {
+    display: flex;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    color: #fff;
+    background: linear-gradient(180deg, #5b7429 0%, #39491a 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #39481a, inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-102:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+.button-102:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #729133;
+}
+
+::-webkit-scrollbar {
+    width: 6px
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555
+}
+
+.scroll-y {
+    overflow-y: scroll;
+    height: 200px
 }

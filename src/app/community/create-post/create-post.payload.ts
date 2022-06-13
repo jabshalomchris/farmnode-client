@@ -1,5 +1,5 @@
 export class CreatePostPayload {
   postName: string;
-  url: string;
+  file: string;
   description: string;
 }

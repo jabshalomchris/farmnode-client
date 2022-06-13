@@ -1,12 +1,14 @@
-.footer-bottom{
-	
-  background: #212529;	
-  height:35px;
+.footer-bottom {
+
+  background: #212529;
+  height: 35px;
   color: white;
   width: 100%;
   text-align: center;
   padding: 10px 0;
-  position: absolute !important;
+  clear: both;
+  width: 100%;
+  margin: auto;
   font: 15px Segoe UI;
-    
-}  
+
+}

@@ -1,35 +1,110 @@
-<span>
-  <span class="subreddit-text">
-    Posted
-    <span> asdasda </span>
-    by
-    <a class="username" href="">asdsad</a>
-  </span>
-</span>
-<hr />
-<a routerLink="post.url" class="post-title">qweqweqeweeqwee</a>
-<div>
-  <!-- <p class="post-text" [innerHtml]="post.description"></p> -->
-  <p class="post-text">dfsdffsffefwvrvwvqervrqervvrgervrr vwrvqavvrvarvavv</p>
-</div>
-<div class="post-comment">
-  <form>
-    <div class="form-group">
-      <textarea class="form-control" placeholder="Your Thoughts?"></textarea>
-    </div>
-    <button type="submit" class="login float-right">Comment</button>
-  </form>
-</div>
-
-<div style="margin-top: 60px">
-  <div class="comment">
-    <div class="username">
-      <a routerLink="/user/comment.username">sssdad</a>
-    </div>
-    <div>
-      <p>asdsad</p>
-    </div>
-    <b>sdadsadd</b>
+<div class="container" style="min-height: 90%">
+  <div class="row mt-5">
+    <a
+      routerLink="/community"
+      class="button-102"
+      style="width: 150px; margin-left: 208px"
+      ><fa-icon
+        [icon]="faArrowLeft"
+        class="icon"
+        style="margin-right: 20px"
+      ></fa-icon
+      >Return</a
+    >
   </div>
-  <hr />
+  <div class="row post shadow-sm">
+    <!-- <app-vote-button [post]="post"></app-vote-button> -->
+    <!-- Section to Display Post Information-->
+    <div class="col-md-12">
+      <span class="post-header">
+        <span class="text-muted"> Posted by </span>
+        <a class="username" routerLink="/user/">{{ post.userName }}</a>
+        <span class="text-muted"> . {{ post.duration }}</span>
+      </span>
+      <hr />
+      <div class="post-title">
+        <a class="postname">{{ post.postName }}</a>
+      </div>
+      <div>
+        <p class="post-text">{{ post.description | slice: 0:140 }} ...</p>
+      </div>
+      <hr />
+      <span>
+        <a class="btnCommments" role="button">
+          <fa-icon [icon]="faComments"></fa-icon>
+          Comments({{ post.commentCount }})
+        </a>
+      </span>
+      <p>Leave a produce comment *</p>
+      <form [formGroup]="commentForm" (ngSubmit)="postComment(submitBtn)">
+        <fieldset>
+          <div class="row">
+            <div class="col">
+              <textarea
+                class="form-control"
+                id="text"
+                style="background-color: #f5f5f5"
+                placeholder="Your message"
+                [formControlName]="'text'"
+                required=""
+              ></textarea>
+            </div>
+          </div>
+          <div class="mt-4 d-flex justify-content-end">
+            <button #submitBtn class="button-10">Add comment</button>
+          </div>
+        </fieldset>
+      </form>
+      <hr />
+      <div class="container p-3 scroll-y">
+        <div
+          class="border-bottom d-flex justify-content-between align-items-center"
+          *ngFor="let comment of comments$"
+        >
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center ms-4">
+              <div
+                *ngIf="
+                  comment.filename == null;
+                  then userimagenotpresent;
+                  else userimagepresent
+                "
+              ></div>
+              <ng-template #userimagepresent
+                ><img
+                  src="http://localhost:8080/api/image/user-image/{{
+                    comment.filename
+                  }}"
+                  alt=""
+                  style="width: 45px; height: 45px"
+                  class="rounded-circle"
+                />
+              </ng-template>
+              <ng-template #userimagenotpresent
+                ><img
+                  src="/assets/images/user.png"
+                  alt=""
+                  style="width: 45px; height: 45px"
+                  class="rounded-circle"
+                  loading="lazy"
+                />
+              </ng-template>
+
+              <div class="ms-4">
+                <p class="mb-0" style="font-size: 12px">
+                  {{ comment.userName }}<span class="text-muted"> says:</span>
+                </p>
+                <p class="fw-bold mb-1" style="color: black">
+                  {{ comment.commentText }}
+                </p>
+                <p>
+                  <span style="font-size: 12px">{{ comment.createdDate }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

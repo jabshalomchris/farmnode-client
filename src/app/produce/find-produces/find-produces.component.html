@@ -319,10 +319,28 @@
               </div>
             </div>
             <div class="mt-4" style="text-align: right">
-              <a
-                routerLink="/produce/{{ produce.produceId }}"
-                class="subdbutton"
-                >View</a
+              <div
+                *ngIf="
+                  produce.userName == user;
+                  then usersProduce;
+                  else othersProduce
+                "
+              ></div>
+              <ng-template #usersProduce
+                ><a
+                  routerLink="/viewproduce/{{ produce.produceId }}"
+                  class="button-10"
+                  style="width: 150px; float: right"
+                  >View</a
+                ></ng-template
+              >
+              <ng-template #othersProduce
+                ><a
+                  routerLink="/produce/{{ produce.produceId }}"
+                  class="button-10"
+                  style="width: 150px; float: right"
+                  >View</a
+                ></ng-template
               >
             </div>
           </div>

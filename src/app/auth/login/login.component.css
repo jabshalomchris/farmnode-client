@@ -54,7 +54,7 @@
   padding: 80px 40px;
   border-radius: 20px;
   position: relative;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -152,4 +152,11 @@
 
 .subbutton:hover:before {
   width: 100%;
+}
+
+.head-text {
+  font-weight: normal;
+  font-family: 'Bad Script', cursive;
+  color: #8EB540;
+  text-align: center;
 }

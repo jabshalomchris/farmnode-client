@@ -21,6 +21,7 @@ import { ViewSentRequestComponent } from './produce-request/view-sent-request/vi
 import { ViewRecievedRequestComponent } from './produce-request/view-recieved-request/view-recieved-request.component';
 import { ViewRequestComponent } from './produce-request/view-request/view-request.component';
 import { UpdateRequestComponent } from './produce-request/update-request/update-request.component';
+import { ViewPostsComponent } from './community/view-posts/view-posts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'view-received-request', component: ViewRecievedRequestComponent },
   { path: 'view-request/:requestId', component: ViewRequestComponent },
   { path: 'update-request/:requestId', component: UpdateRequestComponent },
+  { path: 'view-post/:postId', component: ViewPostsComponent },
 ];
 
 @NgModule({

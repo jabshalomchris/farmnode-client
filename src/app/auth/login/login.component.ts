@@ -75,13 +75,20 @@ export class LoginComponent implements OnInit {
           (error) => {
             this.isError = true;
             throwError(error);
-            this.toastr.error('Login unsuccessful');
+            Swal.fire({
+              icon: 'error',
+              text: 'Invalid credentials!',
+              confirmButtonColor: '#8EB540',
+            });
           }
         );
       submitBtn.disabled = true;
     } else {
-      // validate all form fields
-      console.log('Please input');
+      Swal.fire({
+        icon: 'error',
+        text: 'Please fill all the required fields and try again!',
+        confirmButtonColor: '#8EB540',
+      });
     }
 
     //this.authService.login2(this.loginRequestPayload).subscribe(data=>{

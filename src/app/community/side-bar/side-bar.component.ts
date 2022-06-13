@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-side-bar',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-bar.component.css'],
 })
 export class SideBarComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private modalService: NgbModal) {}
 
   ngOnInit(): void {}
 
@@ -17,5 +18,9 @@ export class SideBarComponent implements OnInit {
 
   goToCreateSubreddit() {
     this.router.navigateByUrl('/create-subreddit');
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 }

@@ -20,7 +20,7 @@ export class CreatePostComponent implements OnInit {
   constructor(private router: Router, private _postService: PostService) {
     this.postPayload = {
       postName: '',
-      url: '',
+      file: '',
       description: '',
     };
   }
@@ -40,7 +40,7 @@ export class CreatePostComponent implements OnInit {
         this.createPostForm.get('description')?.value;
 
       this._postService
-        .createPost(this.postPayload)
+        .createPost(this.postPayload, this.selectedFile)
         .pipe(
           finalize(() => {
             submitBtn.disabled = false;
@@ -76,7 +76,6 @@ export class CreatePostComponent implements OnInit {
   discardPost() {
     this.router.navigateByUrl('/community');
   }
-  po;
   upload(event) {
     const file: File = event.target.files[0];
     var pattern = /image-*/;

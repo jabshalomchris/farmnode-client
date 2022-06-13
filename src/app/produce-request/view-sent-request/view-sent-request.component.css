@@ -26,18 +26,18 @@ thead {
 }
 
 .user-anchor {
-    color: #728e37;
+    color: #212529;
     text-decoration: none;
     cursor: pointer;
 }
 
 .user-anchor:hover {
     font-weight: 600;
-    color: #39471c;
+    color: #728e37;
 }
 
 .request-link {
-    color: #728e37;
+    color: #212529;
     text-decoration: none;
     cursor: pointer;
     font-weight: 600;

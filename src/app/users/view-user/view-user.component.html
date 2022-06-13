@@ -1,44 +1,423 @@
-<div class="container mt-5">
+<div class="container mt-5" style="min-height: 80%">
   <div class="row d-flex justify-content-center">
     <div class="col-md-10">
       <div class="bg-white shadow">
         <div style="padding: 20px 0">
           <div style="padding: 0 30px">
             <div class="row">
-              <div class="col">
-                <img
-                  src="http://localhost:8080/api/image/sid"
-                  alt=""
-                  style="
-                    width: 100px;
-                    height: auto;
-                    border: 1px;
-                    border-color: black;
+              <div class="col-md-6 ms-3">
+                <div class="d-flex align-items-center">
+                  <div
+                    *ngIf="
+                      grower.filename == null;
+                      then userimagenotpresent;
+                      else userimagepresent
+                    "
+                  ></div>
+                  <ng-template #userimagepresent
+                    ><img
+                      src="http://localhost:8080/api/image/user-image/{{
+                        grower.filename
+                      }}"
+                      alt=""
+                      style="height: 120px"
+                      class="rounded"
+                    />
+                  </ng-template>
+                  <ng-template #userimagenotpresent
+                    ><img
+                      src="/assets/images/user.png"
+                      alt=""
+                      style="height: 120px"
+                      class="rounded"
+                      loading="lazy"
+                    />
+                  </ng-template>
+
+                  <div class="ms-4">
+                    <h5 class="fw-bold mb-1">{{ grower.name }}</h5>
+                    <p class="text-muted mb-2">
+                      {{ grower.userDescription }}
+                    </p>
+                    <h6 class="mb-2">
+                      <fa-icon
+                        [icon]="faPhone"
+                        class="icon"
+                        style="color: #728e37; margin-right: 10px"
+                      ></fa-icon>
+                      Contact no:
+                      <strong>
+                        <a
+                          href=""
+                          style="
+                            color: #728e37;
+                            text-decoration: none;
+                            margin-left: 10px;
+                          "
+                          >{{ grower.contactNo }}</a
+                        >
+                      </strong>
+                    </h6>
+                    <h6>
+                      <fa-icon
+                        [icon]="faAt"
+                        class="icon"
+                        style="color: #728e37; margin-right: 10px"
+                      ></fa-icon>
+                      Email :
+                      <strong>
+                        <a
+                          href=""
+                          style="
+                            color: #728e37;
+                            text-decoration: none;
+                            margin-left: 10px;
+                          "
+                          >{{ grower.username }}</a
+                        >
+                      </strong>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-3">
+                <h5>Judah Christopher</h5>
+              </div> -->
+
+              <div class="col-md-2">
+                <div class="row mt-4">
+                  <div class="col-md-2">
+                    <p>
+                      <strong style="margin-right: 5%; color: #8eb540">{{
+                        grower.produceCount
+                      }}</strong>
+                    </p>
+                  </div>
+                  <div class="col-md-10">
+                    <p>Produces grown</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <p>
+                      <strong style="margin-right: 5%; color: #8eb540"
+                        >4</strong
+                      >
+                    </p>
+                  </div>
+
+                  <div class="col-md-10">
+                    <p>Reviews</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="row mt-4">
+                  <div class="col-md-2">
+                    <p>
+                      <strong style="margin-right: 5%; color: #8eb540">{{
+                        grower.friendsCount
+                      }}</strong>
+                    </p>
+                  </div>
+                  <div class="col-md-10">
+                    <p>Connections</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <p>
+                      <strong style="margin-right: 5%; color: #8eb540">{{
+                        grower.subscriptionCount
+                      }}</strong>
+                    </p>
+                  </div>
+                  <div class="col-md-10">
+                    <p>Subscriptions</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1 mt-5">
+                <div
+                  *ngIf="
+                    grower.friendship == 'false';
+                    then addFriend;
+                    else friends
                   "
-                  class="rounded"
-                />
-              </div>
-              <div class="col-sm-3">
-                <h5>Judah Christopher</h5>
-              </div>
-              <div class="col">
-                <p>
-                  <strong style="margin-right: 5%">0</strong> Produces grown
-                </p>
-                <p><strong style="margin-right: 5%">0</strong> Reviews</p>
-                <p><strong style="margin-right: 5%">0</strong> Comments</p>
-              </div>
-              <div class="col">
-                <p><strong style="margin-right: 5%">0</strong> Connections</p>
-                <p><strong style="margin-right: 5%">0</strong> Subscriptions</p>
-              </div>
-              <div class="col">
-                <h5>Judah Christopher</h5>
+                ></div>
+                <ng-template #addFriend
+                  ><a class="btn btn-sm btn-warning">Add Friend</a>
+                </ng-template>
+                <ng-template #friends
+                  ><button
+                    class="btn btn-sm btn-primary"
+                    style="
+                      background-color: #334019;
+                      color: #eaeaea;
+                      border: none;
+                      font-weight: 600;
+                      width: 120px !important;
+                    "
+                    ngbTooltip="You are already friends"
+                  >
+                    <fa-icon [icon]="faCheck" class="icon"></fa-icon>
+                    Connected
+                  </button>
+                </ng-template>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <!-- Display User activity-->
+  <div class="row d-flex justify-content-center mt-4">
+    <div class="col-md-7">
+      <div class="card mb-2 shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+      <div class="card mb-2 shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+      <div class="card mb-2 shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+      <div class="card mb-2 shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+      <div class="card mb-2 shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+      <div class="card mb-2 shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <span style="font-size: 12px">
+            <span>
+              Posted by
+              <a class="username" routerLink="/user/">asdasda</a></span
+            >
+            <span> . 22e2e2</span></span
+          >
+        </div>
+        <div class="card-body">sdda</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card" style="background-color: #dddddd">
+        <div class="card-body" style="padding-top: 10%">
+          <div class="card-title text-center" style="color: #4c3113">
+            <h5>Grower's produces ({{ produces$?.length }})</h5>
+          </div>
+
+          <div class="row" style="padding: 20px">
+            <div class="column" *ngFor="let produce of produces$">
+              <a
+                class="produce-image"
+                routerLink="/produce/{{ produce.produceId }}"
+                ><img
+                  src="http://localhost:8080/api/image/produce-image/{{
+                    produce.filename
+                  }}"
+                  title="{{ produce.produceName }}"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="{{ produce.produceName }}"
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-4" style="background-color: #dddddd">
+        <div class="card-body" style="padding-top: 10%; padding-bottom: 10%">
+          <div class="card-title text-center" style="color: #4c3113">
+            <h5>Subscriptions ({{ grower.subscriptionCount }})</h5>
+          </div>
+
+          <div class="row" style="padding: 20px">
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+            <div class="column">
+              <a class="request-produce-image"
+                ><img
+                  src="/assets/images/user.png"
+                  title="w"
+                  alt="produce-image"
+                  style="object-fit: cover; width: 50px; height: 50px"
+                  class="rounded"
+                  ngbTooltip="www"
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display Posts-->
   </div>
 </div>

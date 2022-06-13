@@ -13,9 +13,7 @@
       ></div>
       <ng-template #userimagepresent
         ><img
-          src="http://localhost:8080/api/image/produce-image/{{
-            grower.filename
-          }}"
+          src="http://localhost:8080/api/image/user-image/{{ grower.filename }}"
           alt=""
           style="width: 50px; height: 50px"
           class="rounded-circle"
@@ -42,15 +40,10 @@
       <a
         ngbTooltip="Go to User profile"
         routerLink="/view-user/{{ grower.userId }}"
-        class="btn btn-sm btn-success w-100"
-        style="
-          background-color: #334019;
-          color: #eaeaea;
-          border: none;
-          font-weight: 400;
-        "
+        class="button-10 w-100"
         >View Profile</a
       >
+
       <div
         *ngIf="grower.friendship == 'false'; then addFriend; else friends"
       ></div>
@@ -58,20 +51,11 @@
         ><a
           (click)="addFriends(grower.userId)"
           class="btn btn-sm btn-warning w-100 ml-2"
-          >Add Friend</a
+          >+ Add Friend</a
         >
       </ng-template>
       <ng-template #friends
-        ><button
-          class="btn btn-sm btn-primary w-100 ml-2"
-          style="
-            background-color: #eaeaea;
-            color: #334019;
-            border: none;
-            font-weight: 600;
-          "
-          ngbTooltip="You are already friends"
-        >
+        ><button class="button-20 w-100" ngbTooltip="You are already friends">
           <fa-icon [icon]="faCheck" class="icon"></fa-icon>
           Connected
         </button>
@@ -80,23 +64,31 @@
 
     <div style="margin-top: 10%; margin-left: 5%">
       <p>
-        <strong style="margin-right: 5%">{{ grower.produceCount }}</strong>
+        <strong style="margin-right: 5%; color: #728e37">{{
+          grower.produceCount
+        }}</strong>
         Agro-produces grown
       </p>
       <p>
-        <strong style="margin-right: 5%">{{ grower.subscriptionCount }}</strong>
+        <strong style="margin-right: 5%; color: #728e37">{{
+          grower.subscriptionCount
+        }}</strong>
         Subscriptions
       </p>
-      <p><strong style="margin-right: 5%">0</strong> Reviews</p>
-      <p><strong style="margin-right: 5%">0</strong> Comments</p>
+      <p><strong style="margin-right: 5%; color: #728e37">0</strong> Reviews</p>
       <p>
-        <strong style="margin-right: 5%">{{ grower.friendsCount }}</strong>
+        <strong style="margin-right: 5%; color: #728e37">0</strong> Comments
+      </p>
+      <p>
+        <strong style="margin-right: 5%; color: #728e37">{{
+          grower.friendsCount
+        }}</strong>
         Connections
       </p>
     </div>
-    <div class="mt-4 d-flex justify-content-end">
+    <div class="mt-4" style="text-align: center">
       <a
-        class="btn btn-success"
+        class="button-40"
         routerLink="/produce-request"
         [queryParams]="{ userId: grower.userId, produceId: produceId }"
       >
@@ -113,21 +105,29 @@
       <h5>Growers other produces ({{ produces$?.length }})</h5>
     </div>
 
-    <div>
-      <a *ngFor="let produce of slicedproduces$" class="request-produce-image"
-        ><img
-          src="http://localhost:8080/api/image/produce-image/{{
-            produce.filename
-          }}"
-          title="{{ produce.produceName }}"
-          alt="produce-image"
-          style="object-fit: cover; width: 45px; height: 45px"
-          class="rounded-circle"
-          ngbTooltip="{{ produce.produceName }}"
-      /></a>
+    <div class="row" style="padding: 20px">
+      <div class="column" *ngFor="let produce of slicedproduces$">
+        <a
+          class="request-produce-image"
+          routerLink="/produce/{{ produce.produceId }}"
+          ><img
+            src="http://localhost:8080/api/image/produce-image/{{
+              produce.filename
+            }}"
+            title="{{ produce.produceName }}"
+            alt="produce-image"
+            style="object-fit: cover; width: 45px; height: 45px"
+            class="rounded"
+            ngbTooltip="{{ produce.produceName }}"
+        /></a>
+      </div>
     </div>
-    <div class="mt-4 d-flex justify-content-end">
-      <a class="btn btn-success" routerLink="/view-user/{{ grower.userId }}">
+    <div class="mt-4" style="text-align: center">
+      <a
+        class="button-20"
+        style="flex-direction: column; align-items: center"
+        routerLink="/view-user/{{ grower.userId }}"
+      >
         View all
       </a>
     </div>

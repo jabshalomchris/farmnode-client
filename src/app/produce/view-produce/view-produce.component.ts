@@ -156,38 +156,70 @@ export class ViewProduceComponent implements OnInit {
   }
 
   editStatus(produceId, status) {
-    this._produceService.editStatus(produceId, status).subscribe(
-      (data) => {
-        this.isError = false;
-        this.toastr.info('Produce status changed to ' + status + ' status !');
-
-        this._produceService
-          .getProducebyId(produceId)
-          .subscribe((data) => (this.produce = data));
-      },
-      (error) => {
-        this.isError = true;
-        throwError(error);
-        this.toastr.error('Error during produce update');
+    Swal.fire({
+      title: 'Are you sure want to chnange produce status ?',
+      text: 'This will send alerts to all potential consumers subscribed to this produce',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#8EB540',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.value) {
+        this._produceService.editStatus(produceId, status).subscribe(
+          (data) => {
+            this.isError = false;
+            Swal.fire({
+              icon: 'success',
+              text: 'Produce status changed!',
+              showConfirmButton: false,
+              // confirmButtonColor: '#8EB540',
+              timer: 1300,
+            });
+            this._produceService
+              .getProducebyId(produceId)
+              .subscribe((data) => (this.produce = data));
+          },
+          (error) => {
+            this.isError = true;
+            throwError(error);
+            Swal.fire('Error while updating status', '', 'error');
+          }
+        );
       }
-    );
+    });
   }
   editPublishStatus(produceId, status) {
-    this._produceService.editPublishStatus(produceId, status).subscribe(
-      (data) => {
-        this.isError = false;
-        this.toastr.info('Visibilty to consumers changed');
+    Swal.fire({
+      title: 'Are you sure want to change the visibility status ?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#8EB540',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.value) {
+        this._produceService.editPublishStatus(produceId, status).subscribe(
+          (data) => {
+            this.isError = false;
+            Swal.fire({
+              icon: 'success',
+              text: 'Visibilty to consumers changed',
+              showConfirmButton: false,
+              // confirmButtonColor: '#8EB540',
+              timer: 133300,
+            });
 
-        this._produceService
-          .getProducebyId(produceId)
-          .subscribe((data) => (this.produce = data));
-      },
-      (error) => {
-        this.isError = true;
-        throwError(error);
-        this.toastr.error('Error during produce update');
+            this._produceService
+              .getProducebyId(produceId)
+              .subscribe((data) => (this.produce = data));
+          },
+          (error) => {
+            this.isError = true;
+            throwError(error);
+            this.toastr.error('Error during produce update');
+          }
+        );
       }
-    );
+    });
   }
 
   open(content) {

@@ -1,4 +1,17 @@
 .community-body {
-    padding: 50px 280px;
+    padding: 20px 200px;
     border: none;
+}
+
+.post {
+    --post-line-color: #ccc;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: relative;
+    border-radius: 4px;
+    padding: 10px;
 }

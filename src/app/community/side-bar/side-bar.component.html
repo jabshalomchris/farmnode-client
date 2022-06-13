@@ -1,22 +1,46 @@
-<div class="sidebar">
+<div class="sidebar shadow/sm sticky">
   <img
     src="/assets/images/community.jpg"
     alt="Logo"
     height="150px"
-    width="203px"
+    width="243px"
   />
-  <div class="mt-2" style="text-align: center; font-size: 0.8em">
-    Welcome to farm node community. Come here to check out others interact with
-    others via questions and posts.
+  <div class="mt-2" style="text-align: center; font-size: 1em">
+    Welcome to <span class="special-text">farm node</span> community circle
+    where we help each other. Come here to check out others interact with others
+    via questions and posts.
   </div>
   <div style="text-align: center">
-    <button class="btnCreatePost" (click)="goToCreatePost()">
+    <button
+      class="button-10 mt-3 mb-3 ms-4"
+      style="width: 200px"
+      (click)="open(mymodal)"
+    >
       Create Post
     </button>
   </div>
   <div style="text-align: center">
-    <button class="btnCreateSubreddit" (click)="goToCreateSubreddit()">
-      My posts
-    </button>
+    <button class="button-20 ms-4" style="width: 200px">My posts</button>
   </div>
 </div>
+
+<ng-template #mymodal let-modal class="modal hide">
+  <div
+    class="modal-header text-center"
+    style="background-color: whitesmoke; color: #4c3113"
+  >
+    <h4 class="modal-title" id="modal-basic-title">
+      <i class="bx bxs-leaf" style="margin-right: 10px; color: #728e37"></i
+      >Create Post
+    </h4>
+    <a
+      type="button"
+      class="btn"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">×</span>
+    </a>
+  </div>
+  <app-create-post></app-create-post>
+</ng-template>

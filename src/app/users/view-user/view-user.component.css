@@ -1,0 +1,15 @@
+.column {
+    float: left;
+    width: 25%;
+    padding: 5px
+}
+
+.produce-image {
+    /* margin-right: 10px; */
+    margin-bottom: 20px;
+    cursor: pointer
+}
+
+a img:hover {
+    transform: scale(1.3);
+}

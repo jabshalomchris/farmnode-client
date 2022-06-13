@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { icon, Marker } from 'leaflet';
 import * as L from 'leaflet';
 import { MappingService } from '../../services/mapping.service';
@@ -12,36 +12,40 @@ import { faHelicopterSymbol } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from 'ngx-webstorage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize, throwError } from 'rxjs';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import 'overlapping-marker-spiderfier-leaflet/dist/oms';
+const OverlappingMarkerSpiderfier = (<any>window).OverlappingMarkerSpiderfier;
+import Swal from 'sweetalert2';
 
 // Icons
 var greenIcon = L.icon({
   iconUrl: '/assets/images/vegicon3.png',
   shadowUrl: 'assets/marker-shadow.png',
-  iconSize: [80, 80], // size of the icon
-  shadowSize: [100, 100], // size of the shadow
-  iconAnchor: [40, 60], // point of the icon which will correspond to marker's location
-  shadowAnchor: [24, 80], // the same for the shadow
-  popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+  iconSize: [70, 70], // size of the icon
+  shadowSize: [70, 100], // size of the shadow
+  iconAnchor: [35, 70], // point of the icon which will correspond to marker's location
+  shadowAnchor: [21, 102], // the same for the shadow
+  popupAnchor: [1, -63], // point from which the popup should open relative to the iconAnchor
 });
 
 var redIcon = L.icon({
   iconUrl: '/assets/images/fruiticon3.png',
   shadowUrl: 'assets/marker-shadow.png',
-  iconSize: [80, 80], // size of the icon
-  shadowSize: [80, 80], // size of the shadow
-  iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
-  shadowAnchor: [24, 107], // the same for the shadow
-  popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+  iconSize: [70, 70], // size of the icon
+  shadowSize: [70, 100], // size of the shadow
+  iconAnchor: [35, 70], // point of the icon which will correspond to marker's location
+  shadowAnchor: [21, 102], // the same for the shadow
+  popupAnchor: [1, -63], // point from which the popup should open relative to the iconAnchor
 });
 
 var DairyIcon = L.icon({
   iconUrl: '/assets/images/farmicon.png',
   shadowUrl: 'assets/marker-shadow.png',
-  iconSize: [80, 80], // size of the icon
-  shadowSize: [80, 80], // size of the shadow
-  iconAnchor: [40, 80], // point of the icon which will correspond to marker's location
-  shadowAnchor: [24, 107], // the same for the shadow
-  popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+  iconSize: [70, 70], // size of the icon
+  shadowSize: [70, 100], // size of the shadow
+  iconAnchor: [35, 70], // point of the icon which will correspond to marker's location
+  shadowAnchor: [21, 102], // the same for the shadow
+  popupAnchor: [1, -63], // point from which the popup should open relative to the iconAnchor
 });
 
 @Component({
@@ -71,6 +75,9 @@ export class FindProducesComponent implements OnInit {
   findProducePayload: FindProducesPayload;
 
   produces$: Array<ProduceModel>;
+  oms;
+  /*create array:*/
+  marker = new Array();
 
   constructor(
     private mappingService: MappingService,
@@ -105,11 +112,23 @@ export class FindProducesComponent implements OnInit {
     this.searchForm = new FormGroup({
       location: new FormControl('', Validators.required),
     });
+
     this.markerClusterGroup = L.markerClusterGroup({
       removeOutsideVisibleBounds: true,
       maxClusterRadius: 5,
       spiderfyDistanceMultiplier: 2,
       spiderLegPolylineOptions: { weight: 1.5, color: '#222', opacity: 0.5 },
+      iconCreateFunction: function (cluster) {
+        return L.icon({
+          iconUrl: '/assets/images/node.png',
+          shadowUrl: 'assets/marker-shadow.png',
+          iconSize: [70, 70], // size of the icon
+          shadowSize: [70, 100], // size of the shadow
+          iconAnchor: [35, 70], // point of the icon which will correspond to marker's location
+          shadowAnchor: [21, 102], // the same for the shadow
+          popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
+        });
+      },
     });
     this.map = L.map('map').setView([6.927079, 79.861243], 14);
 
@@ -127,7 +146,7 @@ export class FindProducesComponent implements OnInit {
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
         maxZoom: 18,
-        minZoom: 10,
+        minZoom: 12,
         attribution:
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }
@@ -153,6 +172,17 @@ export class FindProducesComponent implements OnInit {
     //   });
 
     // console.log(this.map.getBounds());
+    // this.oms = new OverlappingMarkerSpiderfier(this.map, {
+    //   keepSpiderfied: true,
+    //   nearbyDistance: 2,
+    //   circleFootSeparation: 50,
+    //   nudgeStackedMarkers: true,
+    //   minNudgeZoomLevel: 0,
+    //   nudgeBucketSize: 0,
+    //   nudgeRadius: 1.5,
+    //   markersWontMove: true,
+    //   markersWontHide: true,
+    // });
 
     this.fillMap();
 
@@ -163,6 +193,10 @@ export class FindProducesComponent implements OnInit {
       if (this.geoJsonLayer) {
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
         console.log('dragend'); // get the coordinates
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
 
         this.fillMap();
         this.getProducesbyFilter();
@@ -173,7 +207,11 @@ export class FindProducesComponent implements OnInit {
       if (this.geoJsonLayer) {
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
         console.log('zoomed'); // get the coordinates
-
+        // this.oms.clearMarkers();
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
         this.northeast_lat = this.map.getBounds().getNorthEast().lat;
         this.northeast_long = this.map.getBounds().getNorthEast().lng;
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
@@ -189,6 +227,7 @@ export class FindProducesComponent implements OnInit {
   private fillMap(): void {
     let router: any = this.router;
     let user: any = this.user;
+    let map: any = this.map;
 
     this.findProducePayload.sw_lat = this.map.getBounds().getSouthWest().lat;
     this.findProducePayload.ne_lat = this.map.getBounds().getNorthEast().lat;
@@ -198,13 +237,14 @@ export class FindProducesComponent implements OnInit {
     this.findProducePayload.status = this.status;
     this.findProducePayload.includeUsers = this.includeUsers;
 
+    // let oms: any = this.oms;
+    // let array = this.marker;
     this.mappingService.getMap(this.findProducePayload).subscribe(
       (data) => {
-        console.log(data);
-
         this.geoJsonLayer = L.geoJSON(data, {
           pointToLayer: function (feature, latlng) {
             var statusString;
+            var priceString;
 
             if (feature.properties.produceStatus == 'RIPE') {
               statusString =
@@ -219,6 +259,15 @@ export class FindProducesComponent implements OnInit {
               var marker = L.marker(latlng, { icon: DairyIcon });
             } else {
               var marker = L.marker(latlng, { icon: redIcon });
+            }
+            if (feature.properties.price != 0.0) {
+              priceString =
+                'Rs. ' +
+                feature.properties.price +
+                ' / ' +
+                feature.properties.measureType;
+            } else {
+              priceString = 'FREE';
             }
 
             var popup = L.popup({
@@ -241,13 +290,11 @@ export class FindProducesComponent implements OnInit {
                 '</div>' +
                 '<div class="col-6 col-sm-9">' +
                 '<h6 class="card-title">' +
-                'Rs. ' +
-                feature.properties.price +
-                ' / ' +
-                feature.properties.measureType +
-                '</h6>' +
+                '<strong>' +
+                priceString +
+                '</strong></h6>' +
                 '<p class="card-text" >' +
-                feature.properties.description.slice(0, 30) +
+                feature.properties.description.slice(0, 60) +
                 ' .....' +
                 '</p>' +
                 '<div style="text-align: right">' +
@@ -264,7 +311,10 @@ export class FindProducesComponent implements OnInit {
                 '</div>' +
                 '</div>'
             );
-            if (feature.properties.grower == user) {
+            //array.push(marker);
+            //oms.addMarker(marker);
+            //map.addLayer(marker);
+            if (feature.properties.userName == user) {
               return marker.bindPopup(popup).on('popupopen', () => {
                 const button = document.getElementById('routingButton');
                 button?.addEventListener('click', () => {
@@ -286,18 +336,6 @@ export class FindProducesComponent implements OnInit {
 
         this.markerClusterGroup.addLayer(this.geoJsonLayer);
         this.map.addLayer(this.markerClusterGroup);
-
-        // this.map.on('popupopen', function (e) {
-        //   const button = document.getElementById('popupButtonlll');
-
-        //   button?.addEventListener(
-        //     'click',
-        //     () => {
-        //      console.log('button clicked' + e.popup._source.feature.id);
-        //     },
-        //     { once: true }
-        //   );
-        // });
       },
       (error) => {
         console.log(error);
@@ -331,7 +369,7 @@ export class FindProducesComponent implements OnInit {
   handleChange(evt) {
     var target = evt.target;
     if (target.checked) {
-      console.log('Clickec');
+      console.log('Clicked');
       this._prevSelected = target;
     } else {
       console.log('unclicked');
@@ -340,6 +378,10 @@ export class FindProducesComponent implements OnInit {
   changeStatus(e) {
     this.status = e.target.value;
     if (e.target.checked) {
+      // this.oms.clearMarkers();
+      // for (let i = 0; i < this.marker.length; i++) {
+      //   this.map.removeLayer(this.marker[i]);
+      // }
       if (this.geoJsonLayer) {
         // this.includeUsers = true;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
@@ -349,6 +391,10 @@ export class FindProducesComponent implements OnInit {
         this.getProducesbyFilter();
       }
     } else {
+      this.oms.clearMarkers();
+      for (let i = 0; i < this.marker.length; i++) {
+        this.map.removeLayer(this.marker[i]);
+      }
       if (this.geoJsonLayer) {
         // this.includeUsers = false;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
@@ -370,6 +416,10 @@ export class FindProducesComponent implements OnInit {
       if (this.geoJsonLayer) {
         // this.includeUsers = true;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
 
         this.northeast_lat = this.map.getBounds().getNorthEast().lat;
         this.northeast_long = this.map.getBounds().getNorthEast().lng;
@@ -384,7 +434,10 @@ export class FindProducesComponent implements OnInit {
       if (this.geoJsonLayer) {
         // this.includeUsers = false;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
-
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
         this.northeast_lat = this.map.getBounds().getNorthEast().lat;
         this.northeast_long = this.map.getBounds().getNorthEast().lng;
         this.southwest_lat = this.map.getBounds().getSouthWest().lat;
@@ -401,6 +454,10 @@ export class FindProducesComponent implements OnInit {
       if (this.geoJsonLayer) {
         this.includeUsers = true;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
 
         this.northeast_lat = this.map.getBounds().getNorthEast().lat;
         this.northeast_long = this.map.getBounds().getNorthEast().lng;
@@ -415,6 +472,10 @@ export class FindProducesComponent implements OnInit {
       if (this.geoJsonLayer) {
         this.includeUsers = false;
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
 
         this.northeast_lat = this.map.getBounds().getNorthEast().lat;
         this.northeast_long = this.map.getBounds().getNorthEast().lng;
@@ -457,7 +518,12 @@ export class FindProducesComponent implements OnInit {
               ],
             ]);
           } else {
-            this.toastr.warning('Search location not found');
+            Swal.fire({
+              icon: 'error',
+              text: 'Search location not found',
+              showConfirmButton: false,
+              timer: 133300,
+            });
           }
         },
         (error) => {

@@ -46,6 +46,7 @@ import { ViewRecievedRequestComponent } from './produce-request/view-recieved-re
 import { ViewPostsComponent } from './community/view-posts/view-posts.component';
 import { ViewRequestComponent } from './produce-request/view-request/view-request.component';
 import { UpdateRequestComponent } from './produce-request/update-request/update-request.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { UpdateRequestComponent } from './produce-request/update-request/update-
     MatFormFieldModule,
     EditorModule,
     MatIconModule,
+    InfiniteScrollModule,
   ],
   providers: [
     AuthGuard,

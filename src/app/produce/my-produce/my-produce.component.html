@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 4%">
+<div class="container" style="margin-top: 4%; min-height: 70%">
   <div class="row">
     <div class="col-lg-6 mb-4">
       <div class="card">
@@ -53,12 +53,14 @@
                     ></div>
                     <ng-template #priced
                       ><div class="d-flex align-items-center">
-                        <p class="fw-bold mb-1">Rs. {{ produce.price }}</p>
+                        <p class="fw-bold mb-1" style="color: #8c2c35">
+                          Rs. {{ produce.price }}
+                        </p>
                       </div>
                     </ng-template>
                     <ng-template #free
                       ><div class="d-flex align-items-center">
-                        <p class="fw-bold mb-1">FREE</p>
+                        <p class="fw-bold mb-1" style="color: #842029">FREE</p>
                       </div>
                     </ng-template>
                   </td>
@@ -81,7 +83,7 @@
                     <a
                       routerLink="/viewproduce/{{ produce.produceId }}"
                       class="btn btn-warning"
-                      >View</a
+                      >Manage</a
                     >
                   </td>
                 </ng-template>
@@ -140,12 +142,14 @@
                     ></div>
                     <ng-template #priced
                       ><div class="d-flex align-items-center">
-                        <p class="fw-bold mb-1">Rs. {{ produce.price }}</p>
+                        <p class="fw-bold mb-1" style="color: #8c2c35">
+                          Rs. {{ produce.price }}
+                        </p>
                       </div>
                     </ng-template>
                     <ng-template #free
                       ><div class="d-flex align-items-center">
-                        <p class="fw-bold mb-1" style="color: #8c2c35">FREE</p>
+                        <p class="fw-bold mb-1" style="color: #842029">FREE</p>
                       </div>
                     </ng-template>
                   </td>
@@ -168,7 +172,7 @@
                     <a
                       routerLink="/viewproduce/{{ produce.produceId }}"
                       class="btn btn-warning"
-                      >View</a
+                      >Manage</a
                     >
                   </td>
                 </ng-template>

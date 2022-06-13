@@ -1,7 +1,7 @@
 export class PostModel {
   postId: number;
   postName: string;
-  url: string;
+  filename: string;
   description: string;
   userName: string;
   commentCount: number;

@@ -1,7 +1,7 @@
 <div class="parallax">
   <div class="title">My Subscriptions</div>
 </div>
-<div class="container" style="margin-top: 4%; padding: 0 80px">
+<div class="container" style="margin-top: 4%; padding: 0 80px; min-height: 70%">
   <div class="row">
     <div class="col-lg-8 mb-4" style="margin-left: 4%">
       <div *ngIf="isEmptyboolean === true; then content"></div>
@@ -101,19 +101,29 @@
           </div>
           <div style="margin-top: 10%; margin-left: 5%">
             <p>
-              <strong style="margin-right: 5%">{{ user.produceCount }}</strong>
+              <strong style="margin-right: 5%; color: #44571f">{{
+                user.produceCount
+              }}</strong>
               Agro-produces grown
             </p>
             <p>
-              <strong style="margin-right: 5%">{{
+              <strong style="margin-right: 5%; color: #44571f">{{
                 user.subscriptionCount
               }}</strong>
               Subscriptions
             </p>
-            <p><strong style="margin-right: 5%">0</strong> Reviews</p>
-            <p><strong style="margin-right: 5%">0</strong> Comments</p>
             <p>
-              <strong style="margin-right: 5%">{{ user.friendsCount }}</strong>
+              <strong style="margin-right: 5%; color: #44571f">0</strong>
+              Reviews
+            </p>
+            <p>
+              <strong style="margin-right: 5%; color: #44571f">0</strong>
+              Comments
+            </p>
+            <p>
+              <strong style="margin-right: 5%; color: #44571f">{{
+                user.friendsCount
+              }}</strong>
               Connections
             </p>
           </div>

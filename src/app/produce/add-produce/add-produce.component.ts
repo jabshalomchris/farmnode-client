@@ -5,7 +5,12 @@ import { GeoSearchControl, GoogleProvider } from 'leaflet-geosearch';
 import * as L from 'leaflet';
 import { icon, marker, Marker } from 'leaflet';
 import { Title } from '@angular/platform-browser';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { AddProducePayload } from './add-produce.payload';
 import { ProduceService } from '../../services/produce.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,12 +19,12 @@ import { ViewportScroller } from '@angular/common';
 import Swal from 'sweetalert2';
 
 var greenIcon = L.icon({
-  iconUrl: '/assets/images/Icon.png',
+  iconUrl: '/assets/images/vegicon3.png',
   shadowUrl: 'assets/marker-shadow.png',
-  iconSize: [88, 104], // size of the icon
-  shadowSize: [80, 104], // size of the shadow
-  iconAnchor: [44, 104], // point of the icon which will correspond to marker's location
-  shadowAnchor: [24, 107], // the same for the shadow
+  iconSize: [80, 80], // size of the icon
+  shadowSize: [100, 100], // size of the shadow
+  iconAnchor: [40, 60], // point of the icon which will correspond to marker's location
+  shadowAnchor: [24, 80], // the same for the shadow
   popupAnchor: [1, -90], // point from which the popup should open relative to the iconAnchor
 });
 Marker.prototype.options.icon = greenIcon;
@@ -79,11 +84,10 @@ export class AddProduceComponent implements OnInit {
 
   private initForm() {
     this.createProduceForm = new FormGroup({
-      image: new FormControl('', Validators.required),
+      image: new FormControl(''),
       produceName: new FormControl('', Validators.required),
       measureType: new FormControl('each', Validators.required),
       inputCategory: new FormControl('Vegetable', Validators.required),
-      produceDescription: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       produceStatus: new FormControl('GROWING', Validators.required),
       price: new FormControl('', Validators.required),
@@ -213,48 +217,63 @@ export class AddProduceComponent implements OnInit {
   }
 
   submit(submitBtn) {
-    submitBtn.disabled = true;
-    this.produceRequestPayload.produceName =
-      this.createProduceForm.get('produceName')?.value;
-    this.produceRequestPayload.description =
-      this.createProduceForm.get('description')?.value;
-    this.produceRequestPayload.category =
-      this.createProduceForm.get('inputCategory')?.value;
-    this.produceRequestPayload.price =
-      this.createProduceForm.get('price')?.value;
-    this.produceRequestPayload.latitude = this.latitude;
-    this.produceRequestPayload.longitude = this.longitude;
-    this.produceRequestPayload.price =
-      this.createProduceForm.get('price')?.value;
-    this.produceRequestPayload.measureType =
-      this.createProduceForm.get('measureType')?.value;
-    this.produceRequestPayload.produceStatus =
-      this.createProduceForm.get('produceStatus')?.value;
-    this.produceRequestPayload.publishStatus = 'true';
+    if (this.createProduceForm.valid) {
+      submitBtn.disabled = true;
+      this.produceRequestPayload.produceName =
+        this.createProduceForm.get('produceName')?.value;
+      this.produceRequestPayload.description =
+        this.createProduceForm.get('description')?.value;
+      this.produceRequestPayload.category =
+        this.createProduceForm.get('inputCategory')?.value;
+      this.produceRequestPayload.price =
+        this.createProduceForm.get('price')?.value;
+      this.produceRequestPayload.latitude = this.latitude;
+      this.produceRequestPayload.longitude = this.longitude;
+      this.produceRequestPayload.price =
+        this.createProduceForm.get('price')?.value;
+      this.produceRequestPayload.measureType =
+        this.createProduceForm.get('measureType')?.value;
+      this.produceRequestPayload.produceStatus =
+        this.createProduceForm.get('produceStatus')?.value;
+      this.produceRequestPayload.publishStatus = 'true';
 
-    this.produceService
-      .addProduce(this.produceRequestPayload, this.selectedFile)
-      .pipe(
-        finalize(() => {
-          submitBtn.disabled = false;
-        })
-      )
-      .subscribe(
-        (data) => {
-          this.isError = false;
-          this.toastr.success('Produce added successfully');
-          this.initForm();
-          this.viewportScroller.scrollToPosition([0, 0]);
-        },
-        (error) => {
-          this.isError = true;
-          throwError(error);
-          this.toastr.error('Login unsuccessful');
-        }
-      );
-    submitBtn.disabled = false;
-
-    console.log(this.produceRequestPayload);
+      this.produceService
+        .addProduce(this.produceRequestPayload, this.selectedFile)
+        .pipe(
+          finalize(() => {
+            submitBtn.disabled = false;
+          })
+        )
+        .subscribe(
+          (data) => {
+            this.isError = false;
+            Swal.fire({
+              icon: 'success',
+              title:
+                'Produce added successfully! You can check them out in your e-micro farm',
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            });
+            this.initForm();
+            this.viewportScroller.scrollToPosition([0, 0]);
+          },
+          (error) => {
+            this.isError = true;
+            throwError(error);
+            this.toastr.error('Produce add unsuccessful');
+          }
+        );
+      submitBtn.disabled = false;
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        text: "You've missed important produce details!",
+        confirmButtonColor: '#8EB540',
+      });
+    }
   }
   leave() {
     if (this.map) {

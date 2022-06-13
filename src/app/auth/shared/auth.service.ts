@@ -6,6 +6,7 @@ import { LoginRequestPayload } from '../login/login.request.payload';
 import { LoginResponse } from '../login/login.response.payload';
 import { map, tap } from 'rxjs/operators';
 import { SignupRequestPayload } from '../signup/signup.request.payload';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -21,15 +22,29 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private router: Router
   ) {}
 
-  signup(signupRequestPayload: SignupRequestPayload): Observable<any> {
-    return this.httpClient.post(
-      'http://localhost:8080/api/user/signup',
-      signupRequestPayload,
-      { responseType: 'text' }
+  signup(
+    signupRequestPayload: SignupRequestPayload,
+    selectedFile
+  ): Observable<any> {
+    const formdata = new FormData();
+    formdata.append('file', selectedFile);
+    formdata.append(
+      'user',
+      new Blob([JSON.stringify(signupRequestPayload)], {
+        type: 'application/json',
+      })
     );
+    return this.httpClient
+      .post('http://localhost:8080/api/user/signup', formdata)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
@@ -55,6 +70,9 @@ export class AuthService {
 
   getJwtToken() {
     return this.localStorage.retrieve('access_token');
+  }
+  getRefreshJwtToken() {
+    return this.localStorage.retrieve('refresh_token');
   }
 
   refreshToken() {
@@ -91,7 +109,7 @@ export class AuthService {
     this.localStorage.clear('username');
     this.localStorage.clear('refresh_token');
     this.loggedIn.emit(false);
-    //this.localStorage.clear('expiresAt');
+    this.router.navigateByUrl('/login');
   }
 
   getUserName() {

@@ -2,7 +2,11 @@
   <h2 class="head-text">Post your self-grown <strong>Agro-Produces</strong></h2>
 </div>
 
-<form [formGroup]="createProduceForm" (ngSubmit)="submit(submitBtn)">
+<form
+  [formGroup]="createProduceForm"
+  (ngSubmit)="submit(submitBtn)"
+  ngNativeValidate
+>
   <!-- <div class="card shadow topCard rounded">
     <div class="card-body">
       <h3 class="card-title text">Is it on your property?</h3>
@@ -23,6 +27,7 @@
               id="produceName"
               placeholder="Tell us what you are growing "
               [formControlName]="'produceName'"
+              required
             />
           </div>
           <div class="form-group col-md-6">

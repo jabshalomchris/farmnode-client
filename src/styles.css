@@ -13,6 +13,12 @@ input.ng-invalid.ng-touched {
     padding: 0;
 }
 
+/* structure*/
+html,
+body {
+    height: 100%;
+}
+
 body {
     background-color: #EEEEEE;
 }
@@ -39,4 +45,131 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.parallax2 {
+    background-image: url("/assets/images/connection.jpg");
+    width: 100%;
+    height: max-content;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.parallax3 {
+    background-image: url("/assets/images/community.jpg");
+    width: 100%;
+    height: max-content;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/*-----------------------------Button-------------------*/
+
+#myBtn {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Fixed/sticky position */
+    bottom: 20px;
+    /* Place the button at the bottom of the page */
+    right: 30px;
+    /* Place the button 30px from the right */
+    z-index: 1200;
+    /* Make sure it does not overlap */
+    background-color: #728E37;
+    border: #EEEEEE;
+}
+
+#myBtn:hover {
+    background-color: #555;
+    /* Add a dark-grey background on hover */
+}
+
+
+/* CSS */
+.button-10 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+
+    color: #fff;
+    background: linear-gradient(180deg, #5b7429 0%, #39491a 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #39481a, inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-10:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+.button-10:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #729133;
+}
+
+/* CSS */
+.button-20 {
+    display: flex;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+
+    color: #44571f;
+    background: linear-gradient(180deg, #ffff 0%, #eaeaea 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #729133, inset 0px 0.8px 0px -0.25px #729133;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-20:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+
+.button-20:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #729133;
+}
+
+/* CSS */
+.button-30 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+
+    color: #729133;
+    background: linear-gradient(180deg, #E7E7E7 0%, #E7E7E7 100%);
+    background-origin: border-box;
+    box-shadow: 0px 0.5px 1.5px #729133, inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    text-decoration: none;
+}
+
+.button-30:focus {
+    box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px #39481a, 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+    outline: 0;
+}
+
+.button-30:hover {
+    box-shadow: 0 0.5em 1.5em -0.5em #729133;
 }

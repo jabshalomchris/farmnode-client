@@ -10,6 +10,7 @@ export class RequestItem {
   constructor(produce: ProduceModel, quantity = 1) {
     this.produceId = produce.produceId;
     this.produceName = produce.produceName;
+    this.fileName = produce.filename;
     this.price = produce.price;
     this.quantity = quantity;
     this.linetotal = produce.price * quantity;
