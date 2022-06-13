@@ -10,6 +10,7 @@ import { PostModel } from '../models/post-model';
 export class PostService {
   constructor(private httpClient: HttpClient) {}
 
+  //creating a new post
   createPost(CreatePostPayload, selectedFile): Observable<any> {
     const formdata = new FormData();
     formdata.append('file', selectedFile);
@@ -28,12 +29,14 @@ export class PostService {
       );
   }
 
+  //getting all posts
   getAllPosts(page: number): Observable<Array<PostModel>> {
     return this.httpClient.get<Array<PostModel>>(
       'http://localhost:8080/api/posts/?pageNo=' + page
     );
   }
 
+  //get posts by ID
   getPostbyId(postId: number): Observable<any> {
     return this.httpClient
       .get<PostModel>(`http://localhost:8080/api/posts/${postId}`)

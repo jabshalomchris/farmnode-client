@@ -5,5 +5,6 @@ export class FindProducesPayload {
   ne_lng: string;
   category: string;
   status: string;
+  price: string;
   includeUsers: boolean;
 }

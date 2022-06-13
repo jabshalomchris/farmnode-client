@@ -33,6 +33,7 @@ export class ViewFriendsComponent implements AfterViewInit {
 
   getalloutboundrequests() {
     this._friendservice.getoutboundrequests().subscribe((data) => {
+      console.log(data);
       this.outboundRequests = data;
     });
   }
@@ -48,6 +49,7 @@ export class ViewFriendsComponent implements AfterViewInit {
     event.preventDefault();
     this._friendservice.approvefriendship(senderId).subscribe((data) => {
       this.getallinboundrequests();
+      this.getAllFriends();
       this.toastr.success('Connection request approved');
     });
   }

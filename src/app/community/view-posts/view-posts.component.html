@@ -18,16 +18,50 @@
     <div class="col-md-12">
       <span class="post-header">
         <span class="text-muted"> Posted by </span>
+
         <a class="username" routerLink="/user/">{{ post.userName }}</a>
         <span class="text-muted"> . {{ post.duration }}</span>
       </span>
       <hr />
-      <div class="post-title">
-        <a class="postname">{{ post.postName }}</a>
-      </div>
-      <div>
-        <p class="post-text">{{ post.description | slice: 0:140 }} ...</p>
-      </div>
+
+      <div
+        *ngIf="
+          post.filename == '';
+          then postimagenotpresent;
+          else postimagepresent
+        "
+      ></div>
+      <ng-template #postimagenotpresent>
+        <div class="post-title">
+          <a class="postname">{{ post.postName }}</a>
+        </div>
+        <div>
+          <p class="post-text">{{ post.description }} ...</p>
+        </div>
+      </ng-template>
+      <ng-template #postimagepresent
+        ><div class="row">
+          <div class="col-md-10">
+            <div class="post-title">
+              <a class="postname">{{ post.postName }}</a>
+            </div>
+            <div>
+              <p class="post-text">{{ post.description }} ...</p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <img
+              src="http://localhost:8080/api/image/post-image/{{
+                post.filename
+              }}"
+              alt="post-image"
+              style="object-fit: cover; width: 100px; height: 100px"
+              class="rounded"
+            />
+          </div>
+        </div>
+      </ng-template>
+
       <hr />
       <span>
         <a class="btnCommments" role="button">

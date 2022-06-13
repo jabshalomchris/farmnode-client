@@ -32,6 +32,8 @@ export class CreatePostComponent implements OnInit {
       description: new FormControl('', Validators.required),
     });
   }
+
+  //create post
   createPost(submitBtn) {
     submitBtn.disabled = true;
     if (this.createPostForm.valid) {

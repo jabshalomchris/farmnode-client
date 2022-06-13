@@ -12,6 +12,7 @@ import { PostCommentModel } from '../models/comment/post-comment-model';
 export class CommentService {
   constructor(private httpClient: HttpClient) {}
 
+  //Adding a comment to a produce
   addProduceComment(commentPayload: CommentPayload): Observable<boolean> {
     return this.httpClient
       .post<any>('http://localhost:8080/api/produce/comments', commentPayload)
@@ -21,13 +22,14 @@ export class CommentService {
         })
       );
   }
-
+  //Getting comments for a produce
   getCommentsByProduce(produceId): Observable<Array<ProduceCommentModel>> {
     return this.httpClient.get<Array<ProduceCommentModel>>(
       `http://localhost:8080/api/produce/comments/by-produce/${produceId}`
     );
   }
 
+  //Adding a comment to post
   addPostComment(commentPayload: PostCommentPayload): Observable<boolean> {
     return this.httpClient
       .post<any>('http://localhost:8080/api/comments', commentPayload)
@@ -38,6 +40,7 @@ export class CommentService {
       );
   }
 
+  //getting comments for a post
   getCommentsByPost(postId): Observable<Array<PostCommentModel>> {
     return this.httpClient.get<Array<PostCommentModel>>(
       `http://localhost:8080/api/comments/by-post/${postId}`

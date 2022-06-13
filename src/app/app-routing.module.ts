@@ -35,20 +35,76 @@ const routes: Routes = [
     component: MyProduceComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'viewproduce/:produceId', component: ViewProduceComponent },
-  { path: 'produce/:produceId', component: OtherProduceComponent },
-  { path: 'post-produce', component: AddProduceComponent },
-  { path: 'my-subscription', component: MySubscriptionsComponent },
-  { path: 'community', component: CommunityComponent },
-  { path: 'create-post', component: CreatePostComponent },
-  { path: 'view-friends', component: ViewFriendsComponent },
-  { path: 'view-user/:userId', component: ViewUserComponent },
-  { path: 'produce-request', component: ProduceRequestComponent },
-  { path: 'view-sent-request', component: ViewSentRequestComponent },
-  { path: 'view-received-request', component: ViewRecievedRequestComponent },
-  { path: 'view-request/:requestId', component: ViewRequestComponent },
-  { path: 'update-request/:requestId', component: UpdateRequestComponent },
-  { path: 'view-post/:postId', component: ViewPostsComponent },
+  {
+    path: 'viewproduce/:produceId',
+    component: ViewProduceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'produce/:produceId',
+    component: OtherProduceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'post-produce',
+    component: AddProduceComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my-subscription',
+    component: MySubscriptionsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'community',
+    component: CommunityComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'create-post',
+    component: CreatePostComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-friends',
+    component: ViewFriendsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-user/:userId',
+    component: ViewUserComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'produce-request',
+    component: ProduceRequestComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-sent-request',
+    component: ViewSentRequestComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-received-request',
+    component: ViewRecievedRequestComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-request/:requestId',
+    component: ViewRequestComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'update-request/:requestId',
+    component: UpdateRequestComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view-post/:postId',
+    component: ViewPostsComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

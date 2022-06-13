@@ -17,7 +17,7 @@ import 'overlapping-marker-spiderfier-leaflet/dist/oms';
 const OverlappingMarkerSpiderfier = (<any>window).OverlappingMarkerSpiderfier;
 import Swal from 'sweetalert2';
 
-// Icons
+// Setting up geo marker icons
 var greenIcon = L.icon({
   iconUrl: '/assets/images/vegicon3.png',
   shadowUrl: 'assets/marker-shadow.png',
@@ -69,6 +69,7 @@ export class FindProducesComponent implements OnInit {
   includeUsers: boolean = true;
   category = '';
   status = '';
+  price = '';
   _;
   markerClusterGroup: L.MarkerClusterGroup;
   markerClusterData = [];
@@ -100,6 +101,7 @@ export class FindProducesComponent implements OnInit {
       ne_lng: '',
       category: '',
       status: '',
+      price: '',
       includeUsers: this.includeUsers,
     };
   }
@@ -108,6 +110,8 @@ export class FindProducesComponent implements OnInit {
     this.initMap();
   }
 
+  /*Initializing the map
+   */
   private initMap(): void {
     this.searchForm = new FormGroup({
       location: new FormControl('', Validators.required),
@@ -188,21 +192,18 @@ export class FindProducesComponent implements OnInit {
 
     this.getProducesbyFilter();
 
-    // /////important
+    //Binding drag event to change GeoJson data fetch
     this.map.on('dragend', (e) => {
       if (this.geoJsonLayer) {
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
-        console.log('dragend'); // get the coordinates
-        // this.oms.clearMarkers();
-        // for (let i = 0; i < this.marker.length; i++) {
-        //   this.map.removeLayer(this.marker[i]);
-        // }
+        console.log('dragend');
 
         this.fillMap();
         this.getProducesbyFilter();
       }
     });
 
+    //binding zoom event to change GeoJson data fetch
     this.map.on('zoom', (e) => {
       if (this.geoJsonLayer) {
         this.markerClusterGroup.removeLayer(this.geoJsonLayer);
@@ -235,6 +236,7 @@ export class FindProducesComponent implements OnInit {
     this.findProducePayload.ne_lng = this.map.getBounds().getNorthEast().lng;
     this.findProducePayload.category = this.category;
     this.findProducePayload.status = this.status;
+    this.findProducePayload.price = this.price;
     this.findProducePayload.includeUsers = this.includeUsers;
 
     // let oms: any = this.oms;
@@ -351,6 +353,7 @@ export class FindProducesComponent implements OnInit {
     this.findProducePayload.ne_lng = this.map.getBounds().getNorthEast().lng;
     this.findProducePayload.category = this.category;
     this.findProducePayload.status = this.status;
+    this.findProducePayload.price = this.price;
     this.findProducePayload.includeUsers = this.includeUsers;
 
     this.produceService
@@ -487,6 +490,62 @@ export class FindProducesComponent implements OnInit {
       }
     }
   }
+
+  changeAllPriceSwitch(e) {
+    if (e.target.checked) {
+      const checkbox = document.getElementById(
+        'flexSwitchFree'
+      ) as HTMLInputElement | null;
+
+      checkbox!.checked = false;
+
+      if (this.geoJsonLayer) {
+        this.price = '';
+        this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
+
+        this.northeast_lat = this.map.getBounds().getNorthEast().lat;
+        this.northeast_long = this.map.getBounds().getNorthEast().lng;
+        this.southwest_lat = this.map.getBounds().getSouthWest().lat;
+        this.southwest_long = this.map.getBounds().getSouthWest().lng;
+
+        this.fillMap();
+
+        this.getProducesbyFilter();
+      }
+    }
+  }
+
+  changeFreePriceSwitch(e) {
+    if (e.target.checked) {
+      const checkbox = document.getElementById(
+        'flexSwitchAll'
+      ) as HTMLInputElement | null;
+
+      checkbox!.checked = false;
+      if (this.geoJsonLayer) {
+        this.price = '0';
+        this.markerClusterGroup.removeLayer(this.geoJsonLayer);
+        // this.oms.clearMarkers();
+        // for (let i = 0; i < this.marker.length; i++) {
+        //   this.map.removeLayer(this.marker[i]);
+        // }
+
+        this.northeast_lat = this.map.getBounds().getNorthEast().lat;
+        this.northeast_long = this.map.getBounds().getNorthEast().lng;
+        this.southwest_lat = this.map.getBounds().getSouthWest().lat;
+        this.southwest_long = this.map.getBounds().getSouthWest().lng;
+
+        this.fillMap();
+
+        this.getProducesbyFilter();
+      }
+    }
+  }
+
   submit(submitBtn) {
     submitBtn.disabled = true;
     this.locationsearchquery = this.searchForm.get('location')?.value;

@@ -28,6 +28,8 @@ export class ProduceRequestComponent implements OnInit {
   requestItems: RequestItem[] = [];
   produceRequestPayload: ProduceRequestPayload;
   growerId;
+  growerName;
+  growerFirstName;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,6 +70,9 @@ export class ProduceRequestComponent implements OnInit {
       .getProducesbyUserIdForRequest(userId)
       .subscribe((produce) => {
         this.produces$ = produce;
+        this.growerName = produce[0].grower;
+        let x = this.growerName.split(' ');
+        this.growerFirstName = x[0];
         console.log(this.produces$);
       });
   }
@@ -87,6 +92,7 @@ export class ProduceRequestComponent implements OnInit {
       );
       if (this.requestItems[i].produceId === produce.produceId) {
         this.requestItems[i].quantity++;
+        this.calcLineTotal(this.requestItems[i].produceId);
         productExists = true;
         break;
       }

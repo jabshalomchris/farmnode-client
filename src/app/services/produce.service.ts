@@ -18,6 +18,7 @@ export class ProduceService {
     );
   }
 
+  //get procuces by filter
   getProducesbyFilter(
     findProducePayload: FindProducesPayload
   ): Observable<any> {
@@ -32,6 +33,7 @@ export class ProduceService {
     );
     queryParams = queryParams.append('category', findProducePayload.category);
     queryParams = queryParams.append('status', findProducePayload.status);
+    queryParams = queryParams.append('price', findProducePayload.price);
 
     return this.httpClient.get<Array<ProduceModel>>(
       'http://localhost:8080/api/produce/by-filters',

@@ -11,6 +11,7 @@ import { FindProducesComponent } from '../produce/find-produces/find-produces.co
 export class MappingService {
   constructor(private httpClient: HttpClient) {}
 
+  //load map by parameters
   getMap(findProducePayload: FindProducesPayload): Observable<any> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('sw_lat', findProducePayload.sw_lat);
@@ -19,6 +20,7 @@ export class MappingService {
     queryParams = queryParams.append('ne_lng', findProducePayload.ne_lng);
     queryParams = queryParams.append('category', findProducePayload.category);
     queryParams = queryParams.append('status', findProducePayload.status);
+    queryParams = queryParams.append('price', findProducePayload.price);
     queryParams = queryParams.append(
       'include_users',
       findProducePayload.includeUsers
@@ -32,6 +34,7 @@ export class MappingService {
     );
   }
 
+  //Calling Google GeoCoding API: passing the API Key
   geocode(query): Observable<any> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('address', query);

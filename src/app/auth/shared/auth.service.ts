@@ -7,6 +7,7 @@ import { LoginResponse } from '../login/login.response.payload';
 import { map, tap } from 'rxjs/operators';
 import { SignupRequestPayload } from '../signup/signup.request.payload';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
+  @Output() name: EventEmitter<string> = new EventEmitter();
 
   refreshTokenPayload = {
     refreshToken: this.getRefreshToken(),
@@ -23,7 +25,8 @@ export class AuthService {
   constructor(
     private httpClient: HttpClient,
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private _usersService: UsersService
   ) {}
 
   signup(
@@ -59,9 +62,15 @@ export class AuthService {
           this.localStorage.store('access_token', data.access_token);
           this.localStorage.store('username', data.username);
           this.localStorage.store('refresh_token', data.refresh_token);
+          this._usersService.getUsersDetail().subscribe((data1) => {
+            this.localStorage.store('name', data1.name);
+            this.name.emit(data1.name);
+          });
 
           this.loggedIn.emit(true);
+
           this.username.emit(data.username);
+
           // console.log(data);
           return true;
         })
@@ -108,6 +117,7 @@ export class AuthService {
     this.localStorage.clear('access_token');
     this.localStorage.clear('username');
     this.localStorage.clear('refresh_token');
+    this.localStorage.clear('name');
     this.loggedIn.emit(false);
     this.router.navigateByUrl('/login');
   }
@@ -121,5 +131,8 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.getJwtToken() != null;
+  }
+  getName() {
+    return this.localStorage.retrieve('name');
   }
 }

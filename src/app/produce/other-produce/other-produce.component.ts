@@ -11,6 +11,7 @@ import { CommentService } from '../../services/comment.service';
 import { ProduceCommentModel } from '../../models/comment/produce-comment-model';
 import { CommentPayload } from './comment.payload';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-other-produce',
@@ -93,9 +94,12 @@ export class OtherProduceComponent implements OnInit {
     this._subscriptionService.addSubscription(produceId).subscribe(
       (data) => {
         this.isError = false;
-        this.toastr.success(
-          'You have subscribed to ' + this.produce.produceName
-        );
+        Swal.fire({
+          icon: 'success',
+          text: 'You have subscribed to ' + this.produce.produceName,
+          showConfirmButton: true,
+          confirmButtonColor: '#8EB540',
+        });
 
         this._produceService
           .getProducebyId(produceId)
@@ -110,21 +114,41 @@ export class OtherProduceComponent implements OnInit {
   }
 
   unsubscribe(produceId) {
-    this._subscriptionService.unsubscribe(produceId).subscribe(
-      (data) => {
-        this.isError = false;
-        this.toastr.error('You have unsubscribed produce');
+    Swal.fire({
+      title: 'Are you want to unsubscribe ?',
+      text:
+        "You won't be able to recieve further notifications on " +
+        this.produce.produceName +
+        "'s",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      confirmButtonColor: '#8EB540',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.value) {
+        this._subscriptionService.unsubscribe(produceId).subscribe(
+          (data) => {
+            this.isError = false;
+            Swal.fire({
+              icon: 'success',
+              text: 'You have unsubscribed produce',
+              showConfirmButton: false,
+              // confirmButtonColor: '#8EB540',
+              timer: 1300,
+            });
 
-        this._produceService
-          .getProducebyId(produceId)
-          .subscribe((data) => (this.produce = data));
-      },
-      (error) => {
-        this.isError = true;
-        throwError(error);
-        this.toastr.error('Error during unsubscription');
+            this._produceService
+              .getProducebyId(produceId)
+              .subscribe((data) => (this.produce = data));
+          },
+          (error) => {
+            this.isError = true;
+            throwError(error);
+            this.toastr.error('Error during produce update');
+          }
+        );
       }
-    );
+    });
   }
 
   postComment(submitBtn) {

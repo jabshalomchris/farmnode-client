@@ -1,7 +1,7 @@
 <div class="parallax2">
   <div class="title">My Connections</div>
 </div>
-<div class="container mt-5" style="min-height: 70%">
+<div class="container mt-5" style="min-height: 90%">
   <!-- <h1 class="text-center mb-4">Manage your Agro-Friends</h1> -->
   <div class="row d-flex justify-content-center">
     <div class="col-md-10">
@@ -20,7 +20,7 @@
             >
               <div class="d-flex flex-column lh-lg">
                 <i class="bx bxs-user-account"></i
-                ><span>All my friends (0)</span>
+                ><span>All my friends ({{ friendslist?.length || 0 }})</span>
               </div>
             </button>
           </li>
@@ -37,7 +37,9 @@
             >
               <div class="d-flex flex-column lh-lg">
                 <i class="bx bxs-left-down-arrow-circle"></i>
-                <span>Inbound Requests (0)</span>
+                <span
+                  >Inbound Requests ({{ inboundRequests?.length || 0 }})</span
+                >
               </div>
             </button>
           </li>
@@ -54,7 +56,11 @@
             >
               <div class="d-flex flex-column lh-lg">
                 <i class="bx bxs-user-minus"></i>
-                <span>Awaiting connection approval (0)</span>
+                <span
+                  >Awaiting connection approval ({{
+                    outboundRequests?.length || 0
+                  }})</span
+                >
               </div>
             </button>
           </li>
@@ -89,14 +95,39 @@
               >
                 <div class="d-flex flex-column">
                   <div class="d-flex align-items-center ms-4">
-                    <img
-                      src="http://localhost:8080/api/image/sid"
-                      alt=""
-                      style="object-fit: cover; width: 45px; height: 45px"
-                      class="rounded-circle"
-                    />
+                    <div
+                      *ngIf="
+                        obj.filename == null;
+                        then userimagenotpresent;
+                        else userimagepresent
+                      "
+                    ></div>
+                    <ng-template #userimagepresent
+                      ><img
+                        src="http://localhost:8080/api/image/user-image/{{
+                          obj.filename
+                        }}"
+                        alt=""
+                        style="object-fit: cover; width: 60px; height: 60px"
+                        class="rounded"
+                      />
+                    </ng-template>
+                    <ng-template #userimagenotpresent
+                      ><img
+                        src="/assets/images/user.png"
+                        alt=""
+                        style="object-fit: cover; width: 60px; height: 60px"
+                        class="rounded"
+                        loading="lazy"
+                      />
+                    </ng-template>
+
                     <div class="ms-4">
-                      <p class="fw-bold mb-1">{{ obj.name }}</p>
+                      <a
+                        routerLink="/view-user/{{ obj.userId }}"
+                        class="fw-bold mb-1"
+                        >{{ obj.name }}</a
+                      >
                       <p class="text-muted mb-0">{{ obj.username }}</p>
                     </div>
                   </div>
@@ -109,49 +140,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="container p-3">
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Flight From"
-                />
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Flight To"
-                />
-              </div>
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Depart" />
-                <input type="text" class="form-control" placeholder="Return" />
-              </div>
-              <div class="input-group mb-3">
-                <select
-                  class="form-select form-control"
-                  id="inputGroupSelect02"
-                >
-                  <option selected>Passenger</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3+</option>
-                </select>
-                <select
-                  class="form-select form-control"
-                  id="inputGroupSelect02"
-                >
-                  <option selected>Cabin</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-              </div>
-              <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-success custom-button px-5">
-                  Show Flights
-                </button>
-              </div>
-            </div> -->
           </div>
           <div
             class="tab-pane fade"
@@ -166,14 +154,38 @@
               >
                 <div class="d-flex flex-column">
                   <div class="d-flex align-items-center ms-4">
-                    <img
-                      src="http://localhost:8080/api/image/sid"
-                      alt=""
-                      style="object-fit: cover; width: 45px; height: 45px"
-                      class="rounded-circle"
-                    />
+                    <div
+                      *ngIf="
+                        obj.filename == null;
+                        then userimagenotpresent;
+                        else userimagepresent
+                      "
+                    ></div>
+                    <ng-template #userimagepresent
+                      ><img
+                        src="http://localhost:8080/api/image/user-image/{{
+                          obj.filename
+                        }}"
+                        alt=""
+                        style="object-fit: cover; width: 60px; height: 60px"
+                        class="rounded"
+                      />
+                    </ng-template>
+                    <ng-template #userimagenotpresent
+                      ><img
+                        src="/assets/images/user.png"
+                        alt=""
+                        style="object-fit: cover; width: 60px; height: 60px"
+                        class="rounded"
+                        loading="lazy"
+                      />
+                    </ng-template>
                     <div class="ms-4">
-                      <p class="fw-bold mb-1">{{ obj.name }}</p>
+                      <a
+                        routerLink="/view-user/{{ obj.userId }}"
+                        class="fw-bold mb-1"
+                        >{{ obj.name }}</a
+                      >
                       <p class="text-muted mb-0">{{ obj.username }}</p>
                     </div>
                   </div>
@@ -201,14 +213,38 @@
               >
                 <div class="d-flex flex-column">
                   <div class="d-flex align-items-center ms-4">
-                    <img
-                      src="http://localhost:8080/api/image/sid"
-                      alt=""
-                      style="object-fit: cover; width: 45px; height: 45px"
-                      class="rounded-circle"
-                    />
+                    <div
+                      *ngIf="
+                        obj.filename == null;
+                        then userimagenotpresent;
+                        else userimagepresent
+                      "
+                    ></div>
+                    <ng-template #userimagepresent
+                      ><img
+                        src="http://localhost:8080/api/image/user-image/{{
+                          obj.filename
+                        }}"
+                        alt=""
+                        style="object-fit: cover; width: 60px; height: 60px"
+                        class="rounded"
+                      />
+                    </ng-template>
+                    <ng-template #userimagenotpresent
+                      ><img
+                        src="/assets/images/user.png"
+                        alt=""
+                        style="object-fit: cover; width: 60px; height: 60px"
+                        class="rounded"
+                        loading="lazy"
+                      />
+                    </ng-template>
                     <div class="ms-4">
-                      <p class="fw-bold mb-1">{{ obj.name }}</p>
+                      <a
+                        routerLink="/view-user/{{ obj.userId }}"
+                        class="fw-bold mb-1"
+                        >{{ obj.name }}</a
+                      >
                       <p class="text-muted mb-0">{{ obj.username }}</p>
                     </div>
                   </div>
@@ -219,45 +255,6 @@
                     class="cancelbutton"
                     >Cancel request</a
                   >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="faq_tab_4"
-            role="tabpanel"
-            aria-labelledby="faq_tab_4-tab"
-          >
-            <div class="container p-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="input-group mb-3">
-                    <select
-                      class="form-select form-control"
-                      id="inputGroupSelect02"
-                    >
-                      <option selected>Select Airline</option>
-                      <option value="1">Indigo</option>
-                      <option value="2">Air India</option>
-                      <option value="3">Air Asthana</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="input-group mb-3">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Flight Number"
-                    />
-                    <button
-                      class="btn btn-outline-secondary custom-button"
-                      type="button"
-                    >
-                      Search
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>

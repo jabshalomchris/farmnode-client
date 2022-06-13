@@ -184,9 +184,10 @@
                   <input
                     class="form-check-input"
                     type="checkbox"
-                    value="asa"
+                    value="all"
                     id="flexSwitchAll"
                     checked
+                    (change)="changeAllPriceSwitch($event)"
                   />
                   <label class="form-check-label" for="flexSwitchCheckChecked"
                     >All</label
@@ -200,21 +201,10 @@
                     type="checkbox"
                     value="free"
                     id="flexSwitchFree"
+                    (change)="changeFreePriceSwitch($event)"
                   />
                   <label class="form-check-label" for="flexSwitchFree"
-                    >Free</label
-                  >
-                </div>
-              </div>
-              <div class="my-1">
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckChecked"
-                  />
-                  <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Excess harvest</label
+                    >Free / Excess</label
                   >
                 </div>
               </div>

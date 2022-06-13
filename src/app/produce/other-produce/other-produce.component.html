@@ -115,7 +115,7 @@
           </form>
           <hr />
           <div class="container p-3 scroll-y">
-            <div *ngIf="comments$.length == 0; then emptycomments"></div>
+            <div *ngIf="comments$?.length == 0; then emptycomments"></div>
             <ng-template #emptycomments
               ><h5>No comments yet for this produce..</h5></ng-template
             >
@@ -134,7 +134,7 @@
                   ></div>
                   <ng-template #userimagepresent
                     ><img
-                      src="http://localhost:8080/api/image/produce-image/{{
+                      src="http://localhost:8080/api/image/user-image/{{
                         comment.filename
                       }}"
                       alt=""
